@@ -29,31 +29,32 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <p>
-              Hi, I’m Pankaj — a Full Stack Developer and CSE (MAC) student at NSUT.
-              I enjoy building scalable and user-centric web applications using
-              React.js, Next.js, Node.js, TypeScript, PostgreSQL, and MongoDB.
+              Hi, I’m Pankaj — a 3rd year B.Tech CSE (Mathematics & Computing) student at NSUT.
+              I enjoy building scalable and user-centric web applications and AI-based solutions
+              using React.js, Next.js, Node.js, Python, PostgreSQL, and MongoDB.
             </p>
-            <p>
-              🚀 Projects:
-              <br />• FeedLink — Food redistribution platform
-              <br />• Delhi TrafficAI — AI traffic prediction system
+            <p style={{ marginTop: '1rem' }}>
+              🎓 <strong>Education:</strong>
+              <br />• <strong>B.Tech CSE (MAC)</strong> — Netaji Subhas University of Technology (2023–2027)
+              <br />• <strong>Class XII (CBSE)</strong> — Govt. Co-Ed Sarvodaya Vidyalaya (2022)
+              <br />• <strong>Class X (CBSE)</strong> — Indraprastha Convent Sr. Sec. School (2020)
             </p>
-            <p>
-              Currently exploring: Full Stack Development, Backend Systems, System Design.
+            <p style={{ marginTop: '1rem' }}>
+              Currently exploring: Full Stack Development, Backend Systems, System Design, AI/ML.
               Open to: Software Engineering Internships & Full Stack Roles.
             </p>
 
             <div className="about-stats">
               <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">10+</div>
-                <div className="stat-label">Projects Built</div>
+                <div className="stat-number gradient-text">5+</div>
+                <div className="stat-label">Live Projects</div>
               </div>
               <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">300+</div>
+                <div className="stat-number gradient-text">400+</div>
                 <div className="stat-label">DSA Problems</div>
               </div>
               <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">5+</div>
+                <div className="stat-number gradient-text">10+</div>
                 <div className="stat-label">Technologies</div>
               </div>
             </div>
@@ -84,20 +85,20 @@ export default function About() {
                 &nbsp;&nbsp;<span className="code-property">role</span>:{' '}
                 <span className="code-string">&quot;Full Stack Dev&quot;</span>,
                 <br />
-                &nbsp;&nbsp;<span className="code-property">loves</span>:{' '}
+                &nbsp;&nbsp;<span className="code-property">skills</span>:{' '}
                 <span className="code-bracket">[</span>
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span className="code-string">&quot;React&quot;</span>,
+                <span className="code-string">&quot;React/Next.js&quot;</span>,
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span className="code-string">&quot;Node.js&quot;</span>,
+                <span className="code-string">&quot;Node/FastAPI&quot;</span>,
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span className="code-string">&quot;AI/ML&quot;</span>,
+                <span className="code-string">&quot;TensorFlow/RAG&quot;</span>,
                 <br />
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <span className="code-string">&quot;Problem Solving&quot;</span>
+                <span className="code-string">&quot;C++/Python&quot;</span>
                 <br />
                 &nbsp;&nbsp;<span className="code-bracket">]</span>,
                 <br />

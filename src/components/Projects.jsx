@@ -33,6 +33,26 @@ const projects = [
     liveUrl: 'https://smart-traffic-prediction-system.vercel.app',
     githubUrl: '#',
   },
+  {
+    title: 'Chest X-ray Disease Classifier — Medical AI',
+    description:
+      'Built a deep learning classifier for chest X-ray diseases with Grad-CAM explainability heatmaps for medical transparency. Implemented visualization techniques highlighting prediction-driving regions, improving model interpretability.',
+    tech: ['Python', 'TensorFlow', 'Explainable AI', 'Grad-CAM'],
+    featured: false,
+    emoji: '🩻',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    title: 'Fraud Detection System',
+    description:
+      'Developed a scalable fraud detection pipeline using Apache Spark for processing large financial transaction datasets. Applied ensemble ML techniques achieving high precision and recall on heavily imbalanced transaction data.',
+    tech: ['Python', 'Apache Spark', 'Scikit-learn', 'Machine Learning'],
+    featured: false,
+    emoji: '🛡️',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
 ]
 
 const containerVariants = {

@@ -2,9 +2,11 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 const achievements = [
-  'Data Analytics Certification',
-  'DSA Supreme 3.0',
-  '400+ DSA Questions Solved',
+  'Google AI Essentials Specialization — Google / Coursera',
+  'Certified in Basics of Data Analytics — Physics Wallah × Microsoft',
+  'Completed DSA Supreme 3.0 Batch — CodeHelp',
+  'Solved 400+ DSA problems on LeetCode',
+  'Deployed 5 live production projects',
 ]
 
 export default function Achievements() {

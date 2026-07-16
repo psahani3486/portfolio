@@ -4,14 +4,19 @@ import { FiCode, FiServer, FiDatabase, FiCpu, FiTool } from 'react-icons/fi'
 
 const skillCategories = [
   {
+    title: 'Languages',
+    icon: <FiCode />,
+    skills: ['C++', 'C', 'Python', 'JavaScript', 'HTML/CSS'],
+  },
+  {
     title: 'Frontend',
     icon: <FiCode />,
-    skills: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js'],
+    skills: ['React', 'Next.js', 'Tailwind', 'Framer Motion'],
   },
   {
     title: 'Backend',
     icon: <FiServer />,
-    skills: ['Node.js', 'Express', 'FastAPI', 'REST API', 'JWT'],
+    skills: ['Node.js', 'Express', 'NestJS', 'FastAPI', 'REST API', 'JWT'],
   },
   {
     title: 'Database',
@@ -21,7 +26,7 @@ const skillCategories = [
   {
     title: 'AI / ML',
     icon: <FiCpu />,
-    skills: ['Machine Learning', 'LLMs', 'RAG', 'TensorFlow', 'Scikit-Learn'],
+    skills: ['Machine Learning', 'LLMs', 'RAG', 'TensorFlow', 'Scikit-Learn', 'Apache Spark'],
   },
   {
     title: 'Core CS',

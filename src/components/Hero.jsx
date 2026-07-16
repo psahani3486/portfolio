@@ -88,9 +88,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.45 }}
           >
-            I build scalable web apps and AI-based solutions using React,
-            Node.js, MongoDB, and Machine Learning. Passionate about turning
-            ideas into elegant, production-ready products.
+            3rd year B.Tech CSE student at NSUT with hands-on experience in full-stack development and AI/ML systems. Built and deployed 5 production-grade projects using Next.js, FastAPI, TensorFlow, and RAG. Solved 400+ DSA problems on LeetCode. Seeking a challenging SDE internship to contribute and grow.
           </motion.p>
 
           <motion.div
