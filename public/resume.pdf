@@ -1,0 +1,74 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /Resources 4 0 R /MediaBox [0 0 595 842] /Contents 5 0 R >>
+endobj
+4 0 obj
+<< /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> /F2 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >> >> >>
+endobj
+5 0 obj
+<< /Length 750 >>
+stream
+BT
+/F2 20 Tf
+50 780 Td
+(PANKAJ SAHANI) Tj
+/F1 10 Tf
+0 -20 Td
+(Email: psahani729@gmail.com | Phone: +91-8860395176 | GitHub: github.com/psahani3486 | LinkedIn: linkedin.com/in/pankaj-sahani) Tj
+/F2 14 Tf
+0 -30 Td
+(EDUCATION) Tj
+/F1 10 Tf
+0 -20 Td
+(Netaji Subhas University of Technology - B.Tech CSE (Mathematics & Computing) | 2023 - 2027) Tj
+/F2 14 Tf
+0 -30 Td
+(EXPERIENCE) Tj
+/F2 10 Tf
+0 -20 Td
+(Machine Learning Intern - Suvidha Foundation | Jun 2026 - Jul 2026) Tj
+/F1 10 Tf
+0 -15 Td
+(- Completed structured daily ML assignments and real-world project development tasks.) Tj
+0 -15 Td
+(- Applied machine learning techniques to domain-specific social impact problems.) Tj
+/F2 10 Tf
+0 -20 Td
+(Frontend Developer Intern - HumbleServers | Dec 2025 - Jan 2026) Tj
+/F1 10 Tf
+0 -15 Td
+(- Customized and optimized web dashboards and client panels to improve usability.) Tj
+0 -15 Td
+(- Configured and deployed Pterodactyl Panel with node setup and server deployment.) Tj
+/F2 14 Tf
+0 -30 Td
+(PROJECTS) Tj
+/F1 10 Tf
+0 -20 Td
+(- RAG Intelligence: Anti-Hallucination Framework for LLMs) Tj
+0 -15 Td
+(- FeedLink: Full Stack Food Redistribution Platform) Tj
+0 -15 Td
+(- Delhi TrafficAI: Smart Traffic Prediction System) Tj
+ET
+endstream
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000220 00000 n 
+0000000331 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1133
+%%EOF
