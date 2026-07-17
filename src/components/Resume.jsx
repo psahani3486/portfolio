@@ -32,7 +32,7 @@ export default function Resume() {
             Download my resume to learn more about my education, experience,
             skills, and projects. Always updated with latest work.
           </p>
-          <a href={personalInfo.resumeUrl} className="btn-primary" download>
+          <a href={personalInfo.resumeUrl} className="btn-primary" download="Pankaj_Resume.pdf">
             <FiDownload />
             <span>Download Resume</span>
           </a>

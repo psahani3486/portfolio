@@ -93,7 +93,7 @@ export default function Hero() {
               <span>View Projects</span>
               <FiArrowRight />
             </a>
-            <a href={personalInfo.resumeUrl} className="btn-secondary" download>
+            <a href={personalInfo.resumeUrl} className="btn-secondary" download="Pankaj_Resume.pdf">
               <FiDownload />
               <span>Download Resume</span>
             </a>
