@@ -3,9 +3,9 @@
 export const personalInfo = {
   name: 'Pankaj',
   role: 'Full Stack & AI Developer',
-  tagline: '3rd year B.Tech CSE student at NSUT',
+  tagline: 'Final year B.Tech CSE student at NSUT',
   description:
-    '3rd year B.Tech CSE student at NSUT with hands-on experience in full-stack development and AI/ML systems. Built and deployed 5 production-grade projects using Next.js, FastAPI, TensorFlow, and RAG. Solved 400+ DSA problems on LeetCode. Seeking a challenging SDE internship to contribute and grow.',
+    'Final year B.Tech CSE student at NSUT with hands-on experience in full-stack development and AI/ML systems. Built and deployed 5 production-grade projects using Next.js, FastAPI, TensorFlow, and RAG. Solved 400+ DSA problems on LeetCode. Seeking a challenging SDE internship to contribute and grow.',
   email: 'psahani729@gmail.com',
   phone: '+91-8860395176',
   github: 'https://github.com/psahani3486',
