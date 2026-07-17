@@ -1,37 +1,38 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { FiMail, FiGithub, FiLinkedin, FiPhone, FiSend, FiExternalLink } from 'react-icons/fi'
+import { personalInfo } from '../data/resumeData'
 
 const contactInfo = [
   {
     icon: <FiMail />,
     label: 'Email',
-    value: 'psahani729@gmail.com',
-    href: 'mailto:psahani729@gmail.com',
+    value: personalInfo.email,
+    href: `mailto:${personalInfo.email}`,
   },
   {
     icon: <FiGithub />,
     label: 'GitHub',
     value: 'github.com/psahani3486',
-    href: 'https://github.com/psahani3486',
+    href: personalInfo.github,
   },
   {
     icon: <FiLinkedin />,
     label: 'LinkedIn',
     value: 'linkedin.com/in/pankaj-sahani',
-    href: 'https://www.linkedin.com/in/pankaj-sahani/',
+    href: personalInfo.linkedin,
   },
   {
     icon: <FiPhone />,
     label: 'Phone',
-    value: '+91-8860395176',
-    href: 'tel:+918860395176',
+    value: personalInfo.phone,
+    href: `tel:${personalInfo.phone.replace(/-/g, '')}`,
   },
   {
     icon: <FiExternalLink />,
     label: 'LeetCode',
     value: 'leetcode.com/u/Pankaj9643',
-    href: 'https://leetcode.com/u/Pankaj9643/',
+    href: personalInfo.leetcode,
   },
 ]
 
@@ -44,15 +45,16 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Build mailto link
-    const mailtoLink = `mailto:psahani729@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(
+    const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(
+      formData.subject
+    )}&body=${encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
     )}`
     window.open(mailtoLink)
   }
 
   return (
-    <section id="contact" style={{ position: 'relative', background: 'var(--color-bg-secondary)' }}>
+    <section id="contact" style={{ position: 'relative', background: 'var(--bg-secondary)' }}>
       <div className="grid-bg" />
       <div className="section-container" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div
@@ -65,7 +67,7 @@ export default function Contact() {
           <h2 className="section-title">
             Let&apos;s <span className="gradient-text">connect</span>
           </h2>
-          <p style={{ color: 'var(--color-text-secondary)', maxWidth: 560, fontSize: '1.05rem', lineHeight: 1.8 }}>
+          <p className="section-description">
             Have a project in mind or want to discuss opportunities? Feel free to reach out!
           </p>
         </motion.div>

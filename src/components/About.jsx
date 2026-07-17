@@ -1,5 +1,38 @@
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
+import { personalInfo, education } from '../data/resumeData'
+
+function CountUp({ target, suffix = '' }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+  const numericTarget = parseInt(target)
+
+  useEffect(() => {
+    if (!isInView || !ref.current || isNaN(numericTarget)) return
+    let start = 0
+    const duration = 1500
+    const startTime = Date.now()
+
+    const animate = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
+      const current = Math.floor(eased * numericTarget)
+      if (ref.current) {
+        ref.current.textContent = current + suffix
+      }
+      if (progress < 1) requestAnimationFrame(animate)
+    }
+    animate()
+  }, [isInView, numericTarget, suffix])
+
+  return (
+    <span ref={ref} className="gradient-text">
+      {isNaN(numericTarget) ? target : `0${suffix}`}
+    </span>
+  )
+}
 
 const fadeInUp = {
   initial: { opacity: 0, y: 40 },
@@ -11,6 +44,7 @@ const fadeInUp = {
 export default function About() {
   return (
     <section id="about" style={{ position: 'relative' }}>
+      <div className="grid-bg" />
       <div className="section-container">
         <motion.div {...fadeInUp}>
           <span className="section-label">About Me</span>
@@ -29,15 +63,17 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <p>
-              Hi, I’m Pankaj — a 3rd year B.Tech CSE (Mathematics & Computing) student at NSUT.
+              Hi, I'm {personalInfo.name} — a {personalInfo.tagline}.
               I enjoy building scalable and user-centric web applications and AI-based solutions
               using React.js, Next.js, Node.js, Python, PostgreSQL, and MongoDB.
             </p>
             <p style={{ marginTop: '1rem' }}>
               🎓 <strong>Education:</strong>
-              <br />• <strong>B.Tech CSE (MAC)</strong> — Netaji Subhas University of Technology (2023–2027)
-              <br />• <strong>Class XII (CBSE)</strong> — Govt. Co-Ed Sarvodaya Vidyalaya (2022)
-              <br />• <strong>Class X (CBSE)</strong> — Indraprastha Convent Sr. Sec. School (2020)
+              {education.map((edu, i) => (
+                <React.Fragment key={i}>
+                  <br />• <strong>{edu.degree}</strong> — {edu.institution} ({edu.year})
+                </React.Fragment>
+              ))}
             </p>
             <p style={{ marginTop: '1rem' }}>
               Currently exploring: Full Stack Development, Backend Systems, System Design, AI/ML.
@@ -45,18 +81,42 @@ export default function About() {
             </p>
 
             <div className="about-stats">
-              <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">5+</div>
+              <motion.div
+                className="stat-card glass-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+              >
+                <div className="stat-number">
+                  <CountUp target="5" suffix="+" />
+                </div>
                 <div className="stat-label">Live Projects</div>
-              </div>
-              <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">400+</div>
+              </motion.div>
+              <motion.div
+                className="stat-card glass-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
+                <div className="stat-number">
+                  <CountUp target="400" suffix="+" />
+                </div>
                 <div className="stat-label">DSA Problems</div>
-              </div>
-              <div className="stat-card glass-card">
-                <div className="stat-number gradient-text">10+</div>
+              </motion.div>
+              <motion.div
+                className="stat-card glass-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+              >
+                <div className="stat-number">
+                  <CountUp target="10" suffix="+" />
+                </div>
                 <div className="stat-label">Technologies</div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
 

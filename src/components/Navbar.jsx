@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { FiMenu, FiX } from 'react-icons/fi'
-
-const navLinks = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Achievements', href: '#achievements' },
-  { name: 'DSA', href: '#dsa' },
-  { name: 'Resume', href: '#resume' },
-  { name: 'Contact', href: '#contact' },
-]
+import { navLinks } from '../data/resumeData'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -22,8 +11,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
 
-      // Determine active section
-      const sections = navLinks.map(l => l.href.slice(1))
+      const sections = navLinks.map((l) => l.href.slice(1))
       for (let i = sections.length - 1; i >= 0; i--) {
         const el = document.getElementById(sections[i])
         if (el) {
@@ -35,7 +23,7 @@ export default function Navbar() {
         }
       }
     }
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 

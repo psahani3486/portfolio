@@ -1,9 +1,10 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { dsaStats } from '../data/resumeData'
 
 export default function Dsa() {
   return (
-    <section id="dsa" style={{ position: 'relative', background: 'var(--color-bg-secondary)' }}>
+    <section id="dsa" style={{ position: 'relative', background: 'var(--bg-secondary)' }}>
       <div className="grid-bg" />
       <div className="section-container" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div
@@ -28,7 +29,7 @@ export default function Dsa() {
           <div className="dsa-icon">⚡</div>
           <div className="dsa-content">
             <h3>
-              Solved <span className="gradient-text">300+</span> DSA Problems
+              Solved <span className="gradient-text">{dsaStats.problemsSolved}</span> DSA Problems
             </h3>
             <p>
               Focused on arrays, strings, linked lists, trees, graphs, dynamic programming,
@@ -37,17 +38,22 @@ export default function Dsa() {
             </p>
             <div className="dsa-stats">
               <div className="dsa-stat">
-                <div className="dsa-stat-value gradient-text">300+</div>
+                <div className="dsa-stat-value gradient-text">{dsaStats.problemsSolved}</div>
                 <div className="dsa-stat-label">Problems Solved</div>
               </div>
               <div className="dsa-stat">
-                <div className="dsa-stat-value gradient-text">50+</div>
+                <div className="dsa-stat-value gradient-text">{dsaStats.topicsCovered}</div>
                 <div className="dsa-stat-label">Topics Covered</div>
               </div>
               <div className="dsa-stat">
-                <div className="dsa-stat-value gradient-text">Daily</div>
+                <div className="dsa-stat-value gradient-text">{dsaStats.practiceStreak}</div>
                 <div className="dsa-stat-label">Practice Streak</div>
               </div>
+            </div>
+            <div className="dsa-topics">
+              {dsaStats.focus.map((topic) => (
+                <span key={topic}>{topic}</span>
+              ))}
             </div>
           </div>
         </motion.div>

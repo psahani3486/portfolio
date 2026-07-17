@@ -1,17 +1,28 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { FiAward } from 'react-icons/fi'
+import { achievements } from '../data/resumeData'
 
-const achievements = [
-  'Google AI Essentials Specialization — Google / Coursera',
-  'Certified in Basics of Data Analytics — Physics Wallah × Microsoft',
-  'Completed DSA Supreme 3.0 Batch — CodeHelp',
-  'Solved 400+ DSA problems on LeetCode',
-  'Deployed 5 live production projects',
-]
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+}
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
+  },
+}
 
 export default function Achievements() {
   return (
-    <section id="achievements" style={{ position: 'relative', background: 'var(--color-bg-secondary)' }}>
+    <section id="achievements" style={{ position: 'relative', background: 'var(--bg-secondary)' }}>
       <div className="grid-bg" />
       <div className="section-container" style={{ position: 'relative', zIndex: 2 }}>
         <motion.div
@@ -27,18 +38,23 @@ export default function Achievements() {
         </motion.div>
 
         <motion.div
-          className="projects-grid"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="achievements-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, delay: 0.15 }}
         >
-          {achievements.map((a) => (
-            <div key={a} className="project-card glass-card">
-              <div className="project-body">
-                <h3 className="project-title">{a}</h3>
+          {achievements.map((achievement, index) => (
+            <motion.div
+              key={index}
+              className="achievement-card glass-card"
+              variants={cardVariants}
+            >
+              <div className="achievement-icon">
+                <FiAward />
               </div>
-            </div>
+              <span className="achievement-text">{achievement}</span>
+            </motion.div>
           ))}
         </motion.div>
       </div>

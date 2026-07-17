@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { FiDownload } from 'react-icons/fi'
+import { personalInfo } from '../data/resumeData'
 
 export default function Resume() {
   return (
@@ -20,8 +21,8 @@ export default function Resume() {
 
         <motion.div
           className="resume-card glass-card"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
@@ -31,7 +32,7 @@ export default function Resume() {
             Download my resume to learn more about my education, experience,
             skills, and projects. Always updated with latest work.
           </p>
-          <a href="/resume.pdf" className="btn-primary" download>
+          <a href={personalInfo.resumeUrl} className="btn-primary" download>
             <FiDownload />
             <span>Download Resume</span>
           </a>

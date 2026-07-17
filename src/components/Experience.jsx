@@ -1,5 +1,22 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { experience } from '../data/resumeData'
+
+const timelineVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.2 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+  },
+}
 
 export default function Experience() {
   return (
@@ -13,56 +30,41 @@ export default function Experience() {
         >
           <span className="section-label">Experience</span>
           <h2 className="section-title">
-            Where I <span className="gradient-text">worked</span>
+            Where I&apos;ve <span className="gradient-text">worked</span>
           </h2>
         </motion.div>
 
         <motion.div
-          className="projects-grid"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="timeline"
+          variants={timelineVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, delay: 0.15 }}
         >
-          <div className="project-card glass-card">
-            <div className="project-body">
-              <div className="project-featured">Internship</div>
-              <h3 className="project-title">Machine Learning Intern — Suvidha Foundation</h3>
-              <div className="project-description">
-                <p>Jun 2026 — Jul 2026 · Remote</p>
-                <ul>
-                  <li>Completed structured daily ML assignments and real-world project development tasks.</li>
-                  <li>Applied machine learning techniques to domain-specific social impact problems.</li>
+          {experience.map((exp, index) => (
+            <motion.div key={index} className="timeline-item" variants={itemVariants}>
+              <div className="timeline-dot" />
+              <div className="timeline-card glass-card">
+                <div className="timeline-badge">{exp.type}</div>
+                <h3 className="timeline-role">
+                  {exp.role} — {exp.company}
+                </h3>
+                <p className="timeline-meta">
+                  {exp.period} · {exp.location}
+                </p>
+                <ul className="timeline-highlights">
+                  {exp.highlights.map((h, i) => (
+                    <li key={i}>{h}</li>
+                  ))}
                 </ul>
+                <div className="timeline-tech">
+                  {exp.tech.map((t) => (
+                    <span key={t}>{t}</span>
+                  ))}
+                </div>
               </div>
-              <div className="project-tech">
-                <span>Machine Learning</span>
-                <span>Python</span>
-                <span>Data Science</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="project-card glass-card" style={{ marginTop: '2rem' }}>
-            <div className="project-body">
-              <div className="project-featured">Internship</div>
-              <h3 className="project-title">Frontend Developer Intern — HumbleServers</h3>
-              <div className="project-description">
-                <p>Dec 2025 — Jan 2026 · Remote</p>
-                <ul>
-                  <li>Customized and optimized web dashboards and client panels to improve usability and user experience.</li>
-                  <li>Configured and deployed Pterodactyl Panel with node setup, Wings configuration, and server deployment.</li>
-                  <li>Integrated WHMCS billing workflows for streamlined client management.</li>
-                  <li>Improved panel reliability through debugging and performance optimization.</li>
-                </ul>
-              </div>
-              <div className="project-tech">
-                <span>Front-End Development</span>
-                <span>User Interface Design</span>
-                <span>WHMCS</span>
-              </div>
-            </div>
-          </div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

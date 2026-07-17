@@ -1,44 +1,29 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
 import { FiGithub, FiLinkedin, FiArrowRight, FiDownload, FiExternalLink } from 'react-icons/fi'
+import { personalInfo } from '../data/resumeData'
+
+// Lazy-load the 3D scene to keep initial bundle small
+const SpaceScene = lazy(() => import('./three/SpaceScene'))
 
 export default function Hero() {
   return (
     <section className="hero" id="home">
-      <div className="grid-bg" />
+      {/* 3D Background */}
+      <div className="hero-canvas">
+        <Suspense fallback={null}>
+          <SpaceScene />
+        </Suspense>
+      </div>
 
-      {/* Floating Orbs */}
+      {/* Gradient fallback behind 3D (visible during load or on low-end) */}
       <div
-        className="bg-orb"
         style={{
-          width: 500,
-          height: 500,
-          background: 'linear-gradient(135deg, #6366f1, #a855f7)',
-          top: '-10%',
-          right: '-10%',
-          animationDelay: '0s',
-        }}
-      />
-      <div
-        className="bg-orb"
-        style={{
-          width: 400,
-          height: 400,
-          background: 'linear-gradient(135deg, #06b6d4, #6366f1)',
-          bottom: '-5%',
-          left: '-5%',
-          animationDelay: '4s',
-        }}
-      />
-      <div
-        className="bg-orb"
-        style={{
-          width: 250,
-          height: 250,
-          background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-          top: '40%',
-          right: '20%',
-          animationDelay: '2s',
+          position: 'absolute',
+          inset: 0,
+          background: 'radial-gradient(ellipse at 30% 50%, rgba(99,102,241,0.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(168,85,247,0.06) 0%, transparent 50%)',
+          pointerEvents: 'none',
+          zIndex: 0,
         }}
       />
 
@@ -47,7 +32,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             <div className="hero-badge">
               <span className="dot" />
@@ -59,7 +44,7 @@ export default function Hero() {
             className="hero-greeting"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
           >
             Hello, I&apos;m
           </motion.p>
@@ -68,40 +53,47 @@ export default function Hero() {
             className="hero-name"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.5 }}
           >
-            <span className="gradient-text">Pankaj</span>
+            <span className="gradient-text">{personalInfo.name}</span>
           </motion.h1>
 
           <motion.p
             className="hero-role"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
+            transition={{ duration: 0.6, delay: 0.65 }}
           >
-            Full Stack &amp; AI Developer
+            {personalInfo.role}
           </motion.p>
 
           <motion.p
             className="hero-description"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
+            transition={{ duration: 0.6, delay: 0.75 }}
           >
-            3rd year B.Tech CSE student at NSUT with hands-on experience in full-stack development and AI/ML systems. Built and deployed 5 production-grade projects using Next.js, FastAPI, TensorFlow, and RAG. Solved 400+ DSA problems on LeetCode. Seeking a challenging SDE internship to contribute and grow.
+            {personalInfo.description}
           </motion.p>
 
           <motion.div
             className="hero-buttons"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.55 }}
+            transition={{ duration: 0.6, delay: 0.85 }}
           >
-            <a href="#projects" className="btn-primary" onClick={(e) => { e.preventDefault(); document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' }) }}>
+            <a
+              href="#projects"
+              className="btn-primary"
+              onClick={(e) => {
+                e.preventDefault()
+                document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })
+              }}
+            >
               <span>View Projects</span>
               <FiArrowRight />
             </a>
-            <a href="/resume.pdf" className="btn-secondary" download>
+            <a href={personalInfo.resumeUrl} className="btn-secondary" download>
               <FiDownload />
               <span>Download Resume</span>
             </a>
@@ -111,20 +103,31 @@ export default function Hero() {
             className="hero-socials"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.65 }}
+            transition={{ duration: 0.6, delay: 0.95 }}
           >
-            <a href="https://github.com/psahani3486" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <FiGithub />
             </a>
-            <a href="https://www.linkedin.com/in/pankaj-sahani/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <FiLinkedin />
             </a>
-            <a href="https://leetcode.com/u/Pankaj9643/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode">
+            <a href={personalInfo.leetcode} target="_blank" rel="noopener noreferrer" aria-label="LeetCode">
               <FiExternalLink />
             </a>
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="scroll-indicator"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.8 }}
+      >
+        <span>Scroll</span>
+        <div className="scroll-indicator-line" />
+      </motion.div>
     </section>
   )
 }

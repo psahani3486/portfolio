@@ -7,4 +7,20 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/three/')) {
+            return 'three'
+          }
+          if (id.includes('@react-three')) {
+            return 'react-three'
+          }
+        },
+      },
+    },
+    target: 'esnext',
+    minify: 'esbuild',
+  },
 })
