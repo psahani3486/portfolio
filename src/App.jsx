@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
@@ -13,6 +13,7 @@ import Resume from './components/Resume'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AiAssistant from './components/AiAssistant'
+import CommandPalette from './components/CommandPalette'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -82,11 +83,13 @@ function LoadingScreen() {
 }
 
 function App() {
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+
   return (
     <>
       <LoadingScreen />
       <div className="app bg-[#050505] min-h-screen">
-        <Navbar />
+        <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
         <Hero />
         <About />
         <Skills />
@@ -99,6 +102,10 @@ function App() {
         <Contact />
         <Footer />
         <AiAssistant />
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={setCommandPaletteOpen}
+        />
       </div>
     </>
   )

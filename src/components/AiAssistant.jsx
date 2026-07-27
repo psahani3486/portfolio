@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMessageCircle, FiX, FiSend } from 'react-icons/fi'
+import { FiMessageCircle, FiX, FiSend, FiVolume2, FiVolumeX, FiBriefcase } from 'react-icons/fi'
 import {
   personalInfo,
   education,
@@ -15,7 +15,11 @@ import {
 const knowledgeBase = [
   {
     keywords: ['hello', 'hi', 'hey', 'greet', 'sup', 'what\'s up'],
-    response: `Hey there! 👋 I'm Pankaj's AI assistant. I can tell you about his skills, projects, experience, education, or how to get in touch. What would you like to know?`,
+    response: `Hey there! 👋 I'm Pankaj's AI assistant. Ask me anything about his full-stack apps, AI/ML background, LeetCode stats, or internship experience!`,
+  },
+  {
+    keywords: ['recruiter', 'pitch', '30s', 'why hire', 'summary', 'candidate', 'brief'],
+    response: `🎯 **30-Second Recruiter Pitch for Pankaj:**\n\n• **Education:** Final-year B.Tech CSE at NSUT (2023-2027)\n• **Key Strengths:** Full-Stack Web (Next.js, FastAPI, PostgreSQL) & AI/ML (TensorFlow, RAG, LLMs)\n• **Track Record:** 5 production projects deployed + 400+ LeetCode DSA problems solved\n• **Experience:** ML Intern at Suvidha Foundation + Frontend Intern at HumbleServers\n\nReady to contribute immediately as an SDE intern/full-time engineer!`,
   },
   {
     keywords: ['who', 'about', 'tell me about', 'introduce', 'yourself', 'pankaj'],
@@ -31,7 +35,7 @@ const knowledgeBase = [
     keywords: ['project', 'work', 'built', 'portfolio', 'app', 'website', 'rag', 'feedlink', 'traffic'],
     response: `Pankaj has built ${projects.length} notable projects:\n\n${projects
       .map((p) => `${p.emoji} **${p.title}** — ${p.tech.join(', ')}`)
-      .join('\n')}\n\nThe featured one is the RAG Intelligence framework that reduces LLM hallucinations! Ask me about any specific project for more details.`,
+      .join('\n')}\n\nThe featured project is the **RAG Anti-Hallucination Framework** (reduced latency from 40s to 8s).`,
   },
   {
     keywords: ['experience', 'intern', 'work', 'job', 'company', 'suvidha', 'humble'],
@@ -43,33 +47,19 @@ const knowledgeBase = [
     keywords: ['education', 'college', 'university', 'nsut', 'degree', 'study', 'school'],
     response: `📚 **Education:**\n\n${education
       .map((e) => `• ${e.degree} — ${e.institution} (${e.year})`)
-      .join('\n')}\n\nCurrently a 3rd year B.Tech CSE student at NSUT!`,
+      .join('\n')}\n\nCurrently a 4th year B.Tech CSE student at NSUT!`,
   },
   {
-    keywords: ['dsa', 'leetcode', 'competitive', 'problem', 'algorithm', 'data structure', 'coding'],
+    keywords: ['dsa', 'leetcode', 'problem', 'algorithm', 'coding'],
     response: `Pankaj is an active problem solver! ⚡\n\n• **${dsaStats.problemsSolved}** problems solved\n• **${dsaStats.topicsCovered}** topics covered\n• **${dsaStats.practiceStreak}** practice streak\n\nFocus areas: ${dsaStats.focus.join(', ')}. Check out his LeetCode profile!`,
   },
   {
     keywords: ['contact', 'email', 'phone', 'reach', 'connect', 'hire', 'message'],
-    response: `You can reach Pankaj through:\n\n📧 Email: ${personalInfo.email}\n📱 Phone: ${personalInfo.phone}\n🔗 GitHub: github.com/psahani3486\n💼 LinkedIn: linkedin.com/in/pankaj-sahani\n\nHe's always open to new opportunities! 🤝`,
+    response: `You can reach Pankaj through:\n\n📧 Email: ${personalInfo.email}\n📱 Phone: ${personalInfo.phone}\n🔗 GitHub: github.com/psahani3486\n💼 LinkedIn: linkedin.com/in/pankaj-sahani`,
   },
   {
     keywords: ['resume', 'cv', 'download'],
-    response: `You can download Pankaj's resume by clicking the "Download Resume" button in the hero section or the resume section below. It's always updated with his latest work! 📄`,
-  },
-  {
-    keywords: ['achievement', 'award', 'certification', 'certificate', 'google'],
-    response: `🏆 **Achievements & Certifications:**\n\n${achievements
-      .map((a) => `• ${a}`)
-      .join('\n')}\n\nAlways learning and growing! 📈`,
-  },
-  {
-    keywords: ['ai', 'ml', 'machine learning', 'artificial intelligence', 'rag', 'llm', 'tensorflow'],
-    response: `Pankaj is deeply interested in AI/ML! His work includes:\n\n🧠 **RAG Intelligence** — Anti-hallucination framework for LLMs\n🚦 **Delhi TrafficAI** — TensorFlow-based traffic prediction\n🩻 **Chest X-ray Classifier** — Deep learning with Grad-CAM\n🛡️ **Fraud Detection** — Apache Spark ML pipeline\n\nHis AI stack: TensorFlow, Scikit-Learn, LLMs, RAG, Apache Spark`,
-  },
-  {
-    keywords: ['react', 'next', 'frontend', 'web', 'javascript', 'node'],
-    response: `Pankaj's web dev stack:\n\n**Frontend:** React, Next.js, Tailwind CSS, Framer Motion\n**Backend:** Node.js, Express, NestJS, FastAPI\n**Database:** PostgreSQL, MongoDB, MySQL with Prisma ORM\n\nHe's built full-stack apps like FeedLink (food redistribution) and this very portfolio! ✨`,
+    response: `You can download Pankaj's updated resume by clicking the "Resume" button in the Hero or Navbar! 📄`,
   },
 ]
 
@@ -77,10 +67,9 @@ function getResponse(input) {
   const lower = input.toLowerCase().trim()
 
   if (!lower || lower.length < 2) {
-    return "Could you ask a more specific question? I can tell you about Pankaj's skills, projects, experience, education, or contact info! 😊"
+    return "Could you ask a more specific question? I can tell you about Pankaj's skills, projects, experience, or contact info! 😊"
   }
 
-  // Score each knowledge base entry
   let bestMatch = null
   let bestScore = 0
 
@@ -88,7 +77,7 @@ function getResponse(input) {
     let score = 0
     for (const keyword of entry.keywords) {
       if (lower.includes(keyword)) {
-        score += keyword.length // Longer keyword matches = higher confidence
+        score += keyword.length
       }
     }
     if (score > bestScore) {
@@ -101,14 +90,14 @@ function getResponse(input) {
     return bestMatch.response
   }
 
-  return `I'm not sure about that, but I can help with:\n\n• 🧑‍💻 **Skills & Tech Stack**\n• 🚀 **Projects**\n• 💼 **Experience**\n• 📚 **Education**\n• 🏆 **Achievements**\n• 📧 **Contact Info**\n\nTry asking about any of these topics!`
+  return `Pankaj is a Full Stack & AI developer specializing in Next.js, FastAPI, RAG Frameworks, and ML models. Feel free to ask about his **skills**, **projects**, **LeetCode stats**, or **contact details**!`
 }
 
-const quickReplies = [
-  'What are your skills?',
-  'Tell me about projects',
-  'How to contact you?',
-  'What\'s your experience?',
+const defaultQuickReplies = [
+  '🎯 30s Recruiter Summary',
+  '🧠 Tell me about RAG Framework',
+  '💻 What is his tech stack?',
+  '📬 How to contact Pankaj?',
 ]
 
 export default function AiAssistant() {
@@ -116,11 +105,12 @@ export default function AiAssistant() {
   const [messages, setMessages] = useState([
     {
       type: 'bot',
-      text: `Hi! 👋 I'm Pankaj's AI assistant. Ask me anything about his skills, projects, or experience!`,
+      text: `Hi! I'm Pankaj's AI Assistant 🤖\nHow can I help you evaluate Pankaj for your team today?`,
     },
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const [speechEnabled, setSpeechEnabled] = useState(false)
   const messagesEndRef = useRef(null)
 
   const scrollToBottom = () => {
@@ -131,44 +121,54 @@ export default function AiAssistant() {
     scrollToBottom()
   }, [messages, isTyping])
 
-  const handleSend = (text) => {
-    const messageText = text || input.trim()
-    if (!messageText) return
+  const speakText = (text) => {
+    if (!speechEnabled || !('speechSynthesis' in window)) return
+    window.speechSynthesis.cancel()
+    const cleanText = text.replace(/[*#•🎯🤖💻⚡🧠📚🏢📧📱🔗💼]/g, '')
+    const utterance = new SpeechSynthesisUtterance(cleanText)
+    utterance.rate = 1.0
+    utterance.pitch = 1.0
+    window.speechSynthesis.speak(utterance)
+  }
 
-    setMessages((prev) => [...prev, { type: 'user', text: messageText }])
-    setInput('')
+  const handleSend = (textToSend) => {
+    const query = textToSend || input
+    if (!query.trim()) return
+
+    const newMessages = [...messages, { type: 'user', text: query }]
+    setMessages(newMessages)
+    if (!textToSend) setInput('')
     setIsTyping(true)
 
-    // Simulate thinking delay
     setTimeout(() => {
-      const response = getResponse(messageText)
-      setMessages((prev) => [...prev, { type: 'bot', text: response }])
+      const responseText = getResponse(query)
+      setMessages([...newMessages, { type: 'bot', text: responseText }])
       setIsTyping(false)
-    }, 600 + Math.random() * 800)
+      speakText(responseText)
+    }, 500)
   }
 
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault()
+    if (e.key === 'Enter') {
       handleSend()
     }
   }
 
   return (
     <>
-      {/* Floating button */}
+      {/* Floating Trigger Button */}
       <motion.button
-        className="ai-assistant-btn"
+        className="ai-chat-trigger"
         onClick={() => setIsOpen(!isOpen)}
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="Open AI Assistant"
+        aria-label="Toggle AI Assistant"
       >
-        {!isOpen && <span className="pulse-ring" />}
-        {isOpen ? <FiX /> : <FiMessageCircle />}
+        {isOpen ? <FiX size={24} /> : <FiMessageCircle size={24} />}
+        {!isOpen && <span className="ai-trigger-pulse" />}
       </motion.button>
 
-      {/* Chat panel */}
+      {/* Chat Panel */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -179,12 +179,25 @@ export default function AiAssistant() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           >
             {/* Header */}
-            <div className="ai-chat-header">
-              <div className="ai-chat-avatar">🤖</div>
-              <div className="ai-chat-header-info">
-                <h4>Pankaj's AI Assistant</h4>
-                <p>● Online</p>
+            <div className="ai-chat-header flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="ai-chat-avatar">🤖</div>
+                <div className="ai-chat-header-info">
+                  <h4 className="font-bold">Pankaj's AI Assistant</h4>
+                  <p>● Recruiter Assistant Online</p>
+                </div>
               </div>
+
+              {/* TTS Voice Toggle */}
+              <button
+                onClick={() => setSpeechEnabled(!speechEnabled)}
+                className={`p-2 rounded-lg transition-colors ${
+                  speechEnabled ? 'text-[var(--accent)] bg-white/10' : 'text-gray-400 hover:text-white'
+                }`}
+                title={speechEnabled ? 'Voice playback enabled' : 'Enable voice playback'}
+              >
+                {speechEnabled ? <FiVolume2 size={18} /> : <FiVolumeX size={18} />}
+              </button>
             </div>
 
             {/* Messages */}
@@ -199,13 +212,10 @@ export default function AiAssistant() {
                 >
                   {msg.text.split('\n').map((line, j) => (
                     <React.Fragment key={j}>
-                      {line.replace(/\*\*(.*?)\*\*/g, '').length !== line.length ? (
+                      {line.includes('**') ? (
                         <span
                           dangerouslySetInnerHTML={{
-                            __html: line.replace(
-                              /\*\*(.*?)\*\*/g,
-                              '<strong>$1</strong>'
-                            ),
+                            __html: line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'),
                           }}
                         />
                       ) : (
@@ -228,26 +238,24 @@ export default function AiAssistant() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick replies */}
-            {messages.length <= 2 && (
-              <div className="ai-quick-replies">
-                {quickReplies.map((reply) => (
-                  <button
-                    key={reply}
-                    className="ai-quick-reply"
-                    onClick={() => handleSend(reply)}
-                  >
-                    {reply}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Quick Replies / Recruiter Chips */}
+            <div className="ai-quick-replies flex-wrap gap-1.5 p-2 bg-black/40 border-t border-white/5">
+              {defaultQuickReplies.map((reply) => (
+                <button
+                  key={reply}
+                  className="ai-quick-reply text-[11px] font-mono py-1 px-2.5"
+                  onClick={() => handleSend(reply)}
+                >
+                  {reply}
+                </button>
+              ))}
+            </div>
 
-            {/* Input */}
+            {/* Input Bar */}
             <div className="ai-chat-input">
               <input
                 type="text"
-                placeholder="Ask me anything..."
+                placeholder="Ask AI about Pankaj's skills, projects..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}

@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { navLinks } from '../data/resumeData'
 import { Menu, X } from 'lucide-react'
 
-export default function Navbar() {
+export default function Navbar({ onOpenCommandPalette }) {
   const [scrolled, setScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -81,8 +81,16 @@ export default function Navbar() {
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
+            {/* CTA Button & Command Palette */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
+                className="px-3.5 py-2 rounded-full text-xs font-mono text-gray-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2 cursor-pointer"
+                title="Open Command Palette (Ctrl + K)"
+              >
+                <span>🔍</span>
+                <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] font-semibold">Ctrl K</span>
+              </button>
               <Link
                 to="contact"
                 smooth={true}
