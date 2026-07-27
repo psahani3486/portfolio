@@ -3,6 +3,7 @@ import { Link } from 'react-scroll'
 import { motion, AnimatePresence } from 'framer-motion'
 import { navLinks } from '../data/resumeData'
 import { Menu, X } from 'lucide-react'
+import { ThemeSwitcher } from './ThemeSwitcher'
 
 export default function Navbar({ onOpenCommandPalette }) {
   const [scrolled, setScrolled] = useState(false)
@@ -91,6 +92,7 @@ export default function Navbar({ onOpenCommandPalette }) {
                 <span>🔍</span>
                 <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] font-semibold">Ctrl K</span>
               </button>
+              <ThemeSwitcher />
               <Link
                 to="contact"
                 smooth={true}

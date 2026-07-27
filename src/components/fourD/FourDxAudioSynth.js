@@ -1,7 +1,17 @@
 // Web Audio API Sound Synthesizer for 4DX Portfolio Experience
 // Zero external mp3 dependencies — pure mathematical sound synthesis!
+// Includes mobile haptic feedback via navigator.vibrate() API
 
 let audioCtx = null
+
+// Mobile haptic feedback utility
+function haptic(pattern) {
+  try {
+    if (navigator && navigator.vibrate) {
+      navigator.vibrate(pattern)
+    }
+  } catch (e) {}
+}
 
 function getAudioContext() {
   if (typeof window === 'undefined') return null
@@ -28,6 +38,7 @@ export const fourDxAudio = {
   // Soft high-frequency synth pop on hover
   playHover() {
     if (!this.enabled) return
+    haptic(5) // Soft micro-tap for hover
     const ctx = getAudioContext()
     if (!ctx) return
 
@@ -55,6 +66,7 @@ export const fourDxAudio = {
   // Tactile punchy click sound
   playClick() {
     if (!this.enabled) return
+    haptic(15) // Tactile punch for click
     const ctx = getAudioContext()
     if (!ctx) return
 
@@ -80,6 +92,7 @@ export const fourDxAudio = {
   // Resonant sci-fi pitch sweep on modal open or warp toggle
   playWarp() {
     if (!this.enabled) return
+    haptic([10, 30, 20]) // Ascending vibration pattern for warp
     const ctx = getAudioContext()
     if (!ctx) return
 
@@ -105,6 +118,7 @@ export const fourDxAudio = {
   // Dual harmonic crystal chime
   playChime() {
     if (!this.enabled) return
+    haptic([5, 20, 5, 20, 5]) // Triple-tap chime pattern
     const ctx = getAudioContext()
     if (!ctx) return
 

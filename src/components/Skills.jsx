@@ -3,6 +3,7 @@ import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { FiCode, FiServer, FiDatabase, FiCpu, FiTool, FiLayout } from 'react-icons/fi'
 import { skillCategories } from '../data/resumeData'
 import FourDxTiltCard from './fourD/FourDxTiltCard'
+import SkillRadar from './SkillRadar'
 
 const iconMap = {
   code: <FiCode />,
@@ -102,6 +103,20 @@ export default function Skills() {
           {skillCategories.map((cat, index) => (
             <SkillCard key={cat.title} cat={cat} index={index} />
           ))}
+        </div>
+
+        {/* Skill Radar Constellation */}
+        <div className="mt-20 flex flex-col items-center">
+          <motion.h3
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-sm font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-8"
+          >
+            Proficiency Radar
+          </motion.h3>
+          <SkillRadar />
         </div>
 
       </div>

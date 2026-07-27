@@ -15,6 +15,9 @@ import Footer from './components/Footer'
 import AiAssistant from './components/AiAssistant'
 import CommandPalette from './components/CommandPalette'
 import FourDxExperience from './components/fourD/FourDxExperience'
+import ScrollProgress from './components/ScrollProgress'
+import Testimonials from './components/Testimonials'
+import { ThemeProvider } from './components/ThemeSwitcher'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -87,16 +90,18 @@ function App() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
 
   return (
-    <>
+    <ThemeProvider>
       <LoadingScreen />
       <FourDxExperience />
-      <div className="app bg-[#050505] min-h-screen">
+      <ScrollProgress />
+      <div className="app bg-[var(--bg-primary)] min-h-screen transition-colors duration-500">
         <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
         <Hero />
         <About />
         <Skills />
         <TechStack />
         <Experience />
+        <Testimonials />
         <Projects />
         <Achievements />
         <Dsa />
@@ -109,7 +114,7 @@ function App() {
           onClose={setCommandPaletteOpen}
         />
       </div>
-    </>
+    </ThemeProvider>
   )
 }
 
