@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { navLinks } from '../data/resumeData'
 import { Menu, X } from 'lucide-react'
 import { ThemeSwitcher } from './ThemeSwitcher'
+import { LanguageToggle } from './worldclass/LanguageContext'
+import Magnetic from './worldclass/Magnetic'
 
 export default function Navbar({ onOpenCommandPalette }) {
   const [scrolled, setScrolled] = useState(false)
@@ -82,7 +84,7 @@ export default function Navbar({ onOpenCommandPalette }) {
               ))}
             </div>
 
-            {/* CTA Button & Command Palette */}
+            {/* CTA Button, Language Toggle & Command Palette */}
             <div className="hidden md:flex items-center gap-3">
               <button
                 onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
@@ -92,15 +94,18 @@ export default function Navbar({ onOpenCommandPalette }) {
                 <span>🔍</span>
                 <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] font-semibold">Ctrl K</span>
               </button>
+              <LanguageToggle />
               <ThemeSwitcher />
-              <Link
-                to="contact"
-                smooth={true}
-                duration={800}
-                className="px-6 py-2.5 rounded-full text-sm font-medium bg-white text-black hover:bg-[var(--accent)] hover:scale-105 transition-all duration-300 cursor-pointer shadow-[0_0_20px_rgba(0,245,255,0.2)]"
-              >
-                Let's Talk
-              </Link>
+              <Magnetic>
+                <Link
+                  to="contact"
+                  smooth={true}
+                  duration={800}
+                  className="px-6 py-2.5 rounded-full text-sm font-medium bg-white text-black hover:bg-[var(--accent)] hover:scale-105 transition-all duration-300 cursor-pointer shadow-[0_0_20px_rgba(0,245,255,0.2)] block"
+                >
+                  Let's Talk
+                </Link>
+              </Magnetic>
             </div>
 
             {/* Mobile Menu Toggle */}

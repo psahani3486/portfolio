@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft } from 'react-icons/fi'
 import { personalInfo, projects, skillCategories } from '../data/resumeData'
+import Magnetic from './worldclass/Magnetic'
 
 const SpaceScene = lazy(() => import('./three/SpaceScene'))
 
@@ -231,19 +232,23 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.8 }}
             className="flex flex-wrap items-center gap-4"
           >
-            <button
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-              className="h-14 px-8 rounded-full bg-white text-black font-medium tracking-wide flex items-center gap-2 hover:scale-105 hover:bg-[var(--accent)] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] cursor-pointer"
-            >
-              View Projects <FiArrowRight />
-            </button>
-            <a 
-              href={personalInfo.resumeUrl}
-              download="Pankaj_Resume.pdf"
-              className="h-14 px-8 rounded-full glass-panel flex items-center gap-2 font-medium tracking-wide hover:bg-white/10 transition-colors"
-            >
-              Resume <FiDownload />
-            </a>
+            <Magnetic>
+              <button
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+                className="h-14 px-8 rounded-full bg-white text-black font-medium tracking-wide flex items-center gap-2 hover:scale-105 hover:bg-[var(--accent)] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] cursor-pointer"
+              >
+                View Projects <FiArrowRight />
+              </button>
+            </Magnetic>
+            <Magnetic>
+              <a 
+                href={personalInfo.resumeUrl}
+                download="Pankaj_Resume.pdf"
+                className="h-14 px-8 rounded-full glass-panel flex items-center gap-2 font-medium tracking-wide hover:bg-white/10 transition-colors"
+              >
+                Resume <FiDownload />
+              </a>
+            </Magnetic>
           </motion.div>
         </div>
 

@@ -18,6 +18,10 @@ import FourDxExperience from './components/fourD/FourDxExperience'
 import ScrollProgress from './components/ScrollProgress'
 import Testimonials from './components/Testimonials'
 import { ThemeProvider } from './components/ThemeSwitcher'
+import CustomCursor from './components/worldclass/CustomCursor'
+import EasterEgg from './components/worldclass/EasterEgg'
+import { LanguageProvider } from './components/worldclass/LanguageContext'
+import SmoothScroll from './components/worldclass/SmoothScroll'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -91,29 +95,35 @@ function App() {
 
   return (
     <ThemeProvider>
-      <LoadingScreen />
-      <FourDxExperience />
-      <ScrollProgress />
-      <div className="app bg-[var(--bg-primary)] min-h-screen transition-colors duration-500">
-        <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
-        <Hero />
-        <About />
-        <Skills />
-        <TechStack />
-        <Experience />
-        <Testimonials />
-        <Projects />
-        <Achievements />
-        <Dsa />
-        <Resume />
-        <Contact />
-        <Footer />
-        <AiAssistant />
-        <CommandPalette
-          isOpen={commandPaletteOpen}
-          onClose={setCommandPaletteOpen}
-        />
-      </div>
+      <LanguageProvider>
+        <SmoothScroll>
+          <LoadingScreen />
+          <CustomCursor />
+          <EasterEgg />
+          <FourDxExperience />
+          <ScrollProgress />
+          <div className="app bg-[var(--bg-primary)] min-h-screen transition-colors duration-500">
+            <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
+            <Hero />
+            <About />
+            <Skills />
+            <TechStack />
+            <Experience />
+            <Testimonials />
+            <Projects />
+            <Achievements />
+            <Dsa />
+            <Resume />
+            <Contact />
+            <Footer />
+            <AiAssistant />
+            <CommandPalette
+              isOpen={commandPaletteOpen}
+              onClose={setCommandPaletteOpen}
+            />
+          </div>
+        </SmoothScroll>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }
