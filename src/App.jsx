@@ -14,6 +14,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AiAssistant from './components/AiAssistant'
 import CommandPalette from './components/CommandPalette'
+import FourDxExperience from './components/fourD/FourDxExperience'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -88,6 +89,7 @@ function App() {
   return (
     <>
       <LoadingScreen />
+      <FourDxExperience />
       <div className="app bg-[#050505] min-h-screen">
         <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
         <Hero />

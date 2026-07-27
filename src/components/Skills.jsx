@@ -2,6 +2,7 @@ import React from 'react'
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { FiCode, FiServer, FiDatabase, FiCpu, FiTool, FiLayout } from 'react-icons/fi'
 import { skillCategories } from '../data/resumeData'
+import FourDxTiltCard from './fourD/FourDxTiltCard'
 
 const iconMap = {
   code: <FiCode />,
@@ -23,52 +24,54 @@ const SkillCard = ({ cat, index }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      onMouseMove={handleMouseMove}
-      className="group relative p-8 rounded-3xl glass-card overflow-hidden"
-    >
+    <FourDxTiltCard tiltIntensity={12}>
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-0"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              400px circle at ${mouseX}px ${mouseY}px,
-              ${cat.color}20,
-              transparent 80%
-            )
-          `,
-        }}
-      />
-      
-      <div className="relative z-10">
-        <div 
-          className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6 border transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
-          style={{ 
-            backgroundColor: `${cat.color}15`, 
-            color: cat.color, 
-            borderColor: `${cat.color}30` 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.6, delay: index * 0.1 }}
+        onMouseMove={handleMouseMove}
+        className="group relative p-8 rounded-3xl glass-card overflow-hidden h-full"
+      >
+        <motion.div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-0"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                400px circle at ${mouseX}px ${mouseY}px,
+                ${cat.color}20,
+                transparent 80%
+              )
+            `,
           }}
-        >
-          {iconMap[cat.icon] || <FiCode />}
-        </div>
+        />
         
-        <h3 className="text-xl font-bold text-white mb-4 tracking-tight uppercase">
-          {cat.title}
-        </h3>
-        
-        <div className="flex flex-wrap gap-2 mt-4">
-          {cat.skills.map((skill, idx) => (
-             <span key={idx} className="px-3 py-1.5 text-xs font-mono rounded-md border border-white/10 bg-white/5 text-gray-300 transition-colors group-hover:border-white/20">
-               {skill}
-             </span>
-          ))}
+        <div className="relative z-10">
+          <div 
+            className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6 border transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6"
+            style={{ 
+              backgroundColor: `${cat.color}15`, 
+              color: cat.color, 
+              borderColor: `${cat.color}30` 
+            }}
+          >
+            {iconMap[cat.icon] || <FiCode />}
+          </div>
+          
+          <h3 className="text-xl font-bold text-white mb-4 tracking-tight uppercase">
+            {cat.title}
+          </h3>
+          
+          <div className="flex flex-wrap gap-2 mt-4">
+            {cat.skills.map((skill, idx) => (
+              <span key={idx} className="px-3 py-1.5 text-xs font-mono rounded-md border border-white/10 bg-white/5 text-gray-300 transition-colors group-hover:border-white/20">
+                {skill}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </FourDxTiltCard>
   )
 }
 

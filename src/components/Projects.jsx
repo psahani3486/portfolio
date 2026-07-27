@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiLayers, FiCpu, FiCheckCircle, FiX, FiActivity, FiZap } from 'react-icons/fi'
 import { projects } from '../data/resumeData'
+import FourDxTiltCard from './fourD/FourDxTiltCard'
 
 // Interactive System Architecture Diagrams
 const SystemArchitectureDiagram = ({ projectTitle }) => {
@@ -223,109 +224,111 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay: index * 0.1 }}
-      onMouseMove={handleMouseMove}
-      className="group relative rounded-[2rem] overflow-hidden glass-card flex flex-col lg:flex-row min-h-[480px]"
-    >
-      {/* Interactive Glow */}
+    <FourDxTiltCard tiltIntensity={8}>
       <motion.div
-        className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-20 mix-blend-overlay"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              600px circle at ${mouseX}px ${mouseY}px,
-              rgba(255,255,255,0.1),
-              transparent 40%
-            )
-          `,
-        }}
-      />
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.8, delay: index * 0.1 }}
+        onMouseMove={handleMouseMove}
+        className="group relative rounded-[2rem] overflow-hidden glass-card flex flex-col lg:flex-row min-h-[480px] h-full"
+      >
+        {/* Interactive Glow */}
+        <motion.div
+          className="pointer-events-none absolute -inset-px opacity-0 transition duration-300 group-hover:opacity-100 z-20 mix-blend-overlay"
+          style={{
+            background: useMotionTemplate`
+              radial-gradient(
+                600px circle at ${mouseX}px ${mouseY}px,
+                rgba(255,255,255,0.1),
+                transparent 40%
+              )
+            `,
+          }}
+        />
 
-      {/* Left: Graphic Mockup Container */}
-      <div className="lg:w-[45%] relative bg-[#0a0a10] overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border-color)] flex items-center justify-center p-8">
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent-purple)]/20 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-overlay" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-        
-        {/* Animated App Frame Mockup */}
-        <div className="relative z-10 w-full h-full max-h-[300px] rounded-2xl border border-white/10 bg-black/60 p-5 flex flex-col justify-between shadow-2xl group-hover:scale-105 transition-transform duration-700">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
-              <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+        {/* Left: Graphic Mockup Container */}
+        <div className="lg:w-[45%] relative bg-[#0a0a10] overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border-color)] flex items-center justify-center p-8">
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent-purple)]/20 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
+          
+          {/* Animated App Frame Mockup */}
+          <div className="relative z-10 w-full h-full max-h-[300px] rounded-2xl border border-white/10 bg-black/60 p-5 flex flex-col justify-between shadow-2xl group-hover:scale-105 transition-transform duration-700">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/80" />
+                <span className="w-2.5 h-2.5 rounded-full bg-green-500/80" />
+              </div>
+              <span className="text-[10px] font-mono text-cyan-400 tracking-wider uppercase">System Architecture</span>
             </div>
-            <span className="text-[10px] font-mono text-cyan-400 tracking-wider uppercase">System Architecture</span>
-          </div>
 
-          <div className="flex-1 flex flex-col items-center justify-center my-4">
-            <span className="text-6xl mb-3">{project.emoji}</span>
-            <div className="text-xs font-mono text-white font-bold uppercase tracking-widest text-center">
-              {project.title.split('—')[0]}
+            <div className="flex-1 flex flex-col items-center justify-center my-4">
+              <span className="text-6xl mb-3">{project.emoji}</span>
+              <div className="text-xs font-mono text-white font-bold uppercase tracking-widest text-center">
+                {project.title.split('—')[0]}
+              </div>
             </div>
+
+            <button
+              onClick={() => onOpenModal(project)}
+              className="w-full py-2 rounded-xl bg-white/10 hover:bg-[var(--accent)] hover:text-black font-mono text-xs font-bold transition-all text-white flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <FiLayers /> View Architecture & Flow
+            </button>
+          </div>
+        </div>
+
+        {/* Right: Content */}
+        <div className="lg:w-[55%] p-8 lg:p-14 flex flex-col justify-center relative z-30">
+          
+          {project.featured && (
+            <div className="mb-4">
+              <span className="px-4 py-1.5 text-xs font-mono font-bold tracking-widest uppercase rounded-full bg-[var(--accent)] text-black">
+                Featured Project
+              </span>
+            </div>
+          )}
+          
+          <h3 className="text-2xl lg:text-4xl font-display font-bold text-white mb-4 leading-tight uppercase tracking-tight">
+            {project.title}
+          </h3>
+          
+          <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-8">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-10">
+            {project.tech.map((t, i) => (
+              <span key={i} className="px-3 py-1.5 text-xs font-mono rounded-md border border-white/10 bg-white/5 text-gray-300">
+                {t}
+              </span>
+            ))}
           </div>
 
-          <button
-            onClick={() => onOpenModal(project)}
-            className="w-full py-2 rounded-xl bg-white/10 hover:bg-[var(--accent)] hover:text-black font-mono text-xs font-bold transition-all text-white flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <FiLayers /> View Architecture & Flow
-          </button>
-        </div>
-      </div>
+          <div className="flex items-center gap-6 mt-auto pt-6 border-t border-white/5">
+            <button
+              onClick={() => onOpenModal(project)}
+              className="text-xs font-mono font-bold uppercase tracking-widest text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
+            >
+              System Deep Dive ➔
+            </button>
 
-      {/* Right: Content */}
-      <div className="lg:w-[55%] p-8 lg:p-14 flex flex-col justify-center relative z-30">
-        
-        {project.featured && (
-          <div className="mb-4">
-            <span className="px-4 py-1.5 text-xs font-mono font-bold tracking-widest uppercase rounded-full bg-[var(--accent)] text-black">
-              Featured Project
-            </span>
+            {project.githubUrl !== '#' && (
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors ml-auto">
+                <FiGithub size={16} /> Code
+              </a>
+            )}
+            {project.liveUrl !== '#' && (
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors">
+                <FiExternalLink size={16} /> Demo
+              </a>
+            )}
           </div>
-        )}
-        
-        <h3 className="text-2xl lg:text-4xl font-display font-bold text-white mb-4 leading-tight uppercase tracking-tight">
-          {project.title}
-        </h3>
-        
-        <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-8">
-          {project.description}
-        </p>
 
-        <div className="flex flex-wrap gap-2 mb-10">
-          {project.tech.map((t, i) => (
-            <span key={i} className="px-3 py-1.5 text-xs font-mono rounded-md border border-white/10 bg-white/5 text-gray-300">
-              {t}
-            </span>
-          ))}
         </div>
-
-        <div className="flex items-center gap-6 mt-auto pt-6 border-t border-white/5">
-          <button
-            onClick={() => onOpenModal(project)}
-            className="text-xs font-mono font-bold uppercase tracking-widest text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
-          >
-            System Deep Dive ➔
-          </button>
-
-          {project.githubUrl !== '#' && (
-            <a href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors ml-auto">
-              <FiGithub size={16} /> Code
-            </a>
-          )}
-          {project.liveUrl !== '#' && (
-            <a href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors">
-              <FiExternalLink size={16} /> Demo
-            </a>
-          )}
-        </div>
-
-      </div>
-    </motion.div>
+      </motion.div>
+    </FourDxTiltCard>
   )
 }
 
