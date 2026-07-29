@@ -127,20 +127,26 @@ export default function FourDxExperience() {
         const pulseSize = n.size + Math.sin(n.pulse) * 0.5
         const nodeAlpha = 0.4 + Math.sin(n.pulse) * 0.15
 
+        const computedAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00f0ff'
+
         ctx.beginPath()
         ctx.arc(n.x, n.y, pulseSize, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 245, 255, ${nodeAlpha})`
+        ctx.fillStyle = computedAccent
+        ctx.globalAlpha = nodeAlpha
         ctx.fill()
+        ctx.globalAlpha = 1.0
 
         // Cursor connection laser
         if (distM < 180) {
-          const lineAlpha = 0.3 * (1 - distM / 180)
+          const lineAlpha = 0.45 * (1 - distM / 180)
           ctx.beginPath()
           ctx.moveTo(n.x, n.y)
           ctx.lineTo(mouse.x, mouse.y)
-          ctx.strokeStyle = `rgba(0, 245, 255, ${lineAlpha})`
-          ctx.lineWidth = 0.8
+          ctx.strokeStyle = computedAccent
+          ctx.globalAlpha = lineAlpha
+          ctx.lineWidth = 0.9
           ctx.stroke()
+          ctx.globalAlpha = 1.0
         }
 
         // Node-to-node connections
@@ -151,13 +157,15 @@ export default function FourDxExperience() {
           const dist = Math.sqrt(dx * dx + dy * dy)
 
           if (dist < 130) {
-            const alpha = 0.08 * (1 - dist / 130)
+            const alpha = 0.12 * (1 - dist / 130)
             ctx.beginPath()
             ctx.moveTo(n.x, n.y)
             ctx.lineTo(n2.x, n2.y)
-            ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`
+            ctx.strokeStyle = computedAccent
+            ctx.globalAlpha = alpha
             ctx.lineWidth = 0.6
             ctx.stroke()
+            ctx.globalAlpha = 1.0
           }
         }
       }

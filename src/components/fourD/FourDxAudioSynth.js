@@ -144,4 +144,38 @@ export const fourDxAudio = {
       })
     } catch (e) {}
   },
+
+  // Realistic popping Bubble sound effect
+  playBubble(count = 3) {
+    if (!this.enabled) return
+    haptic(10)
+    const ctx = getAudioContext()
+    if (!ctx) return
+
+    try {
+      const now = ctx.currentTime
+      for (let i = 0; i < count; i++) {
+        const startTime = now + i * 0.04 + (Math.random() * 0.01)
+        const baseFreq = 450 + Math.random() * 350
+        const endFreq = baseFreq * (2.2 + Math.random() * 0.5)
+
+        const osc = ctx.createOscillator()
+        const gain = ctx.createGain()
+
+        osc.type = 'sine'
+        osc.frequency.setValueAtTime(baseFreq, startTime)
+        osc.frequency.exponentialRampToValueAtTime(endFreq, startTime + 0.03)
+
+        const vol = 0.18 * (1 - i * 0.2)
+        gain.gain.setValueAtTime(vol, startTime)
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.035)
+
+        osc.connect(gain)
+        gain.connect(ctx.destination)
+
+        osc.start(startTime)
+        osc.stop(startTime + 0.035)
+      }
+    } catch (e) {}
+  },
 }

@@ -61,7 +61,7 @@ export default function Navbar({ onOpenCommandPalette }) {
               <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
             </Link>
 
-            {/* Desktop Links */}
+            {/* Desktop Links with Theme Switcher inside the pill */}
             <div className="hidden md:flex items-center gap-1 bg-[#111111]/80 backdrop-blur-md rounded-full px-2 py-2 border border-white/5 shadow-2xl">
               {navLinks.map((link) => (
                 <Link
@@ -82,6 +82,8 @@ export default function Navbar({ onOpenCommandPalette }) {
                   <span className="relative z-10">{link.name}</span>
                 </Link>
               ))}
+              <div className="w-[1px] h-5 bg-white/10 mx-1.5" />
+              <ThemeSwitcher />
             </div>
 
             {/* CTA Button, Language Toggle & Command Palette */}
@@ -95,7 +97,6 @@ export default function Navbar({ onOpenCommandPalette }) {
                 <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] font-semibold">Ctrl K</span>
               </button>
               <LanguageToggle />
-              <ThemeSwitcher />
               <Magnetic>
                 <Link
                   to="contact"
@@ -146,6 +147,11 @@ export default function Navbar({ onOpenCommandPalette }) {
                 </Link>
               </motion.div>
             ))}
+
+            <div className="pt-4 flex items-center gap-4">
+              <ThemeSwitcher />
+              <LanguageToggle />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

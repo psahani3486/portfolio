@@ -80,12 +80,23 @@ function HeroTerminal() {
       case 'resume':
         newHistory.push({
           type: 'system',
-          content: '📄 Triggering resume download...',
+          content: '📄 Triggering dual resume downloads (SDE + Data Analyst)...',
         })
-        const link = document.createElement('a')
-        link.href = personalInfo.resumeUrl
-        link.download = 'Pankaj_Resume.pdf'
-        link.click()
+        const link1 = document.createElement('a')
+        link1.href = personalInfo.sdeResumeUrl || '/resume.pdf'
+        link1.download = 'Pankaj_SDE_FullStack_Resume.pdf'
+        document.body.appendChild(link1)
+        link1.click()
+        document.body.removeChild(link1)
+
+        setTimeout(() => {
+          const link2 = document.createElement('a')
+          link2.href = personalInfo.dataAnalystResumeUrl || '/data_analyst_Resume.pdf'
+          link2.download = 'Pankaj_DataAnalyst_BI_Resume.pdf'
+          document.body.appendChild(link2)
+          link2.click()
+          document.body.removeChild(link2)
+        }, 400)
         break
       case 'clear':
         setHistory([])
@@ -95,6 +106,14 @@ function HeroTerminal() {
         newHistory.push({
           type: 'system',
           content: '🟢 01001000 01100001 01100011 01101011 00100000 01110100 01101000 01100101 00100000 01110000 01101100 01100001 01101110 01100101 01110100 00100001',
+        })
+        break
+      case 'avengers':
+      case 'stark':
+      case 'jarvis':
+        newHistory.push({
+          type: 'system',
+          content: '⚡ J.A.R.V.I.S. PROTOCOL ACTIVE:\n• Stark OS v4.2 Marvel Avengers System Sync Enabled.\n• Active Hero Themes: Iron Man (Arc Core), Infinity Gauntlet, Thor, Wakanda Vibranium, Captain America, Dr. Strange.',
         })
         break
       default:
@@ -193,7 +212,7 @@ export default function Hero() {
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                <FiGlobe className="inline mr-1" /> 3D
+                <FiGlobe className="inline mr-1" /> ⚡ AVENGERS 3D
               </button>
               <button
                 onClick={() => setViewMode('cli')}
@@ -241,13 +260,12 @@ export default function Hero() {
               </button>
             </Magnetic>
             <Magnetic>
-              <a 
-                href={personalInfo.resumeUrl}
-                download="Pankaj_Resume.pdf"
-                className="h-14 px-8 rounded-full glass-panel flex items-center gap-2 font-medium tracking-wide hover:bg-white/10 transition-colors"
+              <button 
+                onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
+                className="h-14 px-8 rounded-full glass-panel flex items-center gap-2 font-medium tracking-wide hover:bg-white/10 transition-colors cursor-pointer"
               >
-                Resume <FiDownload />
-              </a>
+                Resumes <FiDownload />
+              </button>
             </Magnetic>
           </motion.div>
         </div>

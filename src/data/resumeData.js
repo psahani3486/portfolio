@@ -2,16 +2,18 @@
 
 export const personalInfo = {
   name: 'Pankaj',
-  role: 'Full Stack & AI Developer',
-  tagline: 'Final year B.Tech CSE student at NSUT',
+  role: 'Software Engineer & Data Analyst | Full-Stack, AI & BI Specialist',
+  tagline: 'Computer Science Engineer at NSUT | Full-Stack, Data & AI Systems Architect',
   description:
-    'Final year B.Tech CSE student at NSUT with hands-on experience in full-stack development and AI/ML systems. Built and deployed 5 production-grade projects using Next.js, FastAPI, TensorFlow, and RAG. Solved 400+ DSA problems on LeetCode. Seeking a challenging SDE internship to contribute and grow.',
+    'Software Engineer & Data Analytics Specialist from NSUT with expertise in full-stack architecture, predictive AI models, and enterprise BI analytics. Engineered production RAG systems, XGBoost/Prophet analytics platforms, and autonomous data observability frameworks. Algorithmic problem solver with 400+ LeetCode solutions, certified by Google, Microsoft, and Deloitte.',
   email: 'psahani729@gmail.com',
   phone: '+91-8860395176',
   github: 'https://github.com/psahani3486',
   linkedin: 'https://www.linkedin.com/in/pankaj-sahani/',
   leetcode: 'https://leetcode.com/u/Pankaj9643/',
   resumeUrl: '/resume.pdf',
+  sdeResumeUrl: '/resume.pdf',
+  dataAnalystResumeUrl: '/data_analyst_Resume.pdf',
 }
 
 export const education = [
@@ -27,7 +29,7 @@ export const education = [
   },
   {
     degree: 'Class X (CBSE)',
-    institution: 'Indraprastha Convent Sr. Sec. School',
+    institution: 'Indraprastha Convent Senior Secondary School',
     year: '2020',
   },
 ]
@@ -37,41 +39,61 @@ export const skillCategories = [
     title: 'Languages',
     icon: 'code',
     color: '#6366f1',
-    skills: ['C++', 'C', 'Python', 'JavaScript', 'HTML/CSS'],
+    skills: ['Python', 'SQL', 'C++', 'JavaScript', 'HTML/CSS'],
   },
   {
-    title: 'Frontend',
+    title: 'Data Science & BI',
+    icon: 'bar-chart',
+    color: '#3b82f6',
+    skills: ['Pandas', 'NumPy', 'Scikit-learn', 'XGBoost', 'Prophet', 'SHAP', 'MLflow', 'Power BI'],
+  },
+  {
+    title: 'Frontend & UI',
     icon: 'layout',
     color: '#a855f7',
-    skills: ['React', 'Next.js', 'Tailwind', 'Framer Motion'],
+    skills: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion'],
   },
   {
-    title: 'Backend',
+    title: 'Backend & APIs',
     icon: 'server',
     color: '#06b6d4',
-    skills: ['Node.js', 'Express', 'NestJS', 'FastAPI', 'REST API', 'JWT'],
+    skills: ['FastAPI', 'Node.js', 'Express.js', 'REST APIs', 'SQLAlchemy'],
   },
   {
-    title: 'Database',
+    title: 'Databases & Tools',
     icon: 'database',
     color: '#f59e0b',
-    skills: ['PostgreSQL', 'MongoDB', 'MySQL', 'Prisma'],
+    skills: ['PostgreSQL', 'MySQL', 'MongoDB', 'DuckDB', 'Docker', 'Linux', 'Git', 'Jupyter'],
   },
   {
-    title: 'AI / ML',
+    title: 'Core CS & AI',
     icon: 'cpu',
-    color: '#22c55e',
-    skills: ['Machine Learning', 'LLMs', 'RAG', 'TensorFlow', 'Scikit-Learn', 'Apache Spark'],
-  },
-  {
-    title: 'Core CS',
-    icon: 'tool',
     color: '#ec4899',
-    skills: ['DSA', 'DBMS', 'OS', 'CN', 'OOPs'],
+    skills: ['DSA', 'LLMs', 'RAG', 'DBMS', 'OS', 'CN', 'OOPs'],
   },
 ]
 
 export const projects = [
+  {
+    title: 'Business Intelligence Platform — Enterprise AI Analytics',
+    description:
+      'Architected an enterprise AI business intelligence platform integrating Python, FastAPI, React, and PostgreSQL for executive analytics, KPI monitoring, and interactive dashboard exploration. Implemented MLflow-based model tracking, XGBoost churn prediction, Prophet forecasting, and SHAP explainability.',
+    tech: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'MLflow', 'XGBoost', 'Prophet', 'SHAP'],
+    featured: true,
+    emoji: '📊',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
+  {
+    title: 'Sentinel AI — Autonomous Data Quality Observability',
+    description:
+      'Developed an AI-powered platform to profile datasets, identify missing values, duplicate records, and data quality issues. Built automated data validation workflows generating quality reports and anomaly detection, integrated Groq Llama 3 for natural language recommendations.',
+    tech: ['Python', 'FastAPI', 'PostgreSQL', 'SQLAlchemy', 'Groq Llama 3', 'Docker'],
+    featured: true,
+    emoji: '🔍',
+    liveUrl: '#',
+    githubUrl: '#',
+  },
   {
     title: 'RAG Intelligence — AI Anti-Hallucination Framework',
     description:
@@ -112,16 +134,6 @@ export const projects = [
     liveUrl: '#',
     githubUrl: '#',
   },
-  {
-    title: 'Fraud Detection System',
-    description:
-      'Developed a scalable fraud detection pipeline using Apache Spark for processing large financial transaction datasets. Applied ensemble ML techniques achieving high precision and recall on heavily imbalanced transaction data.',
-    tech: ['Python', 'Apache Spark', 'Scikit-learn', 'Machine Learning'],
-    featured: false,
-    emoji: '🛡️',
-    liveUrl: '#',
-    githubUrl: '#',
-  },
 ]
 
 export const experience = [
@@ -132,10 +144,10 @@ export const experience = [
     location: 'Remote',
     type: 'Internship',
     highlights: [
-      'Completed structured daily ML assignments and real-world project development tasks.',
-      'Applied machine learning techniques to domain-specific social impact problems.',
+      'Performed data preprocessing, feature engineering, and machine learning model development using Python, Pandas, NumPy, and Scikit-learn.',
+      'Built reusable data preprocessing pipelines, optimized model performance via hyperparameter tuning, and visualized insights using Matplotlib & Seaborn.',
     ],
-    tech: ['Machine Learning', 'Python', 'Data Science'],
+    tech: ['Machine Learning', 'Python', 'Pandas', 'Scikit-learn', 'Matplotlib'],
   },
   {
     role: 'Frontend Developer Intern',
@@ -144,21 +156,21 @@ export const experience = [
     location: 'Remote',
     type: 'Internship',
     highlights: [
-      'Customized and optimized web dashboards and client panels to improve usability and user experience.',
-      'Configured and deployed Pterodactyl Panel with node setup, Wings configuration, and server deployment.',
-      'Integrated WHMCS billing workflows for streamlined client management.',
-      'Improved panel reliability through debugging and performance optimization.',
+      'Developed responsive dashboards and client panels using modern frontend technologies while fixing production issues and enhancing UX.',
+      'Managed Pterodactyl Panel deployment, integrated WHMCS billing automation, and optimized Linux server configurations to improve application reliability.',
     ],
-    tech: ['Front-End Development', 'User Interface Design', 'WHMCS'],
+    tech: ['Front-End Development', 'Linux', 'WHMCS', 'System Admin'],
   },
 ]
 
 export const achievements = [
-  'Google AI Essentials Specialization — Google / Coursera',
-  'Certified in Basics of Data Analytics — Physics Wallah × Microsoft',
+  'Certified in Google AI Essentials — Google (Coursera) [June 2026]',
+  'Certified in Microsoft Azure Essentials Professional Certificate — Microsoft & LinkedIn [May 2026]',
+  'Certified in Basics of Data Analytics — Physics Wallah × Microsoft [April 2026]',
+  'Completed Deloitte Data Analytics Job Simulation — Forage [May 2026]',
   'Completed DSA Supreme 3.0 Batch — CodeHelp',
   'Solved 400+ DSA problems on LeetCode',
-  'Deployed 5 live production projects',
+  'Engineered 5+ enterprise AI & Full-Stack production systems',
 ]
 
 export const dsaStats = {
