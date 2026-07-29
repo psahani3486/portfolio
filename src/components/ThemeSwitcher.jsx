@@ -196,10 +196,11 @@ export function ThemeSwitcher() {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="w-9 h-9 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-sm hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+        className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 text-xs font-mono text-gray-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
         title="Switch Theme"
       >
-        {allThemes[theme]?.icon || '🌑'}
+        <span className="text-sm">{allThemes[theme]?.icon || '🎨'}</span>
+        <span className="font-semibold tracking-wide">Switch Theme</span>
       </button>
 
       <AnimatePresence>
