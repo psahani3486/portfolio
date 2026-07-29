@@ -98,15 +98,15 @@ export default function Contact() {
       
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
-        <div className="mb-20">
+        <div className="mb-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <span className="text-sm font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-4 block">
-              07. Contact
+            <span className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-3 block">
+              [ 06 / INITIATE CONTACT ]
             </span>
             <h2 className="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter text-white">
               Let's <span className="text-gradient">Connect</span>

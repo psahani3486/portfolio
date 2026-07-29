@@ -40,83 +40,76 @@ export default function Navbar({ onOpenCommandPalette }) {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? 'py-4' : 'py-8'
-        }`}
+        className="fixed top-0 left-0 right-0 z-50 py-5 pointer-events-none"
       >
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className={`flex items-center justify-between rounded-full transition-all duration-500 ${
-            scrolled ? 'glass-panel px-6 py-3' : 'px-2'
-          }`}>
-            
-            {/* Logo */}
-            <Link 
-              to="home" 
-              smooth={true} 
-              duration={800}
-              className="text-xl font-display font-bold tracking-tighter cursor-pointer relative group"
-            >
-              <span className="text-white">Pankaj</span>
-              <span className="text-gradient">.dev</span>
-              <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-[var(--accent)] transition-all duration-300 group-hover:w-full" />
-            </Link>
+        <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between pointer-events-auto">
+          
+          {/* Logo */}
+          <Link 
+            to="home" 
+            smooth={true} 
+            duration={800}
+            className="text-base font-mono font-medium tracking-tight text-white cursor-pointer flex items-center gap-2 group glass-panel px-4 py-2 rounded-full"
+          >
+            <span className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
+            <span className="font-semibold text-white">pankaj</span>
+            <span className="text-[var(--text-secondary)] text-xs">/ dev</span>
+          </Link>
 
-            {/* Desktop Links with Theme Switcher inside the pill */}
-            <div className="hidden md:flex items-center gap-1 bg-[#111111]/80 backdrop-blur-md rounded-full px-2 py-2 border border-white/5 shadow-2xl">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href.substring(1)}
-                  smooth={true}
-                  duration={800}
-                  className="relative px-5 py-2 text-sm font-medium tracking-wide text-gray-300 hover:text-white transition-colors cursor-pointer rounded-full"
-                  onSetActive={() => setActiveSection(link.href.substring(1))}
-                >
-                  {activeSection === link.href.substring(1) && (
-                    <motion.div
-                      layoutId="navIndicator"
-                      className="absolute inset-0 bg-white/10 rounded-full border border-white/10"
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    />
-                  )}
-                  <span className="relative z-10">{link.name}</span>
-                </Link>
-              ))}
-              <div className="w-[1px] h-5 bg-white/10 mx-1.5" />
-              <ThemeSwitcher />
-            </div>
-
-            {/* CTA Button, Language Toggle & Command Palette */}
-            <div className="hidden md:flex items-center gap-3">
-              <button
-                onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
-                className="px-3.5 py-2 rounded-full text-xs font-mono text-gray-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-all flex items-center gap-2 cursor-pointer"
-                title="Open Command Palette (Ctrl + K)"
+          {/* Floating Pill Nav Bar */}
+          <div className="hidden md:flex items-center gap-1 glass-panel rounded-full px-2 py-1.5 border border-white/10 shadow-2xl">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.href.substring(1)}
+                smooth={true}
+                duration={800}
+                className="relative px-4 py-1.5 text-xs font-mono tracking-wide text-[var(--text-secondary)] hover:text-white transition-colors cursor-pointer rounded-full"
+                onSetActive={() => setActiveSection(link.href.substring(1))}
               >
-                <span>🔍</span>
-                <span className="px-1.5 py-0.5 rounded bg-white/10 text-[10px] font-semibold">Ctrl K</span>
-              </button>
-              <LanguageToggle />
-              <Magnetic>
-                <Link
-                  to="contact"
-                  smooth={true}
-                  duration={800}
-                  className="px-6 py-2.5 rounded-full text-sm font-medium bg-white text-black hover:bg-[var(--accent)] hover:scale-105 transition-all duration-300 cursor-pointer shadow-[0_0_20px_rgba(0,245,255,0.2)] block"
-                >
-                  Let's Talk
-                </Link>
-              </Magnetic>
-            </div>
-
-            {/* Mobile Menu Toggle */}
-            <button 
-              className="md:hidden text-white p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+                {activeSection === link.href.substring(1) && (
+                  <motion.div
+                    layoutId="navIndicator"
+                    className="absolute inset-0 bg-white/10 rounded-full border border-white/15"
+                    transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{link.name}</span>
+              </Link>
+            ))}
+            <div className="w-[1px] h-4 bg-white/10 mx-1" />
+            <ThemeSwitcher />
           </div>
+
+          {/* Actions: Command Palette & Contact Button */}
+          <div className="hidden md:flex items-center gap-2.5">
+            <button
+              onClick={() => onOpenCommandPalette && onOpenCommandPalette(true)}
+              className="px-3.5 py-2 rounded-full text-xs font-mono text-[var(--text-secondary)] hover:text-white glass-panel transition-all flex items-center gap-2 cursor-pointer"
+              title="Open Command Palette (Ctrl + K)"
+            >
+              <span>⌘K</span>
+            </button>
+            <LanguageToggle />
+            <Magnetic>
+              <Link
+                to="contact"
+                smooth={true}
+                duration={800}
+                className="px-5 py-2 rounded-full text-xs font-mono uppercase tracking-wider bg-white text-black font-semibold hover:bg-[var(--accent)] hover:text-white transition-all duration-300 cursor-pointer shadow-lg block"
+              >
+                Contact
+              </Link>
+            </Magnetic>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden text-white p-2 glass-panel rounded-full"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </motion.nav>
 

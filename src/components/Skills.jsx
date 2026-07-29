@@ -83,7 +83,7 @@ export default function Skills() {
       
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
-        <div className="mb-20 text-center">
+        <div className="mb-16 text-left">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}

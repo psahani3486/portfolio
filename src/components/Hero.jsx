@@ -48,6 +48,7 @@ function HeroTerminal() {
 • skills    - Tech stack breakdown
 • projects  - Featured production apps
 • contact   - Reach out to Pankaj
+• themes    - World-class developer coding themes
 • matrix    - Toggle Matrix digital rain effect
 • resume    - Download Pankaj's Resume PDF
 • clear     - Clear screen`,
@@ -108,12 +109,11 @@ function HeroTerminal() {
           content: '🟢 01001000 01100001 01100011 01101011 00100000 01110100 01101000 01100101 00100000 01110000 01101100 01100001 01101110 01100101 01110100 00100001',
         })
         break
-      case 'avengers':
-      case 'stark':
-      case 'jarvis':
+      case 'themes':
+      case 'theme':
         newHistory.push({
           type: 'system',
-          content: '⚡ J.A.R.V.I.S. PROTOCOL ACTIVE:\n• Stark OS v4.2 Marvel Avengers System Sync Enabled.\n• Active Hero Themes: Iron Man (Arc Core), Infinity Gauntlet, Thor, Wakanda Vibranium, Captain America, Dr. Strange.',
+          content: '⚡ WORLD-CLASS DEV CODING THEMES ACTIVE:\n• 🌙 Tokyo Night (Default)\n• ☕ Catppuccin Mocha\n• ⚛️ One Dark Pro\n• 🧛 Dracula Pro\n• ❄️ Nordic Frost\n• 🌑 Dark Cyber\n• 🔮 Midnight Purple\n• ☀️ Aurora Light',
         })
         break
       default:
@@ -164,7 +164,7 @@ function HeroTerminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleCommand}
-          placeholder="Type command ('help', 'projects', 'skills')..."
+          placeholder="Type command ('help', 'projects', 'skills', 'themes')..."
           className="flex-1 bg-transparent text-white focus:outline-none font-mono text-xs md:text-sm placeholder-gray-600"
           autoFocus
         />
@@ -178,51 +178,53 @@ export default function Hero() {
   const [viewMode, setViewMode] = useState('3d') // '3d' | 'cli'
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-noise">
       
-      {/* Background Aurora Glow */}
+      {/* Background Ambient Lighting Mesh */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-[var(--accent)]/10 blur-[120px]" />
-        <div className="absolute top-[20%] -right-[10%] w-[40%] h-[40%] rounded-full bg-[var(--accent-purple)]/10 blur-[120px]" />
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+        <div className="absolute -top-[15%] left-[20%] w-[45vw] h-[45vw] rounded-full bg-[var(--accent)]/12 blur-[140px]" />
+        <div className="absolute top-[35%] -right-[10%] w-[35vw] h-[35vw] rounded-full bg-[var(--accent-purple)]/10 blur-[140px]" />
+        <div className="absolute inset-0 bg-radial-grid opacity-[0.03]" />
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-[1340px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         
-        {/* Left: Typography & CTA */}
-        <div className="flex flex-col items-start pt-12 lg:pt-0">
-          <div className="flex items-center gap-3 mb-8">
+        {/* Left Column: Swiss Editorial Typography & CTA */}
+        <div className="lg:col-span-7 flex flex-col items-start pt-8 lg:pt-0">
+          
+          {/* Status Badge & Mode Switcher */}
+          <div className="flex flex-wrap items-center gap-3 mb-8">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-3"
+              className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2.5"
             >
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs font-mono uppercase tracking-widest text-gray-300">Available for work</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[11px] font-mono tracking-wider uppercase text-[var(--text-secondary)]">Available for Work 2026-2027</span>
             </motion.div>
 
-            {/* Mode Switcher */}
+            {/* Mode Switcher Pill */}
             <div className="p-1 rounded-full border border-white/10 bg-black/40 flex items-center gap-1">
               <button
                 onClick={() => setViewMode('3d')}
-                className={`px-3 py-1 rounded-full text-xs font-mono transition-all ${
+                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
                   viewMode === '3d'
-                    ? 'bg-[var(--accent)] text-black font-bold'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-white text-black font-semibold shadow-sm'
+                    : 'text-[var(--text-secondary)] hover:text-white'
                 }`}
               >
-                <FiGlobe className="inline mr-1" /> ⚡ AVENGERS 3D
+                <FiGlobe className="inline mr-1" /> 3D DEV CORE
               </button>
               <button
                 onClick={() => setViewMode('cli')}
-                className={`px-3 py-1 rounded-full text-xs font-mono transition-all ${
+                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
                   viewMode === 'cli'
-                    ? 'bg-emerald-400 text-black font-bold'
-                    : 'text-gray-400 hover:text-white'
+                    ? 'bg-emerald-400 text-black font-semibold shadow-sm'
+                    : 'text-[var(--text-secondary)] hover:text-white'
                 }`}
               >
-                <FiTerminal className="inline mr-1" /> CLI
+                <FiTerminal className="inline mr-1" /> TERMINAL CLI
               </button>
             </div>
           </div>
@@ -239,74 +241,75 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg md:text-xl text-[var(--text-secondary)] leading-relaxed max-w-xl mb-10"
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-10 font-normal"
           >
             {personalInfo.description}
           </motion.p>
 
+          {/* Tactile Action Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-wrap items-center gap-4"
           >
             <Magnetic>
               <button
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-14 px-8 rounded-full bg-white text-black font-medium tracking-wide flex items-center gap-2 hover:scale-105 hover:bg-[var(--accent)] transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] cursor-pointer"
+                className="h-12 px-7 rounded-full bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2.5 hover:bg-[var(--accent)] hover:text-white transition-all duration-300 shadow-xl cursor-pointer"
               >
-                View Projects <FiArrowRight />
+                Selected Work <FiArrowRight />
               </button>
             </Magnetic>
             <Magnetic>
               <button 
                 onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-14 px-8 rounded-full glass-panel flex items-center gap-2 font-medium tracking-wide hover:bg-white/10 transition-colors cursor-pointer"
+                className="h-12 px-7 rounded-full glass-panel text-white font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2.5 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
               >
-                Resumes <FiDownload />
+                Download Resume <FiDownload />
               </button>
             </Magnetic>
           </motion.div>
         </div>
 
-        {/* Right: 3D Scene / CLI Terminal Switcher */}
-        <div className="relative h-[55vh] lg:h-[75vh] w-full flex items-center justify-center">
+        {/* Right Column: 3D Quantum Core / Interactive CLI Canvas */}
+        <div className="lg:col-span-5 relative h-[50vh] lg:h-[70vh] w-full flex items-center justify-center">
           <AnimatePresence mode="wait">
             {viewMode === '3d' ? (
               <motion.div
                 key="3d"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+                exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.5 }}
                 className="w-full h-full flex items-center justify-center relative"
               >
-                <Suspense fallback={<div className="w-64 h-64 rounded-full border border-white/10 border-t-[var(--accent)] animate-spin" />}>
-                  <div className="absolute inset-0 scale-[1.2] lg:scale-[1.5]">
+                <Suspense fallback={<div className="w-32 h-32 rounded-full border border-white/10 border-t-white animate-spin" />}>
+                  <div className="absolute inset-0 scale-[1.1] lg:scale-[1.3]">
                     <SpaceScene />
                   </div>
                 </Suspense>
 
-                {/* Floating Glass Stats */}
+                {/* Handcrafted Micro Metric Cards */}
                 <motion.div 
-                  initial={{ opacity: 0, x: 50 }}
+                  initial={{ opacity: 0, x: 30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.4, duration: 0.8 }}
-                  className="absolute right-0 top-[20%] glass-panel p-5 rounded-2xl hidden md:block"
+                  className="absolute right-2 top-[15%] glass-card p-4 rounded-xl hidden sm:block border border-white/10"
                 >
-                  <div className="text-3xl font-display font-bold text-white mb-1">5+</div>
-                  <div className="text-xs font-mono text-[var(--text-secondary)] uppercase">Live Projects</div>
+                  <div className="text-2xl font-mono font-bold text-white mb-0.5">5+</div>
+                  <div className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider">Production Apps</div>
                 </motion.div>
                 
                 <motion.div 
-                  initial={{ opacity: 0, x: -50 }}
+                  initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  className="absolute left-0 bottom-[20%] glass-panel p-5 rounded-2xl hidden md:block"
+                  className="absolute left-2 bottom-[15%] glass-card p-4 rounded-xl hidden sm:block border border-white/10"
                 >
-                  <div className="text-3xl font-display font-bold text-[var(--accent)] mb-1">400+</div>
-                  <div className="text-xs font-mono text-[var(--text-secondary)] uppercase">DSA Solved</div>
+                  <div className="text-2xl font-mono font-bold text-[var(--accent)] mb-0.5">400+</div>
+                  <div className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider">Algorithmic Problems</div>
                 </motion.div>
               </motion.div>
             ) : (
@@ -316,7 +319,7 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.4 }}
-                className="w-full h-full max-h-[500px]"
+                className="w-full h-full max-h-[480px]"
               >
                 <HeroTerminal />
               </motion.div>
@@ -327,3 +330,6 @@ export default function Hero() {
     </section>
   )
 }
+
+
+

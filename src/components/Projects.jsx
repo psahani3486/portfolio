@@ -339,15 +339,15 @@ export default function Projects() {
     <section id="projects" className="py-32 relative">
       <div className="max-w-[1400px] mx-auto px-6">
         
-        <div className="mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-sm font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-4 block">
-              05. Selected Works
+            <h2 className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-3 block">
+              [ 04 / FEATURED PROJECTS & SYSTEMS ]
             </h2>
             <h3 className="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter text-white">
               Featured <br/><span className="text-gradient">Projects</span>

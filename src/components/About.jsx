@@ -30,13 +30,13 @@ const Counter = ({ end, duration = 2, label }) => {
 
 export default function About() {
   return (
-    <section id="about" className="py-32 relative overflow-hidden">
-      <div className="max-w-[1400px] mx-auto px-6">
+    <section id="about" className="py-32 relative overflow-hidden bg-noise border-t border-white/[0.06]">
+      <div className="max-w-[1340px] mx-auto px-6">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           
-          {/* Left: Editorial Header */}
-          <div>
+          {/* Left Column: Swiss Editorial Header */}
+          <div className="lg:col-span-6">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg text-[var(--text-secondary)] leading-relaxed mb-12"
+              className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed mb-8 font-normal"
             >
               I am a final year B.Tech student specializing in Mathematics & Computing. 
               My expertise lies in architecting full-stack applications and deploying machine learning models 
@@ -64,46 +64,46 @@ export default function About() {
             </motion.p>
           </div>
 
-          {/* Right: Glass Cards & Counters */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[var(--accent-purple)]/20 rounded-full blur-[100px] pointer-events-none" />
+          {/* Right Column: Handcrafted Metric Cards */}
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-5 relative">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[var(--accent)]/10 rounded-full blur-[100px] pointer-events-none" />
             
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="glass-card p-8 rounded-3xl"
+              className="glass-card p-6 rounded-2xl border border-white/10"
             >
-              <Counter end={5} label="Production Apps" />
+              <Counter end={5} label="Production Applications" />
             </motion.div>
             
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-card p-8 rounded-3xl sm:translate-y-12"
+              className="glass-card p-6 rounded-2xl border border-white/10 sm:translate-y-6"
             >
-              <Counter end={400} label="DSA Problems" />
+              <Counter end={400} label="LeetCode DSA Problems" />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="glass-card p-8 rounded-3xl"
+              className="glass-card p-6 rounded-2xl border border-white/10"
             >
-              <Counter end={20} label="Technologies" />
+              <Counter end={20} label="Core Tech Stack" />
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="glass-card p-8 rounded-3xl sm:translate-y-12"
+              className="glass-card p-6 rounded-2xl border border-white/10 sm:translate-y-6"
             >
               <Counter end={2} label="Internships" />
             </motion.div>

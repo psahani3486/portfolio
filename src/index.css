@@ -1,55 +1,67 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-display: 'Space Grotesk', sans-serif;
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+  --font-display: 'Inter', 'Space Grotesk', system-ui, sans-serif;
 }
 
 @layer base {
   :root {
-    --bg-primary: #050505;
-    --bg-cards: #111111;
-    --bg-surface: #181818;
-    --accent: #00F5FF;
-    --accent-dark: #008f96;
-    --accent-purple: #7B61FF;
-    --text-primary: #ffffff;
-    --text-secondary: #A8A8A8;
+    --bg-primary: #09090b;
+    --bg-cards: #121215;
+    --bg-surface: #18181b;
+    --accent: #6366f1;
+    --accent-dark: #4f46e5;
+    --accent-purple: #a855f7;
+    --text-primary: #f4f4f5;
+    --text-secondary: #a1a1aa;
     --border-color: rgba(255, 255, 255, 0.08);
-    --glass-bg: rgba(17, 17, 17, 0.4);
+    --glass-bg: rgba(18, 18, 21, 0.6);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
   }
 
   body {
-    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased overflow-x-hidden selection:bg-[var(--accent)] selection:text-black;
+    @apply bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans antialiased overflow-x-hidden selection:bg-[var(--accent)]/30 selection:text-white;
+    letter-spacing: -0.011em;
   }
 }
 
 @layer utilities {
   .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--text-primary)] via-white to-[var(--text-secondary)];
+  }
+  .accent-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-purple)];
   }
   .glass-panel {
-    @apply bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--border-color)] shadow-2xl;
+    @apply bg-[var(--glass-bg)] backdrop-blur-2xl border border-[var(--border-color)] shadow-2xl;
   }
   .glass-card {
-    @apply bg-[var(--bg-cards)] border border-[var(--border-color)] shadow-xl transition-all duration-300 hover:border-[var(--accent)]/30;
+    @apply bg-[var(--bg-cards)] border border-[var(--border-color)] transition-all duration-300 hover:border-white/20 hover:bg-[#16161a];
+  }
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Ultra-Thin Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--bg-surface);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Base resets */
@@ -58,3 +70,4 @@ html, body {
   padding: 0;
   min-height: 100vh;
 }
+

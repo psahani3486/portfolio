@@ -1,7 +1,7 @@
 import React from 'react'
-import AvengersScene from './AvengersScene'
+import DevCoreScene from './DevCoreScene'
 
 export default function SpaceScene(props) {
-  return <AvengersScene {...props} />
+  return <DevCoreScene {...props} />
 }
 

@@ -2,154 +2,90 @@ import React, { useState, useEffect, createContext, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const themes = {
-  'ironman': {
-    label: 'Iron Man Arc',
+  'linear-dark': {
+    label: 'Linear Obsidian',
     icon: '⚡',
     vars: {
-      '--bg-primary': '#0a0304',
-      '--bg-cards': '#17090b',
-      '--bg-surface': '#260e12',
-      '--accent': '#00f0ff',
-      '--accent-dark': '#ef4444',
-      '--accent-purple': '#f59e0b',
-      '--text-primary': '#ffffff',
-      '--text-secondary': '#fda4af',
-      '--border-color': 'rgba(239, 68, 68, 0.25)',
-      '--glass-bg': 'rgba(23, 9, 11, 0.5)',
+      '--bg-primary': '#09090b',
+      '--bg-cards': '#121215',
+      '--bg-surface': '#18181b',
+      '--accent': '#6366f1',
+      '--accent-dark': '#4f46e5',
+      '--accent-purple': '#a855f7',
+      '--text-primary': '#f4f4f5',
+      '--text-secondary': '#a1a1aa',
+      '--border-color': 'rgba(255, 255, 255, 0.08)',
+      '--glass-bg': 'rgba(18, 18, 21, 0.65)',
     },
   },
-  'infinity': {
-    label: 'Infinity Gauntlet',
-    icon: '💎',
+  'apple-dark': {
+    label: 'Apple Space Gray',
+    icon: '🍎',
     vars: {
-      '--bg-primary': '#0c051a',
-      '--bg-cards': '#160a30',
-      '--bg-surface': '#220e4a',
-      '--accent': '#eab308',
-      '--accent-dark': '#a855f7',
-      '--accent-purple': '#ec4899',
+      '--bg-primary': '#000000',
+      '--bg-cards': '#111111',
+      '--bg-surface': '#1c1c1e',
+      '--accent': '#f4f4f5',
+      '--accent-dark': '#a1a1aa',
+      '--accent-purple': '#d4d4d8',
       '--text-primary': '#ffffff',
-      '--text-secondary': '#e9d5ff',
-      '--border-color': 'rgba(234, 179, 8, 0.25)',
-      '--glass-bg': 'rgba(22, 10, 48, 0.5)',
+      '--text-secondary': '#8e8e93',
+      '--border-color': 'rgba(255, 255, 255, 0.1)',
+      '--glass-bg': 'rgba(17, 17, 17, 0.7)',
     },
   },
-  'thor': {
-    label: 'Thor Thunder',
-    icon: '🔨',
+  'vercel-dark': {
+    label: 'Vercel Precision',
+    icon: '▲',
     vars: {
-      '--bg-primary': '#020a17',
-      '--bg-cards': '#07162e',
-      '--bg-surface': '#0b2347',
+      '--bg-primary': '#0a0a0a',
+      '--bg-cards': '#141414',
+      '--bg-surface': '#1e1e1e',
       '--accent': '#38bdf8',
       '--accent-dark': '#0284c7',
-      '--accent-purple': '#60a5fa',
-      '--text-primary': '#f0f9ff',
-      '--text-secondary': '#7dd3fc',
-      '--border-color': 'rgba(56, 189, 248, 0.25)',
-      '--glass-bg': 'rgba(7, 22, 46, 0.5)',
+      '--accent-purple': '#818cf8',
+      '--text-primary': '#ededed',
+      '--text-secondary': '#888888',
+      '--border-color': 'rgba(255, 255, 255, 0.09)',
+      '--glass-bg': 'rgba(20, 20, 20, 0.7)',
     },
   },
-  'wakanda': {
-    label: 'Wakanda Vibranium',
-    icon: '🐾',
+  'stripe-dark': {
+    label: 'Stripe Slate',
+    icon: '💳',
     vars: {
-      '--bg-primary': '#0a0414',
-      '--bg-cards': '#15092a',
-      '--bg-surface': '#200c3e',
-      '--accent': '#c084fc',
-      '--accent-dark': '#7e22ce',
-      '--accent-purple': '#e879f9',
-      '--text-primary': '#faf5ff',
-      '--text-secondary': '#d8b4fe',
-      '--border-color': 'rgba(192, 132, 252, 0.25)',
-      '--glass-bg': 'rgba(21, 9, 42, 0.5)',
-    },
-  },
-  'cap': {
-    label: 'Captain Shield',
-    icon: '🛡️',
-    vars: {
-      '--bg-primary': '#03091c',
-      '--bg-cards': '#091538',
-      '--bg-surface': '#102254',
-      '--accent': '#3b82f6',
-      '--accent-dark': '#dc2626',
-      '--accent-purple': '#ef4444',
-      '--text-primary': '#ffffff',
-      '--text-secondary': '#93c5fd',
-      '--border-color': 'rgba(59, 130, 246, 0.25)',
-      '--glass-bg': 'rgba(9, 21, 56, 0.5)',
-    },
-  },
-  'strange': {
-    label: 'Dr. Strange Time',
-    icon: '👁️',
-    vars: {
-      '--bg-primary': '#02140c',
-      '--bg-cards': '#062618',
-      '--bg-surface': '#0b3824',
-      '--accent': '#10b981',
-      '--accent-dark': '#d97706',
-      '--accent-purple': '#34d399',
-      '--text-primary': '#ecfdf5',
-      '--text-secondary': '#6ee7b7',
-      '--border-color': 'rgba(16, 185, 129, 0.25)',
-      '--glass-bg': 'rgba(6, 38, 24, 0.5)',
-    },
-  },
-  'dark-cyber': {
-    label: 'Dark Cyber',
-    icon: '🌑',
-    vars: {
-      '--bg-primary': '#050505',
-      '--bg-cards': '#111111',
-      '--bg-surface': '#181818',
-      '--accent': '#00F5FF',
-      '--accent-dark': '#008f96',
-      '--accent-purple': '#7B61FF',
-      '--text-primary': '#ffffff',
-      '--text-secondary': '#A8A8A8',
+      '--bg-primary': '#0b0e14',
+      '--bg-cards': '#121722',
+      '--bg-surface': '#1a2232',
+      '--accent': '#635bff',
+      '--accent-dark': '#00d4b6',
+      '--accent-purple': '#8093ff',
+      '--text-primary': '#f6f9fc',
+      '--text-secondary': '#adbdcc',
       '--border-color': 'rgba(255, 255, 255, 0.08)',
-      '--glass-bg': 'rgba(17, 17, 17, 0.4)',
+      '--glass-bg': 'rgba(18, 23, 34, 0.65)',
     },
   },
-  'midnight-purple': {
-    label: 'Midnight Purple',
-    icon: '🔮',
+  'tokyo-editorial': {
+    label: 'Tokyo Editorial',
+    icon: '🌙',
     vars: {
-      '--bg-primary': '#0a0614',
-      '--bg-cards': '#14102a',
-      '--bg-surface': '#1c1636',
-      '--accent': '#c084fc',
-      '--accent-dark': '#7c3aed',
-      '--accent-purple': '#f472b6',
-      '--text-primary': '#f0e6ff',
-      '--text-secondary': '#a78bfa',
-      '--border-color': 'rgba(168, 85, 247, 0.12)',
-      '--glass-bg': 'rgba(20, 16, 42, 0.5)',
-    },
-  },
-  'aurora-light': {
-    label: 'Aurora Light',
-    icon: '☀️',
-    vars: {
-      '--bg-primary': '#f8fafc',
-      '--bg-cards': '#ffffff',
-      '--bg-surface': '#f1f5f9',
-      '--accent': '#0891b2',
-      '--accent-dark': '#155e75',
-      '--accent-purple': '#7c3aed',
-      '--text-primary': '#0f172a',
-      '--text-secondary': '#64748b',
-      '--border-color': 'rgba(0, 0, 0, 0.08)',
-      '--glass-bg': 'rgba(255, 255, 255, 0.7)',
+      '--bg-primary': '#16161e',
+      '--bg-cards': '#1a1b26',
+      '--bg-surface': '#24283b',
+      '--accent': '#7dcfff',
+      '--accent-dark': '#7aa2f7',
+      '--accent-purple': '#bb9af7',
+      '--text-primary': '#c0caf5',
+      '--text-secondary': '#9aa5ce',
+      '--border-color': 'rgba(125, 207, 255, 0.15)',
+      '--glass-bg': 'rgba(26, 27, 38, 0.65)',
     },
   },
 }
 
 export const ThemeContext = createContext({
-  theme: 'dark-cyber',
+  theme: 'linear-dark',
   setTheme: () => {},
 })
 
@@ -160,9 +96,10 @@ export function useTheme() {
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(() => {
     try {
-      return localStorage.getItem('portfolio-theme') || 'dark-cyber'
+      const saved = localStorage.getItem('portfolio-theme')
+      return (saved && themes[saved]) ? saved : 'linear-dark'
     } catch {
-      return 'dark-cyber'
+      return 'linear-dark'
     }
   })
 

@@ -9,15 +9,15 @@ export default function Experience() {
       <div className="max-w-[1200px] mx-auto px-6">
         
         {/* Title */}
-        <div className="mb-24 text-center">
+        <div className="mb-20 text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-sm font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-4 block">
-              04. Career
+            <h2 className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-3 block">
+              [ 05 / ENGINEERING EXPERIENCE ]
             </h2>
             <h3 className="text-5xl md:text-6xl font-display font-bold uppercase tracking-tighter text-white">
               Professional <span className="text-gradient">Timeline</span>
