@@ -4,6 +4,10 @@ import { Stars, AdaptiveDpr, AdaptiveEvents, Float } from '@react-three/drei'
 import * as THREE from 'three'
 import { useTheme } from '../ThemeSwitcher'
 
+// Target FPS Cap (30 FPS for lower GPU/CPU usage & battery efficiency)
+const TARGET_FPS = 30
+const FRAME_INTERVAL = 1 / TARGET_FPS
+
 /* ─────────────────────────────────────────────────────────────
    3D DEVELOPER QUANTUM CORE MESH
    ───────────────────────────────────────────────────────────── */
@@ -13,10 +17,13 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
   const outerWireframeRef = useRef()
   const ring1Ref = useRef()
   const ring2Ref = useRef()
+  const lastTimeRef = useRef(0)
 
   useFrame((state, delta) => {
     if (!coreGroupRef.current) return
     const t = state.clock.elapsedTime
+    if (t - lastTimeRef.current < FRAME_INTERVAL) return
+    lastTimeRef.current = t
 
     // Core Rotation
     const rotSpeed = assembling ? 2.5 : 0.35
@@ -48,7 +55,7 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
     <group ref={coreGroupRef} scale={assembling ? 1.2 : 1}>
       {/* Inner Energy Core */}
       <mesh ref={innerSphereRef} position={[0, 0, 0]}>
-        <sphereGeometry args={[0.6, 32, 32]} />
+        <sphereGeometry args={[0.6, 20, 20]} />
         <meshBasicMaterial color={accentColor} transparent opacity={0.9} />
       </mesh>
 
@@ -68,7 +75,7 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
       {/* Primary Tech Orbit Ring */}
       <group ref={ring1Ref}>
         <mesh>
-          <torusGeometry args={[2.0, 0.035, 16, 100]} />
+          <torusGeometry args={[2.0, 0.035, 10, 48]} />
           <meshStandardMaterial
             color={accentColor}
             emissive={accentColor}
@@ -83,7 +90,7 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
             key={idx}
             position={[Math.cos(angle) * 2.0, Math.sin(angle) * 2.0, 0]}
           >
-            <sphereGeometry args={[0.09, 16, 16]} />
+            <sphereGeometry args={[0.09, 12, 12]} />
             <meshBasicMaterial color={secondaryColor} />
           </mesh>
         ))}
@@ -92,7 +99,7 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
       {/* Secondary Tech Ring */}
       <group ref={ring2Ref}>
         <mesh rotation={[Math.PI / 3, 0, 0]}>
-          <torusGeometry args={[2.4, 0.025, 16, 100]} />
+          <torusGeometry args={[2.4, 0.025, 10, 48]} />
           <meshStandardMaterial
             color={secondaryColor}
             emissive={secondaryColor}
@@ -111,12 +118,13 @@ function DevCoreMesh({ accentColor, secondaryColor, assembling }) {
    ───────────────────────────────────────────────────────────── */
 function OrbitingDataNodes({ accentColor, secondaryColor }) {
   const groupRef = useRef()
+  const lastTimeRef = useRef(0)
 
   const nodes = useMemo(() => {
-    return Array.from({ length: 8 }, (_, i) => ({
+    return Array.from({ length: 6 }, (_, i) => ({
       radius: 2.8 + (i % 3) * 0.4,
       speed: 0.4 + (i % 4) * 0.15,
-      phase: (Math.PI / 4) * i,
+      phase: (Math.PI / 3) * i,
       size: 0.1 + (i % 2) * 0.05,
     }))
   }, [])
@@ -124,6 +132,8 @@ function OrbitingDataNodes({ accentColor, secondaryColor }) {
   useFrame((state) => {
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
+    if (t - lastTimeRef.current < FRAME_INTERVAL) return
+    lastTimeRef.current = t
 
     groupRef.current.children.forEach((child, i) => {
       const node = nodes[i]
@@ -159,9 +169,10 @@ function OrbitingDataNodes({ accentColor, secondaryColor }) {
    ───────────────────────────────────────────────────────────── */
 function CodeParticles({ color }) {
   const pointsRef = useRef()
+  const lastTimeRef = useRef(0)
 
   const [positions, colors] = useMemo(() => {
-    const count = 350
+    const count = 180
     const pos = new Float32Array(count * 3)
     const col = new Float32Array(count * 3)
     const baseColor = new THREE.Color(color || '#7dcfff')
@@ -181,7 +192,10 @@ function CodeParticles({ color }) {
 
   useFrame((state) => {
     if (!pointsRef.current) return
-    pointsRef.current.rotation.y = state.clock.elapsedTime * 0.03
+    const t = state.clock.elapsedTime
+    if (t - lastTimeRef.current < FRAME_INTERVAL) return
+    lastTimeRef.current = t
+    pointsRef.current.rotation.y = t * 0.03
   })
 
   return (
@@ -216,8 +230,13 @@ function CodeParticles({ color }) {
    ───────────────────────────────────────────────────────────── */
 function DevCameraRig() {
   const { camera } = useThree()
+  const lastTimeRef = useRef(0)
 
   useFrame((state) => {
+    const t = state.clock.elapsedTime
+    if (t - lastTimeRef.current < FRAME_INTERVAL) return
+    lastTimeRef.current = t
+
     const pointerX = state.pointer.x * 0.6
     const pointerY = state.pointer.y * 0.4
     camera.position.x = THREE.MathUtils.lerp(camera.position.x, pointerX, 0.05)
@@ -239,7 +258,6 @@ export default function DevCoreScene() {
   const secondaryColor = activeVars['--accent-purple'] || activeVars['--accent-dark'] || '#bb9af7'
 
   const [assembling, setAssembling] = useState(false)
-  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768
 
   const handleCoreClick = () => {
     setAssembling(true)
@@ -254,8 +272,8 @@ export default function DevCoreScene() {
     >
       <Canvas
         camera={{ position: [0, 0.5, 6.2], fov: 45 }}
-        gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
-        dpr={[1, isMobile ? 1.25 : 1.75]}
+        gl={{ alpha: true, antialias: false, powerPreference: 'low-power' }}
+        dpr={[1, 1.25]}
       >
         <ambientLight intensity={0.8} />
         <pointLight position={[10, 10, 10]} color={accentColor} intensity={3.0} />
@@ -263,7 +281,7 @@ export default function DevCoreScene() {
 
         <DevCameraRig />
 
-        <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.5}>
+        <Float speed={1.2} rotationIntensity={0.2} floatIntensity={0.3}>
           <group position={[0, 0, 0]}>
             <DevCoreMesh
               accentColor={accentColor}
@@ -278,7 +296,7 @@ export default function DevCoreScene() {
         </Float>
 
         <CodeParticles color={accentColor} />
-        <Stars radius={40} depth={50} count={isMobile ? 300 : 800} factor={4} saturation={0} fade speed={1} />
+        <Stars radius={35} depth={40} count={250} factor={3} saturation={0} fade speed={0.8} />
 
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />

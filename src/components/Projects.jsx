@@ -121,21 +121,19 @@ const ProjectModal = ({ project, onClose }) => {
           <div className="flex items-center gap-2 px-6 pt-4 border-b border-white/10 bg-black/20 font-mono text-xs">
             <button
               onClick={() => setActiveTab('architecture')}
-              className={`px-4 py-2 rounded-t-xl transition-all ${
-                activeTab === 'architecture'
+              className={`px-4 py-2 rounded-t-xl transition-all ${activeTab === 'architecture'
                   ? 'bg-white/10 text-white font-bold border-t border-x border-white/10'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               System Architecture
             </button>
             <button
               onClick={() => setActiveTab('details')}
-              className={`px-4 py-2 rounded-t-xl transition-all ${
-                activeTab === 'details'
+              className={`px-4 py-2 rounded-t-xl transition-all ${activeTab === 'details'
                   ? 'bg-white/10 text-white font-bold border-t border-x border-white/10'
                   : 'text-gray-400 hover:text-white'
-              }`}
+                }`}
             >
               Engineering Deep Dive
             </button>
@@ -251,7 +249,7 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
         <div className="lg:w-[45%] relative bg-[#0a0a10] overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border-color)] flex items-center justify-center p-8">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent-purple)]/20 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-overlay" />
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
-          
+
           {/* Animated App Frame Mockup */}
           <div className="relative z-10 w-full h-full max-h-[300px] rounded-2xl border border-white/10 bg-black/60 p-5 flex flex-col justify-between shadow-2xl group-hover:scale-105 transition-transform duration-700">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
@@ -281,7 +279,7 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
 
         {/* Right: Content */}
         <div className="lg:w-[55%] p-8 lg:p-14 flex flex-col justify-center relative z-30">
-          
+
           {project.featured && (
             <div className="mb-4">
               <span className="px-4 py-1.5 text-xs font-mono font-bold tracking-widest uppercase rounded-full bg-[var(--accent)] text-black">
@@ -289,11 +287,11 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
               </span>
             </div>
           )}
-          
+
           <h3 className="text-2xl lg:text-4xl font-display font-bold text-white mb-4 leading-tight uppercase tracking-tight">
             {project.title}
           </h3>
-          
+
           <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-8">
             {project.description}
           </p>
@@ -338,7 +336,7 @@ export default function Projects() {
   return (
     <section id="projects" className="py-32 relative">
       <div className="max-w-[1400px] mx-auto px-6">
-        
+
         <div className="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -350,7 +348,7 @@ export default function Projects() {
               [ 04 / FEATURED PROJECTS & SYSTEMS ]
             </h2>
             <h3 className="text-5xl md:text-7xl font-display font-bold uppercase tracking-tighter text-white">
-              Featured <br/><span className="text-gradient">Projects</span>
+              Featured <br /><span className="text-gradient">Projects</span>
             </h3>
           </motion.div>
           <motion.div

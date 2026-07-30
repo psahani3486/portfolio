@@ -51,9 +51,9 @@ function LoadingScreen() {
           {/* Animated Noise & Glow */}
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] bg-[var(--accent)]/10 rounded-full blur-[100px] animate-pulse" />
-          
+
           <div className="relative z-10 flex flex-col items-center">
-            <motion.div 
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5 }}
@@ -74,9 +74,9 @@ function LoadingScreen() {
               </span>
               <span className="text-xl md:text-2xl font-mono text-[var(--accent)] mb-1 md:mb-2">%</span>
             </div>
-            
+
             <div className="w-64 md:w-80 h-[2px] bg-white/10 mt-8 overflow-hidden">
-              <motion.div 
+              <motion.div
                 className="h-full bg-[var(--accent)]"
                 initial={{ width: "0%" }}
                 animate={{ width: `${progress}%` }}

@@ -15,7 +15,7 @@ export default function Navbar({ onOpenCommandPalette }) {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50)
-      
+
       // Update active section based on scroll position
       const sections = navLinks.map(link => link.href.substring(1))
       const current = sections.find(section => {
@@ -26,28 +26,28 @@ export default function Navbar({ onOpenCommandPalette }) {
         }
         return false
       })
-      
+
       if (current) setActiveSection(current)
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
     <>
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-0 left-0 right-0 z-50 py-5 pointer-events-none"
       >
         <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between pointer-events-auto">
-          
+
           {/* Logo */}
-          <Link 
-            to="home" 
-            smooth={true} 
+          <Link
+            to="home"
+            smooth={true}
             duration={800}
             className="text-base font-mono font-medium tracking-tight text-white cursor-pointer flex items-center gap-2 group glass-panel px-4 py-2 rounded-full"
           >
@@ -104,7 +104,7 @@ export default function Navbar({ onOpenCommandPalette }) {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <button 
+          <button
             className="md:hidden text-white p-2 glass-panel rounded-full"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
