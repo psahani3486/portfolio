@@ -1,23 +1,45 @@
 import React, { Suspense, lazy, useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft } from 'react-icons/fi'
+import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft, FiCpu, FiZap, FiActivity, FiCode } from 'react-icons/fi'
 import { personalInfo, projects, skillCategories } from '../data/resumeData'
 import Magnetic from './worldclass/Magnetic'
 
-const SpaceScene = lazy(() => import('./three/SpaceScene'))
+const DevCoreScene = lazy(() => import('./three/DevCoreScene'))
 
-const splitText = (text) => {
-  return text.split('').map((char, index) => (
-    <motion.span
-      key={index}
-      initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-      transition={{ duration: 0.8, delay: index * 0.03 + 0.1, ease: [0.16, 1, 0.3, 1] }}
-      className="inline-block"
-    >
-      {char === ' ' ? '\u00A0' : char}
-    </motion.span>
-  ))
+const roles = [
+  'Full-Stack Systems Engineer',
+  'AI & BI Analytics Specialist',
+  'RAG & LLM Architect',
+  '400+ LeetCode Problem Solver',
+]
+
+function DynamicRole() {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % roles.length)
+    }, 2800)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <div className="h-8 overflow-hidden inline-block align-middle font-mono font-bold text-[var(--accent)]">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={index}
+          initial={{ y: 24, opacity: 0, filter: 'blur(4px)' }}
+          animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
+          exit={{ y: -24, opacity: 0, filter: 'blur(4px)' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center gap-2"
+        >
+          <span className="text-cyan-400">⚡</span>
+          <span>{roles[index]}</span>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
 }
 
 function HeroTerminal() {
@@ -48,8 +70,6 @@ function HeroTerminal() {
 • skills    - Tech stack breakdown
 • projects  - Featured production apps
 • contact   - Reach out to Pankaj
-• themes    - World-class developer coding themes
-• matrix    - Toggle Matrix digital rain effect
 • resume    - Download Pankaj's Resume PDF
 • clear     - Clear screen`,
         })
@@ -81,41 +101,19 @@ function HeroTerminal() {
       case 'resume':
         newHistory.push({
           type: 'system',
-          content: '📄 Triggering dual resume downloads (SDE + Data Analyst)...',
+          content: '📄 Triggering resume download...',
         })
-        const link1 = document.createElement('a')
-        link1.href = personalInfo.sdeResumeUrl || '/resume.pdf'
-        link1.download = 'Pankaj_SDE_FullStack_Resume.pdf'
-        document.body.appendChild(link1)
-        link1.click()
-        document.body.removeChild(link1)
-
-        setTimeout(() => {
-          const link2 = document.createElement('a')
-          link2.href = personalInfo.dataAnalystResumeUrl || '/data_analyst_Resume.pdf'
-          link2.download = 'Pankaj_DataAnalyst_BI_Resume.pdf'
-          document.body.appendChild(link2)
-          link2.click()
-          document.body.removeChild(link2)
-        }, 400)
+        const link = document.createElement('a')
+        link.href = personalInfo.resumeUrl || '/resume.pdf'
+        link.download = 'Pankaj_Resume.pdf'
+        document.body.appendChild(link)
+        link.click()
+        document.body.removeChild(link)
         break
       case 'clear':
         setHistory([])
         setInput('')
         return
-      case 'matrix':
-        newHistory.push({
-          type: 'system',
-          content: '🟢 01001000 01100001 01100011 01101011 00100000 01110100 01101000 01100101 00100000 01110000 01101100 01100001 01101110 01100101 01110100 00100001',
-        })
-        break
-      case 'themes':
-      case 'theme':
-        newHistory.push({
-          type: 'system',
-          content: '⚡ WORLD-CLASS DEV CODING THEMES ACTIVE:\n• 🌙 Tokyo Night (Default)\n• ☕ Catppuccin Mocha\n• ⚛️ One Dark Pro\n• 🧛 Dracula Pro\n• ❄️ Nordic Frost\n• 🌑 Dark Cyber\n• 🔮 Midnight Purple\n• ☀️ Aurora Light',
-        })
-        break
       default:
         newHistory.push({
           type: 'error',
@@ -128,7 +126,7 @@ function HeroTerminal() {
   }
 
   return (
-    <div className="w-full h-full glass-card rounded-3xl p-5 font-mono text-xs md:text-sm border border-emerald-500/20 bg-black/85 flex flex-col justify-between shadow-[0_0_50px_rgba(0,255,170,0.08)]">
+    <div className="w-full h-full glass-card rounded-3xl p-5 font-mono text-xs md:text-sm border border-emerald-500/30 bg-black/90 flex flex-col justify-between shadow-[0_0_50px_rgba(0,255,170,0.12)]">
       <div className="flex items-center justify-between border-b border-white/10 pb-3 mb-3 text-gray-400 text-xs">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-red-500/80" />
@@ -164,7 +162,7 @@ function HeroTerminal() {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleCommand}
-          placeholder="Type command ('help', 'projects', 'skills', 'themes')..."
+          placeholder="Type command ('help', 'projects', 'skills', 'about')..."
           className="flex-1 bg-transparent text-white focus:outline-none font-mono text-xs md:text-sm placeholder-gray-600"
           autoFocus
         />
@@ -178,148 +176,246 @@ export default function Hero() {
   const [viewMode, setViewMode] = useState('3d') // '3d' | 'cli'
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden bg-noise">
+    <section id="home" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       
-      {/* Background Ambient Lighting Mesh */}
+      {/* Background Ambient Spotlights & Cyber Lines */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[15%] left-[20%] w-[45vw] h-[45vw] rounded-full bg-[var(--accent)]/12 blur-[140px]" />
-        <div className="absolute top-[35%] -right-[10%] w-[35vw] h-[35vw] rounded-full bg-[var(--accent-purple)]/10 blur-[140px]" />
-        <div className="absolute inset-0 bg-radial-grid opacity-[0.03]" />
+        <div className="absolute -top-[20%] left-[15%] w-[55vw] h-[55vw] rounded-full bg-[var(--accent)]/15 blur-[160px] animate-pulse" />
+        <div className="absolute top-[25%] -right-[15%] w-[45vw] h-[45vw] rounded-full bg-[var(--accent-purple)]/15 blur-[160px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
       </div>
 
-      <div className="max-w-[1340px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-[1380px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
-        {/* Left Column: Swiss Editorial Typography & CTA */}
-        <div className="lg:col-span-7 flex flex-col items-start pt-8 lg:pt-0">
+        {/* Left Column: Futuristic Swiss Typography & CTAs */}
+        <div className="lg:col-span-7 flex flex-col items-start pt-4 lg:pt-0">
           
           {/* Status Badge & Mode Switcher */}
-          <div className="flex flex-wrap items-center gap-3 mb-8">
+          <div className="flex flex-wrap items-center gap-3 mb-6">
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="px-3.5 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2.5"
+              className="px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-xl flex items-center gap-2.5 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
             >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[11px] font-mono tracking-wider uppercase text-[var(--text-secondary)]">Available for Work 2026-2027</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="text-xs font-mono font-semibold tracking-wider uppercase text-emerald-300">
+                Available for Roles 2026–2027
+              </span>
             </motion.div>
 
             {/* Mode Switcher Pill */}
-            <div className="p-1 rounded-full border border-white/10 bg-black/40 flex items-center gap-1">
+            <div className="p-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-xl flex items-center gap-1 shadow-lg">
               <button
                 onClick={() => setViewMode('3d')}
-                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
                   viewMode === '3d'
-                    ? 'bg-white text-black font-semibold shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-white'
+                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold shadow-[0_0_15px_rgba(99,102,241,0.5)]'
+                    : 'text-gray-400 hover:text-white'
                 }`}
               >
-                <FiGlobe className="inline mr-1" /> 3D DEV CORE
+                <FiGlobe size={14} /> 3D DEV CORE
               </button>
               <button
                 onClick={() => setViewMode('cli')}
-                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
                   viewMode === 'cli'
-                    ? 'bg-emerald-400 text-black font-semibold shadow-sm'
-                    : 'text-[var(--text-secondary)] hover:text-white'
+                    ? 'bg-emerald-400 text-black font-bold shadow-[0_0_15px_rgba(52,211,153,0.5)]'
+                    : 'text-gray-400 hover:text-white'
                 }`}
               >
-                <FiTerminal className="inline mr-1" /> TERMINAL CLI
+                <FiTerminal size={14} /> TERMINAL CLI
               </button>
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-display font-bold leading-[1.1] tracking-tighter mb-6 uppercase">
-            <div className="flex overflow-hidden">
-              {splitText("Hello, I'm")}
-            </div>
-            <div className="flex overflow-hidden text-gradient pb-2">
-              {splitText(personalInfo.name)}
-            </div>
+          {/* Dynamic Greeting */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-[var(--accent)] mb-3 font-semibold flex items-center gap-2"
+          >
+            <FiCode className="animate-spin text-cyan-400" style={{ animationDuration: '6s' }} />
+            <span>Computer Science Engineer @ NSUT</span>
+          </motion.div>
+
+          {/* Main Title */}
+          <h1 className="text-5xl md:text-7xl lg:text-[5.8rem] font-display font-black leading-[1.05] tracking-tighter mb-4 uppercase">
+            <span className="text-white block">HI, I'M</span>
+            <span className="bg-gradient-to-r from-white via-cyan-200 to-[var(--accent)] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(99,102,241,0.3)] block">
+              {personalInfo.name}
+            </span>
           </h1>
 
+          {/* Dynamic Role Flipper */}
+          <div className="mb-6 py-1 px-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <DynamicRole />
+          </div>
+
+          {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-10 font-normal"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-8 font-normal"
           >
-            {personalInfo.description}
+            Engineering full-stack architectures, predictive AI models, anti-hallucination RAG frameworks, and high-performance business intelligence applications.
           </motion.p>
 
-          {/* Tactile Action Buttons */}
+          {/* Floating Tech Badges */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-wrap gap-2 mb-10"
+          >
+            {['React', 'Next.js', 'FastAPI', 'Python', 'PyTorch', 'RAG AI', 'PostgreSQL', 'DSA 400+'].map((tech, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-xs font-mono rounded-lg border border-white/10 bg-white/5 text-gray-300 backdrop-blur-md hover:border-[var(--accent)]/50 hover:text-white transition-all shadow-sm"
+              >
+                {tech}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Action CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="flex flex-wrap items-center gap-4"
           >
             <Magnetic>
               <button
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-12 px-7 rounded-full bg-white text-black font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2.5 hover:bg-[var(--accent)] hover:text-white transition-all duration-300 shadow-xl cursor-pointer"
+                className="h-13 px-8 rounded-full bg-gradient-to-r from-white via-gray-100 to-gray-200 text-black font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300 cursor-pointer shadow-xl"
               >
-                Selected Work <FiArrowRight />
+                Explore Projects <FiArrowRight size={16} />
               </button>
             </Magnetic>
             <Magnetic>
               <button 
                 onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-12 px-7 rounded-full glass-panel text-white font-mono text-xs uppercase tracking-wider font-semibold flex items-center gap-2.5 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+                className="h-13 px-8 rounded-full glass-panel text-white font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:bg-white/15 hover:border-white/30 transition-all cursor-pointer shadow-lg"
               >
-                Download Resume <FiDownload />
+                Get Resume <FiDownload size={16} />
               </button>
             </Magnetic>
           </motion.div>
         </div>
 
-        {/* Right Column: 3D Quantum Core / Interactive CLI Canvas */}
-        <div className="lg:col-span-5 relative h-[50vh] lg:h-[70vh] w-full flex items-center justify-center">
+        {/* Right Column: Prominent Interactive 3D Quantum Core Container */}
+        <div className="lg:col-span-5 relative h-[520px] lg:h-[620px] w-full flex items-center justify-center">
           <AnimatePresence mode="wait">
             {viewMode === '3d' ? (
               <motion.div
-                key="3d"
-                initial={{ opacity: 0, scale: 0.95 }}
+                key="3d-hero"
+                initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full flex items-center justify-center relative"
+                className="w-full h-full relative rounded-3xl overflow-hidden glass-card border border-indigo-500/20 bg-gradient-to-b from-black/80 via-[#0b0c16]/90 to-black/80 shadow-[0_0_60px_rgba(99,102,241,0.15)] flex flex-col justify-between p-4"
               >
-                <Suspense fallback={<div className="w-32 h-32 rounded-full border border-white/10 border-t-white animate-spin" />}>
-                  <div className="absolute inset-0 scale-[1.1] lg:scale-[1.3]">
-                    <SpaceScene />
+                {/* 3D Canvas Frame Top Bar */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-3 px-2 z-20">
+                  <div className="flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
+                    <span className="text-[11px] font-mono text-cyan-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
+                      <FiCpu /> Dev Core Engine v3.0
+                    </span>
                   </div>
-                </Suspense>
+                  <div className="flex items-center gap-2 text-[10px] font-mono text-gray-400">
+                    <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-emerald-400">
+                      60 FPS
+                    </span>
+                    <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-purple-400">
+                      WebGL 2.0
+                    </span>
+                  </div>
+                </div>
 
-                {/* Handcrafted Micro Metric Cards */}
+                {/* Main 3D Dev Core Visual Container */}
+                <div className="absolute inset-0 top-12 bottom-12 z-10 flex items-center justify-center overflow-hidden p-6">
+                  {/* Glowing 3D Workspace Image with Floating Animation */}
+                  <motion.div
+                    animate={{ y: [-8, 8, -8], rotateZ: [-1, 1, -1] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                    className="relative w-full h-full max-w-[420px] max-h-[420px] rounded-3xl overflow-hidden border border-cyan-500/30 shadow-[0_0_50px_rgba(0,245,255,0.25)] group"
+                  >
+                    <img
+                      src="/images/3d_coding_workspace.png"
+                      alt="3D Holographic Coding Workspace"
+                      className="w-full h-full object-cover rounded-3xl group-hover:scale-110 transition-transform duration-700 filter brightness-110 contrast-125"
+                    />
+
+                    {/* Holographic Scanline Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-purple-500/20 pointer-events-none mix-blend-screen" />
+                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/30 to-black/80 pointer-events-none" />
+
+                    {/* Floating Holographic Badge Labels */}
+                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full border border-cyan-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono text-cyan-300 font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
+                      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                      RAG AI CORE
+                    </div>
+                    <div className="absolute bottom-4 right-4 px-3 py-1 rounded-full border border-purple-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono text-purple-300 font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
+                      <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                      FULL-STACK MESH
+                    </div>
+                  </motion.div>
+
+                  {/* 3D Dev Core Scene overlay */}
+                  <div className="absolute inset-0 z-20 opacity-40 pointer-events-none">
+                    <Suspense fallback={null}>
+                      <DevCoreScene />
+                    </Suspense>
+                  </div>
+                </div>
+
+                {/* Handcrafted Floating HUD Stat Cards */}
                 <motion.div 
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                  className="absolute right-2 top-[15%] glass-card p-4 rounded-xl hidden sm:block border border-white/10"
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="absolute right-4 top-16 z-20 glass-card px-4 py-3 rounded-2xl border border-cyan-500/30 backdrop-blur-2xl bg-black/60 shadow-xl"
                 >
-                  <div className="text-2xl font-mono font-bold text-white mb-0.5">5+</div>
-                  <div className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider">Production Apps</div>
+                  <div className="text-2xl font-mono font-extrabold text-white mb-0.5 flex items-center gap-1">
+                    <FiZap className="text-cyan-400 text-lg" /> 5+
+                  </div>
+                  <div className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Production Apps</div>
                 </motion.div>
                 
                 <motion.div 
-                  initial={{ opacity: 0, x: -30 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                  className="absolute left-2 bottom-[15%] glass-card p-4 rounded-xl hidden sm:block border border-white/10"
+                  transition={{ delay: 0.6, duration: 0.6 }}
+                  className="absolute left-4 bottom-16 z-20 glass-card px-4 py-3 rounded-2xl border border-purple-500/30 backdrop-blur-2xl bg-black/60 shadow-xl"
                 >
-                  <div className="text-2xl font-mono font-bold text-[var(--accent)] mb-0.5">400+</div>
-                  <div className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-wider">Algorithmic Problems</div>
+                  <div className="text-2xl font-mono font-extrabold text-[var(--accent)] mb-0.5 flex items-center gap-1">
+                    <FiActivity className="text-purple-400 text-lg" /> 400+
+                  </div>
+                  <div className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">LeetCode Solved</div>
                 </motion.div>
+
+                {/* 3D Canvas Frame Bottom Bar */}
+                <div className="flex items-center justify-between border-t border-white/10 pt-3 px-2 z-20 text-[10px] font-mono text-gray-400">
+                  <span className="text-indigo-400 font-bold uppercase tracking-widest">
+                    ★ Click Core to Pulse Energy
+                  </span>
+                  <span className="text-gray-500 hidden sm:inline">
+                    Interactive Orbital Mesh
+                  </span>
+                </div>
               </motion.div>
             ) : (
               <motion.div
-                key="cli"
+                key="cli-hero"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 20 }}
                 transition={{ duration: 0.4 }}
-                className="w-full h-full max-h-[480px]"
+                className="w-full h-full max-h-[520px]"
               >
                 <HeroTerminal />
               </motion.div>
@@ -330,6 +426,5 @@ export default function Hero() {
     </section>
   )
 }
-
 
 

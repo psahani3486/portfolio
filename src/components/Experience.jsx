@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { motion } from 'framer-motion'
 import { experience } from '../data/resumeData'
 import { Briefcase } from 'lucide-react'
+
+const TimelineRoad = lazy(() => import('./three/TimelineRoad'))
 
 export default function Experience() {
   return (
@@ -25,7 +27,29 @@ export default function Experience() {
           </motion.div>
         </div>
 
-        {/* Timeline */}
+        {/* 3D Timeline Road */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <Suspense fallback={
+            <div className="w-full h-[300px] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border-2 border-white/10 border-t-[var(--accent)] animate-spin" />
+            </div>
+          }>
+            <TimelineRoad experiences={experience} />
+          </Suspense>
+          <div className="text-center mt-3">
+            <span className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-widest">
+              ↑ 3D Timeline Path · Milestones orbit along the journey
+            </span>
+          </div>
+        </motion.div>
+
+        {/* Timeline Cards */}
         <div className="relative">
           {/* Vertical Line */}
           <div className="absolute left-[28px] md:left-1/2 top-0 bottom-0 w-px bg-[var(--border-color)] md:-translate-x-1/2" />

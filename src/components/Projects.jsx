@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense, lazy } from 'react'
 import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { FiGithub, FiExternalLink, FiLayers, FiCpu, FiCheckCircle, FiX, FiActivity, FiZap } from 'react-icons/fi'
 import { projects } from '../data/resumeData'
 import FourDxTiltCard from './fourD/FourDxTiltCard'
+
+const ProjectHologram = lazy(() => import('./three/ProjectHologram'))
 
 // Interactive System Architecture Diagrams
 const SystemArchitectureDiagram = ({ projectTitle }) => {
@@ -245,13 +247,18 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
           }}
         />
 
-        {/* Left: Graphic Mockup Container */}
+        {/* Left: Graphic Mockup Container with 3D Hologram */}
         <div className="lg:w-[45%] relative bg-[#0a0a10] overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border-color)] flex items-center justify-center p-8">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/20 to-[var(--accent-purple)]/20 opacity-40 group-hover:opacity-60 transition-opacity duration-700 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20" />
+          <div className="absolute inset-0 bg-noise opacity-20" />
+
+          {/* 3D Hologram Background */}
+          <Suspense fallback={null}>
+            <ProjectHologram featured={project.featured} />
+          </Suspense>
 
           {/* Animated App Frame Mockup */}
-          <div className="relative z-10 w-full h-full max-h-[300px] rounded-2xl border border-white/10 bg-black/60 p-5 flex flex-col justify-between shadow-2xl group-hover:scale-105 transition-transform duration-700">
+          <div className="relative z-10 w-full h-full max-h-[300px] rounded-2xl border border-white/10 bg-black/60 p-5 flex flex-col justify-between shadow-2xl group-hover:scale-105 transition-transform duration-700 backdrop-blur-sm">
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-red-500/80" />

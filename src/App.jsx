@@ -22,6 +22,9 @@ import CustomCursor from './components/worldclass/CustomCursor'
 import EasterEgg from './components/worldclass/EasterEgg'
 import { LanguageProvider } from './components/worldclass/LanguageContext'
 import SmoothScroll from './components/worldclass/SmoothScroll'
+import { PerformanceProvider } from './components/three/PerformanceTier'
+import SceneManager from './components/three/SceneManager'
+import useScrollProgress from './hooks/useScrollProgress'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -49,7 +52,7 @@ function LoadingScreen() {
           className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden"
         >
           {/* Animated Noise & Glow */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] bg-[var(--accent)]/10 rounded-full blur-[100px] animate-pulse" />
 
           <div className="relative z-10 flex flex-col items-center">
@@ -83,6 +86,15 @@ function LoadingScreen() {
                 transition={{ duration: 0.2 }}
               />
             </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-6 text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-[0.3em]"
+            >
+              Initializing 3D Experience
+            </motion.div>
           </div>
         </motion.div>
       )}
@@ -90,39 +102,57 @@ function LoadingScreen() {
   )
 }
 
-function App() {
+function AppContent() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+  const { totalProgress, scrollVelocity } = useScrollProgress()
 
+  return (
+    <>
+      <LoadingScreen />
+      <CustomCursor />
+      <EasterEgg />
+      <FourDxExperience />
+      <ScrollProgress />
+
+      {/* Global 3D Scene Manager — persistent background canvas */}
+      <SceneManager
+        totalProgress={totalProgress}
+        scrollVelocity={scrollVelocity}
+      />
+
+      <div className="app bg-transparent min-h-screen transition-colors duration-500 relative z-[1]">
+        <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
+        <Hero />
+        <About />
+        <Skills />
+        <TechStack />
+        <Experience />
+        <Testimonials />
+        <Projects />
+        <Achievements />
+        <Dsa />
+        <Resume />
+        <Contact />
+        <Footer />
+        <AiAssistant />
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={setCommandPaletteOpen}
+        />
+      </div>
+    </>
+  )
+}
+
+function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <SmoothScroll>
-          <LoadingScreen />
-          <CustomCursor />
-          <EasterEgg />
-          <FourDxExperience />
-          <ScrollProgress />
-          <div className="app bg-[var(--bg-primary)] min-h-screen transition-colors duration-500">
-            <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
-            <Hero />
-            <About />
-            <Skills />
-            <TechStack />
-            <Experience />
-            <Testimonials />
-            <Projects />
-            <Achievements />
-            <Dsa />
-            <Resume />
-            <Contact />
-            <Footer />
-            <AiAssistant />
-            <CommandPalette
-              isOpen={commandPaletteOpen}
-              onClose={setCommandPaletteOpen}
-            />
-          </div>
-        </SmoothScroll>
+        <PerformanceProvider>
+          <SmoothScroll>
+            <AppContent />
+          </SmoothScroll>
+        </PerformanceProvider>
       </LanguageProvider>
     </ThemeProvider>
   )

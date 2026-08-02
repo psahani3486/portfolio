@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, Suspense, lazy } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMail, FiGithub, FiLinkedin, FiPhone, FiSend, FiExternalLink, FiCheck } from 'react-icons/fi'
 import { personalInfo } from '../data/resumeData'
+
+const ContactPortal = lazy(() => import('./three/ContactPortal'))
 
 const contactInfo = [
   { icon: <FiMail />, label: 'Email', value: personalInfo.email, href: `mailto:${personalInfo.email}` },
@@ -113,6 +115,23 @@ export default function Contact() {
             </h2>
           </motion.div>
         </div>
+
+        {/* 3D Contact Portal */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <Suspense fallback={
+            <div className="w-full h-[300px] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border-2 border-white/10 border-t-[var(--accent)] animate-spin" />
+            </div>
+          }>
+            <ContactPortal />
+          </Suspense>
+        </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-16 lg:gap-24">
           

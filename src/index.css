@@ -39,13 +39,165 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-[var(--accent)] to-[var(--accent-purple)];
   }
   .glass-panel {
-    @apply bg-[var(--glass-bg)] backdrop-blur-2xl border border-[var(--border-color)] shadow-2xl;
+    background-color: rgba(14, 14, 18, 0.85);
+    @apply backdrop-blur-2xl border border-[var(--border-color)] shadow-2xl;
   }
   .glass-card {
-    @apply bg-[var(--bg-cards)] border border-[var(--border-color)] transition-all duration-300 hover:border-white/20 hover:bg-[#16161a];
+    background-color: rgba(18, 18, 22, 0.85);
+    @apply border border-[var(--border-color)] transition-all duration-300 hover:border-white/20 hover:bg-[#18181f] backdrop-blur-xl;
   }
   .bg-noise {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+}
+
+/* ─── 3D Section Overlay Styles ─── */
+section {
+  position: relative;
+  z-index: 1;
+}
+
+/* Sections with semi-transparent backgrounds so 3D bleeds through */
+#home {
+  background: transparent;
+}
+
+#about {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(9, 9, 11, 0.92) 30%,
+    rgba(9, 9, 11, 0.92) 70%,
+    var(--bg-primary) 100%
+  );
+}
+
+#skills {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(9, 9, 11, 0.88) 20%,
+    rgba(9, 9, 11, 0.88) 80%,
+    var(--bg-primary) 100%
+  );
+}
+
+#experience {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(9, 9, 11, 0.9) 25%,
+    rgba(9, 9, 11, 0.9) 75%,
+    var(--bg-primary) 100%
+  );
+}
+
+#projects {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(9, 9, 11, 0.85) 15%,
+    rgba(9, 9, 11, 0.85) 85%,
+    var(--bg-primary) 100%
+  );
+}
+
+#contact {
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    rgba(9, 9, 11, 0.9) 20%,
+    rgba(9, 9, 11, 0.9) 80%,
+    var(--bg-primary) 100%
+  );
+}
+
+/* ─── 3D Canvas Animations ─── */
+@keyframes float-3d {
+  0%, 100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateX(2deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(var(--accent-rgb, 99, 102, 241), 0.15);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(var(--accent-rgb, 99, 102, 241), 0.3);
+  }
+}
+
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-float-3d {
+  animation: float-3d 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-scan-line {
+  animation: scan-line 3s linear infinite;
+}
+
+/* ─── 3D Holographic Effects ─── */
+.holographic-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(125, 207, 255, 0.3),
+    rgba(168, 85, 247, 0.3),
+    rgba(125, 207, 255, 0.1),
+    rgba(168, 85, 247, 0.3)
+  );
+  background-size: 400% 400%;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  animation: holographic-shift 4s ease infinite;
+}
+
+@keyframes holographic-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── Section Enter Animations ─── */
+.section-3d-enter {
+  animation: section-fade-up 0.8s ease-out forwards;
+}
+
+@keyframes section-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -71,3 +223,7 @@ html, body {
   min-height: 100vh;
 }
 
+/* 3D Canvas container */
+canvas {
+  touch-action: none;
+}

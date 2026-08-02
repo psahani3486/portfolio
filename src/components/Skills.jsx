@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion'
 import { FiCode, FiServer, FiDatabase, FiCpu, FiTool, FiLayout } from 'react-icons/fi'
 import { skillCategories } from '../data/resumeData'
 import FourDxTiltCard from './fourD/FourDxTiltCard'
 import SkillRadar from './SkillRadar'
+
+const FloatingSkillSpheres = lazy(() => import('./three/FloatingSkillSpheres'))
 
 const iconMap = {
   code: <FiCode />,
@@ -12,6 +14,17 @@ const iconMap = {
   database: <FiDatabase />,
   cpu: <FiCpu />,
   tool: <FiTool />,
+}
+
+// Map missing icons
+const iconLookup = {
+  code: <FiCode />,
+  layout: <FiLayout />,
+  server: <FiServer />,
+  database: <FiDatabase />,
+  cpu: <FiCpu />,
+  tool: <FiTool />,
+  'bar-chart': <FiCpu />,
 }
 
 const SkillCard = ({ cat, index }) => {
@@ -56,7 +69,7 @@ const SkillCard = ({ cat, index }) => {
               borderColor: `${cat.color}30` 
             }}
           >
-            {iconMap[cat.icon] || <FiCode />}
+            {iconLookup[cat.icon] || <FiCode />}
           </div>
           
           <h3 className="text-xl font-bold text-white mb-4 tracking-tight uppercase">
@@ -79,7 +92,7 @@ const SkillCard = ({ cat, index }) => {
 export default function Skills() {
   return (
     <section id="skills" className="py-32 relative overflow-hidden bg-[var(--bg-primary)]">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none" />
+      <div className="absolute inset-0 bg-noise opacity-10 mix-blend-overlay pointer-events-none" />
       
       <div className="max-w-[1400px] mx-auto px-6 relative z-10">
         
@@ -98,6 +111,28 @@ export default function Skills() {
             </h2>
           </motion.div>
         </div>
+
+        {/* 3D Interactive Skill Spheres */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.8 }}
+          className="mb-16"
+        >
+          <Suspense fallback={
+            <div className="w-full h-[400px] flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full border-2 border-white/10 border-t-[var(--accent)] animate-spin" />
+            </div>
+          }>
+            <FloatingSkillSpheres categories={skillCategories} />
+          </Suspense>
+          <div className="text-center mt-4">
+            <span className="text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-widest">
+              ↑ Hover over spheres to explore skills · Orbiting in 3D space
+            </span>
+          </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
           {skillCategories.map((cat, index) => (
