@@ -336,40 +336,29 @@ export default function Hero() {
                   </div>
                 </div>
 
-                {/* Main 3D Dev Core Visual Container */}
-                <div className="absolute inset-0 top-12 bottom-12 z-10 flex items-center justify-center overflow-hidden p-6">
-                  {/* Glowing 3D Workspace Image with Floating Animation */}
-                  <motion.div
-                    animate={{ y: [-8, 8, -8], rotateZ: [-1, 1, -1] }}
+                {/* Main 3D Dev Core Visual Container — 100% FULL COVER */}
+                <div className="absolute inset-0 z-10 w-full h-full overflow-hidden rounded-3xl group">
+                  {/* High-Definition 3D Visual Asset */}
+                  <motion.img
+                    animate={{ scale: [1, 1.03, 1] }}
                     transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                    className="relative w-full h-full max-w-[420px] max-h-[420px] rounded-3xl overflow-hidden border border-cyan-500/30 shadow-[0_0_50px_rgba(0,245,255,0.25)] group"
-                  >
-                    <img
-                      src="/images/3d_coding_workspace.png"
-                      alt="3D Holographic Coding Workspace"
-                      className="w-full h-full object-cover rounded-3xl group-hover:scale-110 transition-transform duration-700 filter brightness-110 contrast-125"
-                    />
+                    src="/images/3d_coding_workspace.png"
+                    alt="3D Holographic Coding Workspace"
+                    className="w-full h-full object-cover rounded-3xl filter brightness-115 contrast-120 group-hover:scale-108 transition-transform duration-700"
+                  />
 
-                    {/* Holographic Scanline Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-purple-500/20 pointer-events-none mix-blend-screen" />
-                    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/30 to-black/80 pointer-events-none" />
+                  {/* Holographic Cyber Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 pointer-events-none" />
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/20 to-black/80 pointer-events-none" />
 
-                    {/* Floating Holographic Badge Labels */}
-                    <div className="absolute top-4 left-4 px-3 py-1 rounded-full border border-cyan-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono text-cyan-300 font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
-                      <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                      RAG AI CORE
-                    </div>
-                    <div className="absolute bottom-4 right-4 px-3 py-1 rounded-full border border-purple-400/40 bg-black/60 backdrop-blur-md text-[10px] font-mono text-purple-300 font-bold tracking-wider flex items-center gap-1.5 shadow-lg">
-                      <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-                      FULL-STACK MESH
-                    </div>
-                  </motion.div>
-
-                  {/* 3D Dev Core Scene overlay */}
-                  <div className="absolute inset-0 z-20 opacity-40 pointer-events-none">
-                    <Suspense fallback={null}>
-                      <DevCoreScene />
-                    </Suspense>
+                  {/* Floating Holographic Badge Labels */}
+                  <div className="absolute top-16 left-4 z-20 px-3.5 py-1.5 rounded-full border border-cyan-400/40 bg-black/70 backdrop-blur-md text-[10px] font-mono text-cyan-300 font-bold tracking-wider flex items-center gap-2 shadow-2xl">
+                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                    3D NEURAL CORE ENGINE
+                  </div>
+                  <div className="absolute bottom-16 right-4 z-20 px-3.5 py-1.5 rounded-full border border-purple-400/40 bg-black/70 backdrop-blur-md text-[10px] font-mono text-purple-300 font-bold tracking-wider flex items-center gap-2 shadow-2xl">
+                    <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                    RAG & FULL-STACK MESH
                   </div>
                 </div>
 
