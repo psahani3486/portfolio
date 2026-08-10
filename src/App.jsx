@@ -23,7 +23,7 @@ import EasterEgg from './components/worldclass/EasterEgg'
 import { LanguageProvider } from './components/worldclass/LanguageContext'
 import SmoothScroll from './components/worldclass/SmoothScroll'
 import { PerformanceProvider } from './components/three/PerformanceTier'
-import SceneManager from './components/three/SceneManager'
+import AnimatedBackground from './components/AnimatedBackground'
 import useScrollProgress from './hooks/useScrollProgress'
 
 function LoadingScreen() {
@@ -114,11 +114,8 @@ function AppContent() {
       <FourDxExperience />
       <ScrollProgress />
 
-      {/* Global 3D Scene Manager — persistent background canvas */}
-      <SceneManager
-        totalProgress={totalProgress}
-        scrollVelocity={scrollVelocity}
-      />
+      {/* Global Lightweight Background */}
+      <AnimatedBackground />
 
       <div className="app bg-transparent min-h-screen transition-colors duration-500 relative z-[1]">
         <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
