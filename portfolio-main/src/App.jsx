@@ -1,0 +1,158 @@
+import React, { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import About from './components/About'
+import Skills from './components/Skills'
+import TechStack from './components/TechStack'
+import Experience from './components/Experience'
+import Projects from './components/Projects'
+import Achievements from './components/Achievements'
+import Dsa from './components/Dsa'
+import Resume from './components/Resume'
+import Contact from './components/Contact'
+import Footer from './components/Footer'
+import AiAssistant from './components/AiAssistant'
+import CommandPalette from './components/CommandPalette'
+import FourDxExperience from './components/fourD/FourDxExperience'
+import ScrollProgress from './components/ScrollProgress'
+import Testimonials from './components/Testimonials'
+import { ThemeProvider } from './components/ThemeSwitcher'
+import CustomCursor from './components/worldclass/CustomCursor'
+import EasterEgg from './components/worldclass/EasterEgg'
+import { LanguageProvider } from './components/worldclass/LanguageContext'
+import SmoothScroll from './components/worldclass/SmoothScroll'
+import { PerformanceProvider } from './components/three/PerformanceTier'
+import AnimatedBackground from './components/AnimatedBackground'
+import useScrollProgress from './hooks/useScrollProgress'
+
+function LoadingScreen() {
+  const [progress, setProgress] = useState(0)
+  const [hide, setHide] = useState(false)
+
+  useEffect(() => {
+    let current = 0
+    const interval = setInterval(() => {
+      current += Math.floor(Math.random() * 15) + 5
+      if (current >= 100) {
+        current = 100
+        clearInterval(interval)
+        setTimeout(() => setHide(true), 800)
+      }
+      setProgress(current)
+    }, 150)
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <AnimatePresence>
+      {!hide && (
+        <motion.div
+          exit={{ y: "-100%", opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }}
+          className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden"
+        >
+          {/* Animated Noise & Glow */}
+          <div className="absolute inset-0 bg-noise opacity-20 mix-blend-overlay" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[40vw] md:h-[40vw] bg-[var(--accent)]/10 rounded-full blur-[100px] animate-pulse" />
+
+          <div className="relative z-10 flex flex-col items-center">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="text-6xl md:text-8xl font-display font-bold text-white tracking-tighter mb-8 overflow-hidden"
+            >
+              <motion.div
+                initial={{ y: "100%" }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                Pankaj<span className="text-[var(--accent)]">.dev</span>
+              </motion.div>
+            </motion.div>
+
+            <div className="flex items-end gap-2 text-white">
+              <span className="text-5xl md:text-7xl font-mono font-light tracking-tighter tabular-nums">
+                {progress}
+              </span>
+              <span className="text-xl md:text-2xl font-mono text-[var(--accent)] mb-1 md:mb-2">%</span>
+            </div>
+
+            <div className="w-64 md:w-80 h-[2px] bg-white/10 mt-8 overflow-hidden">
+              <motion.div
+                className="h-full bg-[var(--accent)]"
+                initial={{ width: "0%" }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.2 }}
+              />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="mt-6 text-[10px] font-mono text-[var(--text-secondary)] uppercase tracking-[0.3em]"
+            >
+              Initializing 3D Experience
+            </motion.div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+function AppContent() {
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
+  const { totalProgress, scrollVelocity } = useScrollProgress()
+
+  return (
+    <>
+      <LoadingScreen />
+      <CustomCursor />
+      <EasterEgg />
+      <FourDxExperience />
+      <ScrollProgress />
+
+      {/* Global Lightweight Background */}
+      <AnimatedBackground />
+
+      <div className="app bg-transparent min-h-screen transition-colors duration-500 relative z-[1]">
+        <Navbar onOpenCommandPalette={setCommandPaletteOpen} />
+        <Hero />
+        <About />
+        <Skills />
+        <TechStack />
+        <Experience />
+        <Testimonials />
+        <Projects />
+        <Achievements />
+        <Dsa />
+        <Resume />
+        <Contact />
+        <Footer />
+        <AiAssistant />
+        <CommandPalette
+          isOpen={commandPaletteOpen}
+          onClose={setCommandPaletteOpen}
+        />
+      </div>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <LanguageProvider>
+        <PerformanceProvider>
+          <SmoothScroll>
+            <AppContent />
+          </SmoothScroll>
+        </PerformanceProvider>
+      </LanguageProvider>
+    </ThemeProvider>
+  )
+}
+
+export default App
