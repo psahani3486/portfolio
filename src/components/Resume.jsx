@@ -1,27 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiDownload, FiFileText, FiBarChart2, FiLayers, FiCheckCircle } from 'react-icons/fi'
+import { FiDownload, FiFileText, FiBarChart2, FiLayers, FiCheckCircle, FiLoader } from 'react-icons/fi'
 import { personalInfo } from '../data/resumeData'
+import { downloadSdeResume, downloadDataAnalystResume, downloadBothResumes, getAssetUrl } from '../utils/downloadHelper'
 import Magnetic from './worldclass/Magnetic'
 
 export default function Resume() {
-  const handleDownloadBoth = () => {
-    const link1 = document.createElement('a')
-    link1.href = personalInfo.sdeResumeUrl || '/resume.pdf'
-    link1.download = 'Pankaj_SDE_FullStack_Resume.pdf'
-    document.body.appendChild(link1)
-    link1.click()
-    document.body.removeChild(link1)
+  const [loadingType, setLoadingType] = useState(null)
 
-    setTimeout(() => {
-      const link2 = document.createElement('a')
-      link2.href = personalInfo.dataAnalystResumeUrl || '/data_analyst_Resume.pdf'
-      link2.download = 'Pankaj_DataAnalyst_BI_Resume.pdf'
-      document.body.appendChild(link2)
-      link2.click()
-      document.body.removeChild(link2)
-    }, 400)
+  const handleSdeDownload = async (e) => {
+    e.preventDefault()
+    setLoadingType('sde')
+    await downloadSdeResume()
+    setLoadingType(null)
   }
+
+  const handleDaDownload = async (e) => {
+    e.preventDefault()
+    setLoadingType('da')
+    await downloadDataAnalystResume()
+    setLoadingType(null)
+  }
+
+  const handleDownloadBoth = async (e) => {
+    e.preventDefault()
+    setLoadingType('both')
+    await downloadBothResumes()
+    setLoadingType(null)
+  }
+
+  const sdeUrl = getAssetUrl(personalInfo.sdeResumeUrl || '/resume.pdf')
+  const daUrl = getAssetUrl(personalInfo.dataAnalystResumeUrl || '/data_analyst_Resume.pdf')
 
   return (
     <section id="resume" className="py-28 relative overflow-hidden bg-[var(--bg-primary)]">
@@ -58,22 +67,32 @@ export default function Resume() {
             <div className="flex flex-wrap items-center justify-center gap-4 w-full">
               <Magnetic>
                 <a 
-                  href={personalInfo.sdeResumeUrl || '/resume.pdf'} 
+                  href={sdeUrl} 
                   download="Pankaj_SDE_FullStack_Resume.pdf"
+                  onClick={handleSdeDownload}
                   className="h-14 px-8 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-3 hover:scale-105 hover:bg-cyan-300 transition-all duration-300 shadow-xl cursor-pointer" 
                 >
-                  <FiFileText size={18} />
+                  {loadingType === 'sde' ? (
+                    <FiLoader size={18} className="animate-spin" />
+                  ) : (
+                    <FiFileText size={18} />
+                  )}
                   <span>SDE / Full-Stack PDF</span>
                 </a>
               </Magnetic>
 
               <Magnetic>
                 <a 
-                  href={personalInfo.dataAnalystResumeUrl || '/data_analyst_Resume.pdf'} 
+                  href={daUrl} 
                   download="Pankaj_DataAnalyst_BI_Resume.pdf"
+                  onClick={handleDaDownload}
                   className="h-14 px-8 rounded-full glass-panel border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider flex items-center gap-3 hover:scale-105 hover:bg-white/15 transition-all duration-300 cursor-pointer shadow-lg" 
                 >
-                  <FiBarChart2 size={18} className="text-purple-400" />
+                  {loadingType === 'da' ? (
+                    <FiLoader size={18} className="animate-spin text-purple-400" />
+                  ) : (
+                    <FiBarChart2 size={18} className="text-purple-400" />
+                  )}
                   <span>Data Analyst PDF</span>
                 </a>
               </Magnetic>
@@ -83,7 +102,11 @@ export default function Resume() {
                   onClick={handleDownloadBoth}
                   className="h-14 px-9 rounded-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600 text-white font-mono text-xs font-extrabold uppercase tracking-wider flex items-center gap-3 hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(99,102,241,0.4)] cursor-pointer" 
                 >
-                  <FiLayers size={18} />
+                  {loadingType === 'both' ? (
+                    <FiLoader size={18} className="animate-spin" />
+                  ) : (
+                    <FiLayers size={18} />
+                  )}
                   <span>⚡ Download Both PDFs</span>
                 </button>
               </Magnetic>

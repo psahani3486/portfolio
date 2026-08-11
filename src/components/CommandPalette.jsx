@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiSearch, FiCode, FiUser, FiFolder, FiMail, FiDownload, FiCpu, FiX, FiCheck, FiArrowRight } from 'react-icons/fi'
+import { FiSearch, FiCode, FiUser, FiFolder, FiMail, FiDownload, FiCpu, FiX, FiCheck, FiArrowRight, FiBarChart2, FiLayers } from 'react-icons/fi'
 import { personalInfo, projects } from '../data/resumeData'
+import { downloadSdeResume, downloadDataAnalystResume, downloadBothResumes } from '../utils/downloadHelper'
 
 export default function CommandPalette({ isOpen, onClose }) {
   const [query, setQuery] = useState('')
@@ -66,15 +67,32 @@ export default function CommandPalette({ isOpen, onClose }) {
       },
     },
     {
-      id: 'resume',
-      title: 'Download Resume (PDF)',
+      id: 'resume-sde',
+      title: 'Download SDE / Full-Stack Resume (PDF)',
       category: 'Actions',
-      icon: <FiDownload className="text-pink-400" />,
+      icon: <FiDownload className="text-cyan-400" />,
       action: () => {
-        const link = document.createElement('a')
-        link.href = personalInfo.resumeUrl
-        link.download = 'Pankaj_Resume.pdf'
-        link.click()
+        downloadSdeResume()
+        onClose(false)
+      },
+    },
+    {
+      id: 'resume-da',
+      title: 'Download Data Analyst & BI Resume (PDF)',
+      category: 'Actions',
+      icon: <FiBarChart2 className="text-purple-400" />,
+      action: () => {
+        downloadDataAnalystResume()
+        onClose(false)
+      },
+    },
+    {
+      id: 'resume-both',
+      title: 'Download Both Resumes (SDE & Data Analyst PDFs)',
+      category: 'Actions',
+      icon: <FiLayers className="text-amber-400" />,
+      action: () => {
+        downloadBothResumes()
         onClose(false)
       },
     },

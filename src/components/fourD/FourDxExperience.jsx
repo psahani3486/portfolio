@@ -23,8 +23,8 @@ export default function FourDxExperience() {
       }
     }
 
-    window.addEventListener('click', handleGlobalClick)
-    window.addEventListener('mouseover', handleGlobalHover)
+    window.addEventListener('click', handleGlobalClick, { passive: true })
+    window.addEventListener('mouseover', handleGlobalHover, { passive: true })
 
     return () => {
       window.removeEventListener('click', handleGlobalClick)

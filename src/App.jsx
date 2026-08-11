@@ -24,7 +24,6 @@ import { LanguageProvider } from './components/worldclass/LanguageContext'
 import SmoothScroll from './components/worldclass/SmoothScroll'
 import { PerformanceProvider } from './components/three/PerformanceTier'
 import AnimatedBackground from './components/AnimatedBackground'
-import useScrollProgress from './hooks/useScrollProgress'
 
 function LoadingScreen() {
   const [progress, setProgress] = useState(0)
@@ -104,7 +103,6 @@ function LoadingScreen() {
 
 function AppContent() {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false)
-  const { totalProgress, scrollVelocity } = useScrollProgress()
 
   return (
     <>

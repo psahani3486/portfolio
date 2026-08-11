@@ -12,13 +12,11 @@ const FRAME_INTERVAL = 1 / TARGET_FPS
 /* ─────────────────────────────────────────────────────────────
    HOLOGRAPHIC PARTICLE VORTEX — spiraling particles around the core
    ───────────────────────────────────────────────────────────── */
-function ParticleVortex({ accentColor, secondaryColor, count = 400 }) {
+function ParticleVortex({ accentColor, secondaryColor, count = 300 }) {
   const pointsRef = useRef()
 
-  const [positions, randoms] = useMemo(() => {
+  const positions = useMemo(() => {
     const pos = new Float32Array(count * 3)
-    const rnd = new Float32Array(count * 2)
-
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2
       const radius = 1.5 + Math.random() * 2.5
@@ -27,31 +25,15 @@ function ParticleVortex({ accentColor, secondaryColor, count = 400 }) {
       pos[i * 3] = Math.cos(angle) * radius
       pos[i * 3 + 1] = height
       pos[i * 3 + 2] = Math.sin(angle) * radius
-
-      rnd[i * 2] = Math.random() * Math.PI * 2 // phase
-      rnd[i * 2 + 1] = 0.3 + Math.random() * 0.7 // speed
     }
-
-    return [pos, rnd]
+    return pos
   }, [count])
 
   useFrame((state) => {
     if (!pointsRef.current) return
     const t = state.clock.elapsedTime
-    const posArr = pointsRef.current.geometry.attributes.position
-
-    for (let i = 0; i < count; i++) {
-      const phase = randoms[i * 2]
-      const speed = randoms[i * 2 + 1]
-      const angle = phase + t * speed * 0.5
-      const baseRadius = 1.5 + (i / count) * 2.5
-      const radius = baseRadius + Math.sin(t * 2 + phase) * 0.3
-
-      posArr.setX(i, Math.cos(angle) * radius)
-      posArr.setY(i, Math.sin(t * speed + phase) * 1.5)
-      posArr.setZ(i, Math.sin(angle) * radius)
-    }
-    posArr.needsUpdate = true
+    pointsRef.current.rotation.y = t * 0.25
+    pointsRef.current.rotation.x = Math.sin(t * 0.2) * 0.15
   })
 
   return (

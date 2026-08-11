@@ -2,6 +2,7 @@ import React, { Suspense, lazy, useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft, FiCpu, FiZap, FiActivity, FiCode } from 'react-icons/fi'
 import { personalInfo, projects, skillCategories } from '../data/resumeData'
+import { downloadSdeResume, downloadDataAnalystResume, downloadBothResumes } from '../utils/downloadHelper'
 import Magnetic from './worldclass/Magnetic'
 
 const DevCoreScene = lazy(() => import('./three/DevCoreScene'))
@@ -99,16 +100,29 @@ function HeroTerminal() {
         })
         break
       case 'resume':
+      case 'resume sde':
         newHistory.push({
           type: 'system',
-          content: '📄 Triggering resume download...',
+          content: '📄 Triggering SDE / Full-Stack resume download...',
         })
-        const link = document.createElement('a')
-        link.href = personalInfo.resumeUrl || '/resume.pdf'
-        link.download = 'Pankaj_Resume.pdf'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
+        downloadSdeResume()
+        break
+      case 'resume da':
+      case 'resume data':
+      case 'resume analyst':
+        newHistory.push({
+          type: 'system',
+          content: '📊 Triggering Data Analyst & BI resume download...',
+        })
+        downloadDataAnalystResume()
+        break
+      case 'resume both':
+      case 'resume all':
+        newHistory.push({
+          type: 'system',
+          content: '⚡ Triggering download for both resumes (SDE & Data Analyst)...',
+        })
+        downloadBothResumes()
         break
       case 'clear':
         setHistory([])
