@@ -3,8 +3,6 @@ import { Link } from 'react-scroll'
 import { motion, AnimatePresence } from 'framer-motion'
 import { navLinks } from '../data/resumeData'
 import { Menu, X } from 'lucide-react'
-import { ThemeSwitcher } from './ThemeSwitcher'
-import { LanguageToggle } from './worldclass/LanguageContext'
 import Magnetic from './worldclass/Magnetic'
 
 export default function Navbar({ onOpenCommandPalette }) {
@@ -84,8 +82,6 @@ export default function Navbar({ onOpenCommandPalette }) {
                 <span className="relative z-10">{link.name}</span>
               </Link>
             ))}
-            <div className="w-[1px] h-4 bg-white/10 mx-1" />
-            <ThemeSwitcher />
           </div>
 
           {/* Actions: Command Palette & Contact Button */}
@@ -97,7 +93,6 @@ export default function Navbar({ onOpenCommandPalette }) {
             >
               <span>⌘K</span>
             </button>
-            <LanguageToggle />
             <Magnetic>
               <Link
                 to="contact"
@@ -147,11 +142,6 @@ export default function Navbar({ onOpenCommandPalette }) {
                 </Link>
               </motion.div>
             ))}
-
-            <div className="pt-4 flex items-center gap-4">
-              <ThemeSwitcher />
-              <LanguageToggle />
-            </div>
           </motion.div>
         )}
       </AnimatePresence>

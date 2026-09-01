@@ -51,15 +51,15 @@ export default function Footer() {
               to="home" 
               smooth={true} 
               duration={1000}
-              className="w-14 h-14 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group"
+              className="w-11 h-11 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all duration-300 cursor-pointer group shadow-md"
             >
-              <FiArrowUp className="group-hover:-translate-y-1 transition-transform" />
+              <FiArrowUp size={16} className="group-hover:-translate-y-0.5 transition-transform" />
             </Link>
 
             {/* Local Time */}
-            <div className="flex items-center gap-3 glass-panel px-5 py-2.5 rounded-full">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="font-mono text-sm text-gray-300 uppercase tracking-widest flex items-center gap-2">
+            <div className="flex items-center gap-2.5 glass-panel px-4 py-2 rounded-full">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="font-mono text-xs text-gray-300 uppercase tracking-widest flex items-center gap-1.5">
                 Local Time <span className="text-white font-bold">{formatTime(time)}</span>
               </span>
             </div>

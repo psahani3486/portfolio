@@ -1,6 +1,6 @@
-import React, { Suspense, lazy, useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft, FiCpu, FiZap, FiActivity, FiCode } from 'react-icons/fi'
+import React, { Suspense, lazy, useState, useRef, useEffect, useMemo } from 'react'
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
+import { FiArrowRight, FiDownload, FiTerminal, FiGlobe, FiSend, FiCornerDownLeft, FiCpu, FiZap, FiActivity, FiCode, FiGithub, FiLinkedin } from 'react-icons/fi'
 import { personalInfo, projects, skillCategories } from '../data/resumeData'
 import { downloadSdeResume, downloadDataAnalystResume, downloadBothResumes } from '../utils/downloadHelper'
 import Magnetic from './worldclass/Magnetic'
@@ -14,6 +14,49 @@ const roles = [
   '400+ LeetCode Problem Solver',
 ]
 
+/* ═══════════════════════════════════════════════
+   CODE RAIN BACKGROUND — elegant code keywords
+   ═══════════════════════════════════════════════ */
+function CodeRain() {
+  const columns = useMemo(() => {
+    const keywords = ['const', 'let', 'async', 'await', 'return', 'import', 'export', 'function', 'class', 'if', 'for', 'map', 'filter', 'reduce', 'useState', 'useEffect', 'fetch', 'Promise', 'try', 'catch', '=>', '()', '{}', '[]', '<>', '/>', '===', '!==', '&&', '||', 'true', 'false', 'null', 'React', 'Node', 'API', 'SQL', 'AI', 'ML', 'RAG', 'LLM']
+    const cols = []
+    const count = Math.floor(window.innerWidth / 45)
+    for (let i = 0; i < count; i++) {
+      cols.push({
+        keyword: keywords[Math.floor(Math.random() * keywords.length)],
+        x: i * 45 + Math.random() * 20,
+        duration: Math.random() * 8 + 6,
+        delay: Math.random() * 5,
+        opacity: Math.random() * 0.06 + 0.02,
+      })
+    }
+    return cols
+  }, [])
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {columns.map((col, i) => (
+        <div
+          key={i}
+          className="absolute text-[9px] font-mono text-indigo-400/40 animate-matrix-fall"
+          style={{
+            left: col.x,
+            opacity: col.opacity,
+            '--fall-duration': `${col.duration}s`,
+            '--fall-delay': `${col.delay}s`,
+          }}
+        >
+          {col.keyword}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   DYNAMIC ROLE FLIPPER — cinematic text animation
+   ═══════════════════════════════════════════════ */
 function DynamicRole() {
   const [index, setIndex] = useState(0)
 
@@ -29,9 +72,9 @@ function DynamicRole() {
       <AnimatePresence mode="wait">
         <motion.div
           key={index}
-          initial={{ y: 24, opacity: 0, filter: 'blur(4px)' }}
+          initial={{ y: 28, opacity: 0, filter: 'blur(6px)' }}
           animate={{ y: 0, opacity: 1, filter: 'blur(0px)' }}
-          exit={{ y: -24, opacity: 0, filter: 'blur(4px)' }}
+          exit={{ y: -28, opacity: 0, filter: 'blur(6px)' }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           className="flex items-center gap-2"
         >
@@ -43,6 +86,114 @@ function DynamicRole() {
   )
 }
 
+/* ═══════════════════════════════════════════════
+   STAGGERED LETTER ANIMATION
+   ═══════════════════════════════════════════════ */
+function CinematicText({ text, className, delay = 0 }) {
+  return (
+    <span className={className}>
+      {text.split('').map((char, i) => (
+        <motion.span
+          key={i}
+          initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{
+            duration: 0.5,
+            delay: delay + i * 0.03,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          className="inline-block"
+          style={{ minWidth: char === ' ' ? '0.3em' : undefined }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </motion.span>
+      ))}
+    </span>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   FLOATING PHOTO CARD — with parallax & holographic border
+   ═══════════════════════════════════════════════ */
+function FloatingPhotoCard() {
+  const cardRef = useRef(null)
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setTilt({ x: y * -18, y: x * 18 })
+  }
+
+  const handleMouseLeave = () => setTilt({ x: 0, y: 0 })
+
+  return (
+    <motion.div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, scale: 0.85, y: 30 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className="relative w-full h-full flex items-center justify-center"
+      style={{ perspective: '1400px' }}
+    >
+      {/* Dynamic Background Glow behind 3D animation */}
+      <div className="absolute w-[380px] h-[500px] sm:w-[460px] sm:h-[600px] lg:w-[520px] lg:h-[680px] rounded-full bg-gradient-to-tr from-[var(--accent)]/25 via-cyan-500/20 to-purple-500/25 blur-[90px] pointer-events-none animate-pulse" style={{ animationDuration: '4s' }} />
+
+      <motion.div
+        animate={{
+          rotateX: tilt.x,
+          rotateY: tilt.y,
+        }}
+        transition={{ type: 'spring', stiffness: 180, damping: 18 }}
+        className="relative w-[320px] h-[440px] sm:w-[380px] sm:h-[520px] md:w-[420px] md:h-[570px] lg:w-[460px] lg:h-[620px] rounded-[2.5rem] overflow-hidden photo-frame shadow-[0_25px_80px_rgba(0,0,0,0.9)] border border-white/20"
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* Photo */}
+        <motion.img
+          src="/images/pankaj-workspace.png"
+          alt="Pankaj — Developer Workspace"
+          className="w-full h-full object-cover rounded-[2.5rem] filter brightness-105 contrast-105"
+          whileHover={{ scale: 1.04 }}
+          transition={{ duration: 0.6 }}
+        />
+
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10 rounded-[2.5rem] pointer-events-none" />
+
+        {/* Scan line */}
+        <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] pointer-events-none">
+          <div
+            className="absolute left-0 right-0 h-[2.5px] bg-gradient-to-r from-transparent via-cyan-400/90 to-transparent animate-scan-line shadow-[0_0_12px_#22d3ee]"
+          />
+        </div>
+
+        {/* Bottom info overlay */}
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 z-10">
+          <div className="text-white font-display font-bold text-2xl sm:text-3xl tracking-tight drop-shadow-lg">Pankaj Sahani</div>
+          <div className="text-xs sm:text-sm font-mono text-cyan-300 uppercase tracking-widest font-semibold mt-1">NSUT • CSE • Full-Stack & AI</div>
+        </div>
+
+        {/* Floating HUD badge */}
+        <motion.div
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-6 right-6 z-10 px-4 py-2 rounded-full border border-emerald-500/50 bg-black/75 backdrop-blur-xl text-xs font-mono text-emerald-300 font-bold flex items-center gap-2 shadow-xl"
+        >
+          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+          AVAILABLE FOR ROLES
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   INTERACTIVE HERO TERMINAL
+   ═══════════════════════════════════════════════ */
 function HeroTerminal() {
   const [history, setHistory] = useState([
     { type: 'system', content: 'Pankaj Dev CLI v2.5 [Type "help" for commands]' },
@@ -186,31 +337,48 @@ function HeroTerminal() {
   )
 }
 
+/* ═══════════════════════════════════════════════
+   MAIN HERO SECTION
+   ═══════════════════════════════════════════════ */
 export default function Hero() {
-  const [viewMode, setViewMode] = useState('3d') // '3d' | 'cli'
+  const [viewMode, setViewMode] = useState('photo') // 'photo' | 'cli'
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end start'],
+  })
+  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+
+  // Staggered tech badges
+  const techBadges = ['React', 'Next.js', 'FastAPI', 'Python', 'PyTorch', 'RAG AI', 'PostgreSQL', 'DSA 400+']
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section id="home" ref={sectionRef} className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
       
-      {/* Background Ambient Spotlights & Cyber Lines */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] left-[15%] w-[55vw] h-[55vw] rounded-full bg-[var(--accent)]/15 blur-[160px] animate-pulse" />
-        <div className="absolute top-[25%] -right-[15%] w-[45vw] h-[45vw] rounded-full bg-[var(--accent-purple)]/15 blur-[160px] animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
-      </div>
+      {/* Code Rain Background */}
+      <CodeRain />
 
-      <div className="max-w-[1380px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      {/* Background Ambient Spotlights */}
+      <motion.div className="absolute inset-0 z-0 overflow-hidden pointer-events-none" style={{ y: bgY }}>
+        <div className="absolute -top-[20%] left-[10%] w-[55vw] h-[55vw] rounded-full bg-[var(--accent)]/12 blur-[180px] animate-aurora" />
+        <div className="absolute top-[25%] -right-[15%] w-[45vw] h-[45vw] rounded-full bg-[var(--accent-purple)]/12 blur-[160px] animate-aurora" style={{ animationDelay: '3s' }} />
+        <div className="absolute bottom-[10%] left-[40%] w-[30vw] h-[30vw] rounded-full bg-cyan-500/6 blur-[140px] animate-aurora" style={{ animationDelay: '6s' }} />
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff06_1px,transparent_1px)] [background-size:28px_28px] opacity-30" />
+      </motion.div>
+
+      <div className="max-w-[1440px] mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
         
-        {/* Left Column: Futuristic Swiss Typography & CTAs */}
-        <div className="lg:col-span-7 flex flex-col items-start pt-4 lg:pt-0">
+        {/* Left Column: Cinematic Typography & CTAs */}
+        <div className="lg:col-span-6 flex flex-col items-start pt-4 lg:pt-0">
           
           {/* Status Badge & Mode Switcher */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-xl flex items-center gap-2.5 shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+              initial={{ opacity: 0, scale: 0.9, x: -20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 backdrop-blur-xl flex items-center gap-2.5 shadow-[0_0_25px_rgba(16,185,129,0.15)] animate-neon-pulse"
+              style={{ '--neon-color': 'rgba(16, 185, 129, 0.3)' }}
             >
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
               <span className="text-xs font-mono font-semibold tracking-wider uppercase text-emerald-300">
@@ -219,16 +387,21 @@ export default function Hero() {
             </motion.div>
 
             {/* Mode Switcher Pill */}
-            <div className="p-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-xl flex items-center gap-1 shadow-lg">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="p-1 rounded-full border border-white/15 bg-black/60 backdrop-blur-xl flex items-center gap-1 shadow-lg"
+            >
               <button
-                onClick={() => setViewMode('3d')}
+                onClick={() => setViewMode('photo')}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
-                  viewMode === '3d'
+                  viewMode === 'photo'
                     ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold shadow-[0_0_15px_rgba(99,102,241,0.5)]'
                     : 'text-gray-400 hover:text-white'
                 }`}
               >
-                <FiGlobe size={14} /> 3D DEV CORE
+                <FiGlobe size={14} /> PORTFOLIO
               </button>
               <button
                 onClick={() => setViewMode('cli')}
@@ -240,57 +413,70 @@ export default function Hero() {
               >
                 <FiTerminal size={14} /> TERMINAL CLI
               </button>
-            </div>
+            </motion.div>
           </div>
 
           {/* Dynamic Greeting */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
             className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-[var(--accent)] mb-3 font-semibold flex items-center gap-2"
           >
             <FiCode className="animate-spin text-cyan-400" style={{ animationDuration: '6s' }} />
             <span>Computer Science Engineer @ NSUT</span>
           </motion.div>
 
-          {/* Main Title */}
+          {/* Cinematic Main Title — letter by letter */}
           <h1 className="text-5xl md:text-7xl lg:text-[5.8rem] font-display font-black leading-[1.05] tracking-tighter mb-4 uppercase">
-            <span className="text-white block">HI, I'M</span>
-            <span className="bg-gradient-to-r from-white via-cyan-200 to-[var(--accent)] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(99,102,241,0.3)] block">
-              {personalInfo.name}
+            <CinematicText text="HI, I'M" className="text-white block" delay={0.2} />
+            <span className="block">
+              <CinematicText 
+                text={personalInfo.name}
+                className="bg-gradient-to-r from-white via-cyan-200 to-[var(--accent)] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(99,102,241,0.3)]"
+                delay={0.5}
+              />
             </span>
           </h1>
 
           {/* Dynamic Role Flipper */}
-          <div className="mb-6 py-1 px-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="mb-6 py-1 px-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md"
+          >
             <DynamicRole />
-          </div>
+          </motion.div>
 
           {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
             className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-8 font-normal"
           >
             Engineering full-stack architectures, predictive AI models, anti-hallucination RAG frameworks, and high-performance business intelligence applications.
           </motion.p>
 
-          {/* Floating Tech Badges */}
+          {/* Floating Tech Badges — staggered */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
             className="flex flex-wrap gap-2 mb-10"
           >
-            {['React', 'Next.js', 'FastAPI', 'Python', 'PyTorch', 'RAG AI', 'PostgreSQL', 'DSA 400+'].map((tech, i) => (
-              <span
+            {techBadges.map((tech, i) => (
+              <motion.span
                 key={i}
-                className="px-3 py-1 text-xs font-mono rounded-lg border border-white/10 bg-white/5 text-gray-300 backdrop-blur-md hover:border-[var(--accent)]/50 hover:text-white transition-all shadow-sm"
+                initial={{ opacity: 0, y: 15, scale: 0.9 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.4, delay: 1 + i * 0.06 }}
+                whileHover={{ scale: 1.08, borderColor: 'rgba(99, 102, 241, 0.5)' }}
+                className="px-3 py-1.5 text-xs font-mono rounded-lg border border-white/10 bg-white/5 text-gray-300 backdrop-blur-md hover:text-white transition-all shadow-sm cursor-default"
               >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </motion.div>
 
@@ -298,118 +484,60 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 1.3 }}
             className="flex flex-wrap items-center gap-4"
           >
             <Magnetic>
               <button
                 onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-13 px-8 rounded-full bg-gradient-to-r from-white via-gray-100 to-gray-200 text-black font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transition-all duration-300 cursor-pointer shadow-xl"
+                className="group h-13 px-8 rounded-full bg-gradient-to-r from-white via-gray-100 to-gray-200 text-black font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:scale-105 hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all duration-300 cursor-pointer shadow-xl relative overflow-hidden"
               >
-                Explore Projects <FiArrowRight size={16} />
+                <span className="relative z-10 flex items-center gap-3">
+                  Explore Projects <FiArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                </span>
               </button>
             </Magnetic>
             <Magnetic>
               <button 
                 onClick={() => document.getElementById('resume')?.scrollIntoView({ behavior: 'smooth' })}
-                className="h-13 px-8 rounded-full glass-panel text-white font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:bg-white/15 hover:border-white/30 transition-all cursor-pointer shadow-lg"
+                className="h-13 px-8 rounded-full glass-panel text-white font-mono text-xs uppercase tracking-wider font-bold flex items-center gap-3 hover:bg-white/15 hover:border-white/30 transition-all cursor-pointer shadow-lg neon-glow"
               >
                 Get Resume <FiDownload size={16} />
               </button>
             </Magnetic>
           </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.6 }}
+            className="flex items-center gap-3 mt-8"
+          >
+            <a href={personalInfo.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+              <FiGithub size={16} />
+            </a>
+            <a href={personalInfo.linkedin} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">
+              <FiLinkedin size={16} />
+            </a>
+            <div className="h-px w-12 bg-gradient-to-r from-white/20 to-transparent ml-2" />
+            <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Connect with me</span>
+          </motion.div>
         </div>
 
-        {/* Right Column: Prominent Interactive 3D Quantum Core Container */}
-        <div className="lg:col-span-5 relative h-[520px] lg:h-[620px] w-full flex items-center justify-center">
+        {/* Right Column: Photo / CLI Switcher */}
+        <div className="lg:col-span-6 relative h-[560px] lg:h-[700px] w-full flex items-center justify-center">
           <AnimatePresence mode="wait">
-            {viewMode === '3d' ? (
+            {viewMode === 'photo' ? (
               <motion.div
-                key="3d-hero"
+                key="photo-hero"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.5 }}
-                className="w-full h-full relative rounded-3xl overflow-hidden glass-card border border-indigo-500/20 bg-gradient-to-b from-black/80 via-[#0b0c16]/90 to-black/80 shadow-[0_0_60px_rgba(99,102,241,0.15)] flex flex-col justify-between p-4"
+                className="w-full h-full relative flex items-center justify-center"
               >
-                {/* 3D Canvas Frame Top Bar */}
-                <div className="flex items-center justify-between border-b border-white/10 pb-3 px-2 z-20">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-                    <span className="text-[11px] font-mono text-cyan-300 font-bold uppercase tracking-wider flex items-center gap-1.5">
-                      <FiCpu /> Dev Core Engine v3.0
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[10px] font-mono text-gray-400">
-                    <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-emerald-400">
-                      60 FPS
-                    </span>
-                    <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-purple-400">
-                      WebGL 2.0
-                    </span>
-                  </div>
-                </div>
-
-                {/* Main 3D Dev Core Visual Container — 100% FULL COVER */}
-                <div className="absolute inset-0 z-10 w-full h-full overflow-hidden rounded-3xl group">
-                  {/* High-Definition 3D Visual Asset */}
-                  <motion.img
-                    animate={{ scale: [1, 1.03, 1] }}
-                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                    src="/images/3d_coding_workspace.png"
-                    alt="3D Holographic Coding Workspace"
-                    className="w-full h-full object-cover rounded-3xl filter brightness-115 contrast-120 group-hover:scale-108 transition-transform duration-700"
-                  />
-
-                  {/* Holographic Cyber Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/60 pointer-events-none" />
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent via-black/20 to-black/80 pointer-events-none" />
-
-                  {/* Floating Holographic Badge Labels */}
-                  <div className="absolute top-16 left-4 z-20 px-3.5 py-1.5 rounded-full border border-cyan-400/40 bg-black/70 backdrop-blur-md text-[10px] font-mono text-cyan-300 font-bold tracking-wider flex items-center gap-2 shadow-2xl">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
-                    3D NEURAL CORE ENGINE
-                  </div>
-                  <div className="absolute bottom-16 right-4 z-20 px-3.5 py-1.5 rounded-full border border-purple-400/40 bg-black/70 backdrop-blur-md text-[10px] font-mono text-purple-300 font-bold tracking-wider flex items-center gap-2 shadow-2xl">
-                    <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
-                    RAG & FULL-STACK MESH
-                  </div>
-                </div>
-
-                {/* Handcrafted Floating HUD Stat Cards */}
-                <motion.div 
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4, duration: 0.6 }}
-                  className="absolute right-4 top-16 z-20 glass-card px-4 py-3 rounded-2xl border border-cyan-500/30 backdrop-blur-2xl bg-black/60 shadow-xl"
-                >
-                  <div className="text-2xl font-mono font-extrabold text-white mb-0.5 flex items-center gap-1">
-                    <FiZap className="text-cyan-400 text-lg" /> 5+
-                  </div>
-                  <div className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">Production Apps</div>
-                </motion.div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.6, duration: 0.6 }}
-                  className="absolute left-4 bottom-16 z-20 glass-card px-4 py-3 rounded-2xl border border-purple-500/30 backdrop-blur-2xl bg-black/60 shadow-xl"
-                >
-                  <div className="text-2xl font-mono font-extrabold text-[var(--accent)] mb-0.5 flex items-center gap-1">
-                    <FiActivity className="text-purple-400 text-lg" /> 400+
-                  </div>
-                  <div className="text-[10px] font-mono text-gray-400 uppercase tracking-wider">LeetCode Solved</div>
-                </motion.div>
-
-                {/* 3D Canvas Frame Bottom Bar */}
-                <div className="flex items-center justify-between border-t border-white/10 pt-3 px-2 z-20 text-[10px] font-mono text-gray-400">
-                  <span className="text-indigo-400 font-bold uppercase tracking-widest">
-                    ★ Click Core to Pulse Energy
-                  </span>
-                  <span className="text-gray-500 hidden sm:inline">
-                    Interactive Orbital Mesh
-                  </span>
-                </div>
+                <FloatingPhotoCard />
               </motion.div>
             ) : (
               <motion.div
@@ -429,5 +557,3 @@ export default function Hero() {
     </section>
   )
 }
-
-

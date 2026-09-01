@@ -84,9 +84,11 @@ export default function Testimonials() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 bg-[var(--accent)]/10 rounded-full blur-[80px] pointer-events-none" />
 
               <div className="relative z-10">
-                <span className="text-5xl mb-6 block">{t.avatar}</span>
+                <div className="w-12 h-12 mx-auto rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl mb-4 shadow-sm backdrop-blur-md">
+                  <span>{t.avatar}</span>
+                </div>
 
-                <blockquote className="text-lg md:text-xl text-gray-300 leading-relaxed mb-8 italic max-w-2xl mx-auto">
+                <blockquote className="text-base md:text-lg text-gray-300 leading-relaxed mb-6 italic max-w-2xl mx-auto">
                   "{t.quote}"
                 </blockquote>
 
