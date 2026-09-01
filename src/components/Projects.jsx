@@ -273,7 +273,7 @@ const ProjectModal = ({ project, onClose }) => {
 }
 
 /* ═══════════════════════════════════════════════
-   PROJECT CARD — with holographic effects
+   PROJECT CARD — Vertical layout with holographic effects
    ═══════════════════════════════════════════════ */
 const ProjectCard = ({ project, index, onOpenModal }) => {
   const mouseX = useMotionValue(0)
@@ -288,12 +288,12 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
   return (
     <FourDxTiltCard tiltIntensity={6}>
       <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.98 }}
+        initial={{ opacity: 0, y: 30, scale: 0.98 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, margin: "-60px" }}
+        transition={{ duration: 0.5, delay: index * 0.07, ease: [0.16, 1, 0.3, 1] }}
         onMouseMove={handleMouseMove}
-        className="group relative rounded-2xl overflow-hidden glass-card flex flex-col lg:flex-row min-h-[320px] h-full gradient-border-card"
+        className="group relative rounded-2xl overflow-hidden glass-card flex flex-col h-full min-h-[460px] gradient-border-card"
       >
         {/* Interactive Glow */}
         <motion.div
@@ -301,7 +301,7 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
           style={{
             background: useMotionTemplate`
               radial-gradient(
-                500px circle at ${mouseX}px ${mouseY}px,
+                400px circle at ${mouseX}px ${mouseY}px,
                 rgba(255,255,255,0.06),
                 transparent 40%
               )
@@ -309,8 +309,8 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
           }}
         />
 
-        {/* Left: Graphic Mockup Container with 3D Hologram */}
-        <div className="lg:w-[38%] relative bg-[#060610] overflow-hidden border-b lg:border-b-0 lg:border-r border-[var(--border-color)] flex items-center justify-center p-5 md:p-6">
+        {/* Top: Graphic Mockup Container with 3D Hologram */}
+        <div className="relative h-48 sm:h-52 bg-[#060610] overflow-hidden border-b border-[var(--border-color)] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)]/15 to-[var(--accent-purple)]/15 opacity-40 group-hover:opacity-70 transition-opacity duration-700 mix-blend-overlay" />
           <div className="absolute inset-0 bg-noise opacity-15" />
 
@@ -321,11 +321,11 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
 
           {/* Animated App Frame Mockup */}
           <motion.div
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.4 }}
-            className="relative z-10 w-full rounded-xl border border-white/10 bg-black/60 p-4 flex flex-col justify-between shadow-xl backdrop-blur-sm"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+            className="relative z-10 w-full max-w-[280px] rounded-xl border border-white/10 bg-black/60 p-3 flex flex-col justify-between shadow-xl backdrop-blur-sm"
           >
-            <div className="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2">
+            <div className="flex items-center justify-between border-b border-white/10 pb-1.5 mb-1.5">
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-red-500/80" />
                 <span className="w-2 h-2 rounded-full bg-yellow-500/80" />
@@ -334,45 +334,45 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
               <span className="text-[9px] font-mono text-cyan-400 tracking-wider uppercase">System Architecture</span>
             </div>
 
-            <div className="flex-1 flex flex-col items-center justify-center my-3">
+            <div className="flex items-center justify-center gap-3 my-2">
               <AnimatedProjectIcon emoji={project.emoji} featured={project.featured} />
-              <div className="text-[11px] font-mono text-white font-bold uppercase tracking-wider text-center mt-2.5">
+              <div className="text-[11px] font-mono text-white font-bold uppercase tracking-wider text-left">
                 {project.title.split('—')[0]}
               </div>
             </div>
 
             <motion.button
-              whileHover={{ backgroundColor: 'var(--accent)' }}
+              whileHover={{ backgroundColor: 'var(--accent)', color: '#000' }}
               onClick={() => onOpenModal(project)}
-              className="w-full py-2 rounded-lg bg-white/10 font-mono text-[11px] font-bold transition-all text-white flex items-center justify-center gap-1.5 cursor-pointer hover:text-black mt-1"
+              className="w-full py-1.5 rounded-lg bg-white/10 font-mono text-[10px] font-bold transition-all text-white flex items-center justify-center gap-1.5 cursor-pointer mt-1"
             >
-              <FiLayers size={13} /> View Architecture & Flow
+              <FiLayers size={12} /> View Architecture & Flow
             </motion.button>
           </motion.div>
         </div>
 
-        {/* Right: Content */}
-        <div className="lg:w-[62%] p-5 md:p-6 lg:p-8 flex flex-col justify-center relative z-30">
+        {/* Bottom: Content */}
+        <div className="p-5 md:p-6 flex flex-col flex-1 relative z-30">
 
           {project.featured && (
             <motion.div
-              initial={{ opacity: 0, x: -15 }}
+              initial={{ opacity: 0, x: -10 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.15 }}
-              className="mb-2"
+              transition={{ delay: 0.1 }}
+              className="mb-2.5"
             >
-              <span className="px-3 py-1 text-[10px] font-mono font-bold tracking-widest uppercase rounded-full bg-[var(--accent)] text-black animate-neon-pulse">
+              <span className="inline-block px-2.5 py-0.5 text-[9px] font-mono font-bold tracking-widest uppercase rounded-full bg-[var(--accent)] text-black animate-neon-pulse">
                 Featured Project
               </span>
             </motion.div>
           )}
 
-          <h3 className="text-lg md:text-xl lg:text-2xl font-display font-bold text-white mb-2 leading-tight uppercase tracking-tight">
+          <h3 className="text-base sm:text-lg font-display font-bold text-white mb-2 leading-tight uppercase tracking-tight line-clamp-2">
             {project.title}
           </h3>
 
-          <p className="text-xs md:text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
+          <p className="text-xs text-[var(--text-secondary)] leading-relaxed mb-4 flex-1 line-clamp-3">
             {project.description}
           </p>
 
@@ -383,32 +383,32 @@ const ProjectCard = ({ project, index, onOpenModal }) => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.03 }}
+                transition={{ delay: i * 0.02 }}
                 whileHover={{ scale: 1.05, borderColor: 'rgba(99, 102, 241, 0.4)' }}
-                className="px-2.5 py-0.5 text-[11px] font-mono rounded-md border border-white/10 bg-white/5 text-gray-300 cursor-default transition-all"
+                className="px-2 py-0.5 text-[10px] font-mono rounded-md border border-white/10 bg-white/5 text-gray-300 cursor-default transition-all"
               >
                 {t}
               </motion.span>
             ))}
           </div>
 
-          <div className="flex items-center gap-4 mt-auto pt-4 border-t border-white/5">
+          <div className="flex items-center gap-3 mt-auto pt-3.5 border-t border-white/5">
             <motion.button
               whileHover={{ scale: 1.03 }}
               onClick={() => onOpenModal(project)}
-              className="text-[11px] font-mono font-bold uppercase tracking-widest text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
+              className="text-[10px] font-mono font-bold uppercase tracking-widest text-[var(--accent)] hover:underline flex items-center gap-1 cursor-pointer"
             >
-              System Deep Dive ➔
+              Deep Dive ➔
             </motion.button>
 
             {project.githubUrl !== '#' && (
-              <motion.a whileHover={{ scale: 1.08 }} href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors ml-auto">
-                <FiGithub size={14} /> Code
+              <motion.a whileHover={{ scale: 1.08 }} href={project.githubUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors ml-auto">
+                <FiGithub size={13} /> Code
               </motion.a>
             )}
             {project.liveUrl !== '#' && (
-              <motion.a whileHover={{ scale: 1.08 }} href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors">
-                <FiExternalLink size={14} /> Demo
+              <motion.a whileHover={{ scale: 1.08 }} href={project.liveUrl} target="_blank" rel="noreferrer" className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest text-white hover:text-[var(--accent)] transition-colors">
+                <FiExternalLink size={13} /> Live
               </motion.a>
             )}
           </div>
@@ -467,7 +467,7 @@ export default function Projects() {
           </motion.div>
         </div>
 
-        <div className="flex flex-col gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {projects.map((project, index) => (
             <ProjectCard
               key={index}

@@ -9,14 +9,12 @@ import Experience from './components/Experience'
 import Projects from './components/Projects'
 import Achievements from './components/Achievements'
 import Dsa from './components/Dsa'
-import Resume from './components/Resume'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import AiAssistant from './components/AiAssistant'
 import CommandPalette from './components/CommandPalette'
 import FourDxExperience from './components/fourD/FourDxExperience'
 import ScrollProgress from './components/ScrollProgress'
-import Testimonials from './components/Testimonials'
 import { ThemeProvider } from './components/ThemeSwitcher'
 import CustomCursor from './components/worldclass/CustomCursor'
 import EasterEgg from './components/worldclass/EasterEgg'
@@ -270,11 +268,9 @@ function AppContent() {
         <Skills />
         <TechStack />
         <Experience />
-        <Testimonials />
         <Projects />
         <Achievements />
         <Dsa />
-        <Resume />
         <Contact />
         <Footer />
         <AiAssistant />

@@ -33,14 +33,14 @@ export default function CustomCursor() {
       mouseX.set(e.clientX)
       mouseY.set(e.clientY)
 
-      // Spawn trail particles every 75ms
+      // Spawn trail particles every 120ms for subtle calm effect
       const now = Date.now()
-      if (now - lastTrailTime > 75) {
+      if (now - lastTrailTime > 120) {
         lastTrailTime = now
         const id = trailIdRef.current++
         setTrails(prev => {
           const next = [...prev, { id, x: e.clientX, y: e.clientY }]
-          if (next.length > 6) next.shift()
+          if (next.length > 4) next.shift()
           return next
         })
       }

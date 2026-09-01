@@ -26,9 +26,9 @@ function CodeRain() {
       cols.push({
         keyword: keywords[Math.floor(Math.random() * keywords.length)],
         x: i * 45 + Math.random() * 20,
-        duration: Math.random() * 8 + 6,
-        delay: Math.random() * 5,
-        opacity: Math.random() * 0.06 + 0.02,
+        duration: Math.random() * 12 + 14,
+        delay: Math.random() * 6,
+        opacity: Math.random() * 0.04 + 0.015,
       })
     }
     return cols
@@ -87,19 +87,28 @@ function DynamicRole() {
 }
 
 /* ═══════════════════════════════════════════════
-   STAGGERED LETTER ANIMATION
+   STAGGERED LETTER ANIMATION — Fast & Crisp
    ═══════════════════════════════════════════════ */
 function CinematicText({ text, className, delay = 0 }) {
   return (
-    <span className={className}>
+    <motion.span
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.35,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+      }}
+      className={className}
+    >
       {text.split('').map((char, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 40, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{
-            duration: 0.5,
-            delay: delay + i * 0.03,
+            duration: 0.25,
+            delay: delay + i * 0.015,
             ease: [0.16, 1, 0.3, 1],
           }}
           className="inline-block"
@@ -108,7 +117,7 @@ function CinematicText({ text, className, delay = 0 }) {
           {char === ' ' ? '\u00A0' : char}
         </motion.span>
       ))}
-    </span>
+    </motion.span>
   )
 }
 
@@ -420,21 +429,21 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.02 }}
             className="text-xs md:text-sm font-mono uppercase tracking-[0.3em] text-[var(--accent)] mb-3 font-semibold flex items-center gap-2"
           >
             <FiCode className="animate-spin text-cyan-400" style={{ animationDuration: '6s' }} />
             <span>Computer Science Engineer @ NSUT</span>
           </motion.div>
 
-          {/* Cinematic Main Title — letter by letter */}
+          {/* Cinematic Main Title — instant & responsive */}
           <h1 className="text-5xl md:text-7xl lg:text-[5.8rem] font-display font-black leading-[1.05] tracking-tighter mb-4 uppercase">
-            <CinematicText text="HI, I'M" className="text-white block" delay={0.2} />
+            <CinematicText text="HI, I'M" className="text-white block" delay={0.04} />
             <span className="block">
               <CinematicText 
                 text={personalInfo.name}
                 className="bg-gradient-to-r from-white via-cyan-200 to-[var(--accent)] bg-clip-text text-transparent drop-shadow-[0_0_35px_rgba(99,102,241,0.3)]"
-                delay={0.5}
+                delay={0.08}
               />
             </span>
           </h1>
@@ -443,7 +452,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-6 py-1 px-4 rounded-xl bg-white/5 border border-white/10 backdrop-blur-md"
           >
             <DynamicRole />
@@ -453,7 +462,7 @@ export default function Hero() {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
             className="text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed max-w-xl mb-8 font-normal"
           >
             Engineering full-stack architectures, predictive AI models, anti-hallucination RAG frameworks, and high-performance business intelligence applications.
@@ -463,7 +472,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-wrap gap-2 mb-10"
           >
             {techBadges.map((tech, i) => (
@@ -471,7 +480,7 @@ export default function Hero() {
                 key={i}
                 initial={{ opacity: 0, y: 15, scale: 0.9 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ duration: 0.4, delay: 1 + i * 0.06 }}
+                transition={{ duration: 0.3, delay: 0.4 + i * 0.04 }}
                 whileHover={{ scale: 1.08, borderColor: 'rgba(99, 102, 241, 0.5)' }}
                 className="px-3 py-1.5 text-xs font-mono rounded-lg border border-white/10 bg-white/5 text-gray-300 backdrop-blur-md hover:text-white transition-all shadow-sm cursor-default"
               >
@@ -484,7 +493,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
+            transition={{ duration: 0.5, delay: 0.55 }}
             className="flex flex-wrap items-center gap-4"
           >
             <Magnetic>
@@ -511,7 +520,7 @@ export default function Hero() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1.6 }}
+            transition={{ delay: 0.65 }}
             className="flex items-center gap-3 mt-8"
           >
             <a href={personalInfo.github} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-gray-400 hover:text-white hover:border-white/30 hover:bg-white/10 transition-all">

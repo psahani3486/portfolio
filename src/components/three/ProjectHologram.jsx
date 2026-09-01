@@ -18,20 +18,20 @@ function HologramPanel({ width = 3, height = 2, accentColor, secondaryColor, fea
     if (!groupRef.current) return
     const t = state.clock.elapsedTime
 
-    // Gentle floating
-    groupRef.current.position.y = Math.sin(t * 1.2) * 0.08
-    groupRef.current.rotation.y = Math.sin(t * 0.5) * 0.05
-    groupRef.current.rotation.x = Math.cos(t * 0.3) * 0.02
+    // Gentle, calm floating
+    groupRef.current.position.y = Math.sin(t * 0.6) * 0.05
+    groupRef.current.rotation.y = Math.sin(t * 0.25) * 0.03
+    groupRef.current.rotation.x = Math.cos(t * 0.15) * 0.015
 
     // Scan line moving down the panel
     if (scanRef.current) {
-      const scanY = ((t * 0.8) % 1) * height - height / 2
+      const scanY = ((t * 0.35) % 1) * height - height / 2
       scanRef.current.position.y = scanY
     }
 
     // Frame pulse for featured
     if (frameRef.current && featured) {
-      const pulse = 1 + Math.sin(t * 2) * 0.02
+      const pulse = 1 + Math.sin(t * 1.2) * 0.015
       frameRef.current.scale.set(pulse, pulse, 1)
     }
   })
