@@ -47,8 +47,21 @@ export default function AnimatedBackground() {
     window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
     let time = 0
-    const animate = () => {
-      time += 0.005
+    let lastTime = performance.now()
+    const TARGET_FPS = 35
+    const FRAME_INTERVAL = 1000 / TARGET_FPS
+
+    const animate = (currentTime) => {
+      animationRef.current = requestAnimationFrame(animate)
+
+      if (!currentTime) currentTime = performance.now()
+      const elapsed = currentTime - lastTime
+
+      if (elapsed < FRAME_INTERVAL) return
+
+      lastTime = currentTime - (elapsed % FRAME_INTERVAL)
+      time += 0.007
+
       const { width, height } = canvas
       ctx.clearRect(0, 0, width, height)
 
@@ -87,7 +100,7 @@ export default function AnimatedBackground() {
 
       // Particles
       const particles = particlesRef.current
-      const connectionDist = 120
+      const connectionDist = 110
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
@@ -96,8 +109,8 @@ export default function AnimatedBackground() {
         const dx = mx * width - p.x
         const dy = my * height - p.y
         const dist = Math.sqrt(dx * dx + dy * dy)
-        if (dist < 200) {
-          const force = (200 - dist) / 200 * 0.002
+        if (dist < 180) {
+          const force = (180 - dist) / 180 * 0.002
           p.vx += dx * force
           p.vy += dy * force
         }
@@ -109,7 +122,7 @@ export default function AnimatedBackground() {
         // Move
         p.x += p.vx
         p.y += p.vy
-        p.pulse += 0.02
+        p.pulse += 0.03
 
         // Wrap
         if (p.x < 0) p.x = width
@@ -131,7 +144,7 @@ export default function AnimatedBackground() {
           const cdy = p.y - p2.y
           const cdist = Math.sqrt(cdx * cdx + cdy * cdy)
           if (cdist < connectionDist) {
-            const lineOp = (1 - cdist / connectionDist) * 0.12
+            const lineOp = (1 - cdist / connectionDist) * 0.1
             ctx.beginPath()
             ctx.moveTo(p.x, p.y)
             ctx.lineTo(p2.x, p2.y)
@@ -141,14 +154,12 @@ export default function AnimatedBackground() {
           }
         }
       }
-
-      animationRef.current = requestAnimationFrame(animate)
     }
 
-    animate()
+    animationRef.current = requestAnimationFrame(animate)
 
     return () => {
-      cancelAnimationFrame(animationRef.current)
+      if (animationRef.current) cancelAnimationFrame(animationRef.current)
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', handleMouseMove)
     }
