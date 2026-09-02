@@ -46,7 +46,7 @@ export default function Dsa() {
             transition={{ duration: 0.6 }}
           >
             <span className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-3 block font-semibold">
-              [ 08 / ALGORITHMIC MASTERY & OPEN SOURCE ]
+              [ 07 / ALGORITHMIC MASTERY & OPEN SOURCE ]
             </span>
             <h2 className="text-5xl md:text-6xl font-display font-black uppercase tracking-tighter text-white">
               Data Structures &amp; <span className="text-gradient">Open Source</span>
@@ -193,7 +193,7 @@ export default function Dsa() {
                   </div>
                 </div>
                 <span className="px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold">
-                  ACTIVE COMMITER
+                  ACTIVE COMMITTER
                 </span>
               </div>
 

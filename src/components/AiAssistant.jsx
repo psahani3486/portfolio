@@ -47,7 +47,7 @@ const knowledgeBase = [
     keywords: ['education', 'college', 'university', 'nsut', 'degree', 'study', 'school'],
     response: `📚 **Education:**\n\n${education
       .map((e) => `• ${e.degree} — ${e.institution} (${e.year})`)
-      .join('\n')}\n\nCurrently a 4th year B.Tech CSE student at NSUT!`,
+      .join('\n')}\n\nCurrently a B.Tech CSE (Mathematics & Computing) student at NSUT (Batch 2023–2027)!`,
   },
   {
     keywords: ['dsa', 'leetcode', 'problem', 'algorithm', 'coding'],

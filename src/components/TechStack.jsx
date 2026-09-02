@@ -191,7 +191,7 @@ export default function TechStack() {
             transition={{ duration: 0.6 }}
           >
             <span className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-3 block font-semibold">
-              [ 02 / SYSTEM ARCHITECTURE ]
+              [ 03 / SYSTEM ARCHITECTURE ]
             </span>
             <h2 className="text-5xl md:text-6xl font-display font-black uppercase tracking-tighter text-white mb-6">
               Production <span className="text-gradient">Tech Stack</span>

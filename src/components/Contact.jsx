@@ -200,7 +200,7 @@ export default function Contact() {
               transition={{ duration: 0.7 }}
               className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-3 block font-semibold"
             >
-              [ 06 / OFFICIAL CREDENTIALS &amp; CONTACT ]
+              [ 08 / OFFICIAL CREDENTIALS & CONTACT ]
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, x: -60 }}

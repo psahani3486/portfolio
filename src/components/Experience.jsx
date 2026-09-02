@@ -166,7 +166,7 @@ export default function Experience() {
               transition={{ duration: 0.6 }}
               className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-2 block"
             >
-              [ 05 / ENGINEERING EXPERIENCE ]
+              [ 04 / ENGINEERING EXPERIENCE ]
             </motion.h2>
             <motion.h3
               initial={{ opacity: 0, x: -40 }}

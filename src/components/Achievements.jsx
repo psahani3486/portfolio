@@ -1,6 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { FiAward, FiCheckCircle, FiExternalLink } from 'react-icons/fi'
+import { personalInfo } from '../data/resumeData'
 
 const certificates = [
   {
@@ -9,6 +10,7 @@ const certificates = [
     date: 'June 2026',
     color: '#4285F4',
     verified: true,
+    url: personalInfo.linkedin,
   },
   {
     title: 'Microsoft Azure Essentials Professional Certificate',
@@ -16,6 +18,7 @@ const certificates = [
     date: 'May 2026',
     color: '#00A4EF',
     verified: true,
+    url: personalInfo.linkedin,
   },
   {
     title: 'Basics of Data Analytics Professional Certification',
@@ -23,6 +26,7 @@ const certificates = [
     date: 'April 2026',
     color: '#F25022',
     verified: true,
+    url: personalInfo.linkedin,
   },
   {
     title: 'Deloitte Data Analytics Job Simulation',
@@ -30,6 +34,7 @@ const certificates = [
     date: 'May 2026',
     color: '#86BC25',
     verified: true,
+    url: personalInfo.linkedin,
   },
   {
     title: 'DSA Supreme 3.0 Batch Graduate',
@@ -37,6 +42,7 @@ const certificates = [
     date: 'Comprehensive DSA',
     color: '#A855F7',
     verified: true,
+    url: personalInfo.leetcode,
   },
   {
     title: '400+ LeetCode DSA Problem Solutions',
@@ -44,6 +50,7 @@ const certificates = [
     date: 'Daily Active Streak',
     color: '#FFA116',
     verified: true,
+    url: personalInfo.leetcode,
   },
 ]
 
@@ -61,7 +68,7 @@ export default function Achievements() {
             transition={{ duration: 0.6 }}
           >
             <span className="text-xs font-mono tracking-[0.3em] uppercase text-[var(--accent)] mb-3 block font-semibold">
-              [ 07 / HONORS & CREDENTIALS ]
+              [ 06 / HONORS & CREDENTIALS ]
             </span>
             <h2 className="text-5xl md:text-6xl font-display font-black uppercase tracking-tighter text-white">
               Certifications & <span className="text-gradient">Recognitions</span>
@@ -113,9 +120,14 @@ export default function Achievements() {
 
               <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gray-500">
                 <span>{cert.date}</span>
-                <span className="text-[var(--accent)] font-bold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                  Credential <FiExternalLink />
-                </span>
+                <a
+                  href={cert.url || personalInfo.linkedin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[var(--accent)] font-bold group-hover:translate-x-1 transition-transform inline-flex items-center gap-1 hover:underline cursor-pointer"
+                >
+                  Verify <FiExternalLink />
+                </a>
               </div>
             </motion.div>
           ))}

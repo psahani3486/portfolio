@@ -443,7 +443,7 @@ export default function Projects() {
               transition={{ duration: 0.6 }}
               className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-2 block"
             >
-              [ 04 / FEATURED PROJECTS & SYSTEMS ]
+              [ 05 / FEATURED PROJECTS & SYSTEMS ]
             </motion.h2>
             <motion.h3
               initial={{ opacity: 0, x: -40 }}

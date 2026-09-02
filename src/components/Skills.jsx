@@ -175,7 +175,7 @@ export default function Skills() {
               transition={{ duration: 0.7 }}
               className="text-xs font-mono tracking-[0.25em] uppercase text-[var(--accent)] mb-2 block font-semibold"
             >
-              [ 03 / TECHNICAL CAPABILITIES ]
+              [ 02 / TECHNICAL CAPABILITIES ]
             </motion.span>
             <motion.h2
               initial={{ opacity: 0, x: -60 }}
